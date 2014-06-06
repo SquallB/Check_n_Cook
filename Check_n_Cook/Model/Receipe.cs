@@ -9,6 +9,8 @@ namespace Check_n_Cook.Model
 {
     public class Receipe
     {
+        public int Id { get; set; }
+
         public String Title { get; set; }
 
         public User Author { get; set; }

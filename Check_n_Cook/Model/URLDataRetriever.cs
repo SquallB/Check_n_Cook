@@ -9,9 +9,11 @@ using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
 {
-    public class MarmitonDataRetriever
+    public class URLDataRetriever
     {
-        public JsonArray getItemsArrayFromJSONObject(JsonObject jsonObject)
+        public String URL { get; set; }
+
+        private JsonArray getItemsArrayFromJSONObject(JsonObject jsonObject)
         {
             foreach (var item in jsonObject)
             {
@@ -31,7 +33,7 @@ namespace Check_n_Cook.Model
             return null;
         }
 
-        public Receipe getReceipeFromJSONItem(JsonObject item)
+        private Receipe getReceipeFromJSONItem(JsonObject item)
         {
             Receipe receipe = new Receipe();
 
@@ -46,6 +48,38 @@ namespace Check_n_Cook.Model
                     case "cost":
                         receipe.Cost = new Cost((int)property.Value.GetNumber());
                         break;
+
+                    case "difficulty":
+                        receipe.Difficulty = new Difficulty((int)property.Value.GetNumber());
+                        break;
+
+                    case "dishType":
+                        receipe.DishType = DishType.GetInstance(property.Value.GetString());
+                        break;
+
+                    case "id":
+                        receipe.Id = (int)property.Value.GetNumber();
+                        break;
+
+                    case "isVegetarian":
+                        receipe.Vegetarian = property.Value.GetBoolean();
+                        break;
+
+                    case "published":
+                        receipe.PublicationDate = new DateTime();
+                        break; 
+
+                    case "rating":
+                        receipe.Rating = new Rating((int)property.Value.GetNumber());
+                        break;
+
+                    case "title":
+                        receipe.Title = property.Value.GetString();
+                        break;
+
+                    case "withAlcohol":
+                        receipe.WithAlcohol = property.Value.GetBoolean();
+                        break;
                 }
             }
 
@@ -56,11 +90,9 @@ namespace Check_n_Cook.Model
         {
             HttpClient http = new System.Net.Http.HttpClient();
 
-            String url = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord=pomme&SearchType=0&ItemsPerPage=10&StartIndex=1";
-
             try
             {
-                HttpResponseMessage response = await http.GetAsync(url);
+                HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord));
                 string jsonString = await response.Content.ReadAsStringAsync();
 
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
@@ -80,6 +112,11 @@ namespace Check_n_Cook.Model
                     "Here's the error message I received: "
                     + ex.ToString();*/
             }
+        }
+
+        public URLDataRetriever()
+        {
+            this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage=10&StartIndex=1";
         }
     }
 }
