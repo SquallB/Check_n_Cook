@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>ELITEBOOK-8560W</Machine>
+    <WindowsUser>.Sylvain</WindowsUser>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>f0873d4f-de42-4606-b52b-0be5c9643fc1</PackageIdentityName>
+    <IntermediateOutputPath>E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\obj\Debug\</IntermediateOutputPath>
+    <RegisteredManifestChecksum>B66AB287B1F141F3F0F825363B55656BC289477686E01CE8A89297CB3F4FD52E</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>f0873d4f-de42-4606-b52b-0be5c9643fc1_1.0.0.0_neutral__6edv2sgs94dzw</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>f0873d4f-de42-4606-b52b-0be5c9643fc1_6edv2sgs94dzw!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>f0873d4f-de42-4606-b52b-0be5c9643fc1</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=.Sylvain</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-05T11:07:43.013</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.exe">
+      <PackagePath>Check %27n%27 Cook.exe</PackagePath>
+      <Modified>2014-06-05T11:07:42.923</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\Logo.scale-100.png">
+      <PackagePath>Assets\Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T12:26:21.609</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\SmallLogo.scale-100.png">
+      <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T12:26:21.616</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T12:26:21.624</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-03T12:26:21.631</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+      <Modified>2014-06-05T11:07:42.677</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+      <Modified>2014-06-05T11:07:42.677</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.xr.xml">
+      <PackagePath>Check %27n%27 Cook.xr.xml</PackagePath>
+      <Modified>2014-06-05T11:04:27.596</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2014-06-05T11:07:12.864</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

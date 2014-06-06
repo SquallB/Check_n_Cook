@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Check_n_Cook.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Check_n_Cook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" UseLayoutRounding="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="279*"/>
+            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="544*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="99,75,0,0" TextWrapping="Wrap" Text="Check'n Cook" VerticalAlignment="Top" Height="83" Width="445" FontSize="72" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="textBoxReceipe" HorizontalAlignment="Left" Margin="264,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="324" Height="32" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="txt_name" HorizontalAlignment="Left" Margin="282,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="buttonAdvancedSearch" Content="Recherche avancée" HorizontalAlignment="Left" Margin="259,361,0,0" VerticalAlignment="Top" Width="329" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="textBlockResultatSearch" HorizontalAlignment="Left" Margin="70,298,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="323" Width="355" Grid.Column="2" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonAddReceipe" Content="Ajouter une recette" HorizontalAlignment="Left" Margin="4,735,0,-5" VerticalAlignment="Top" Width="314"/>
+        <Button x:Name="buttonListReceipe" Content="Votre liste de recette" HorizontalAlignment="Left" Margin="19,720,0,0" VerticalAlignment="Top" Width="194" Grid.Column="2" Grid.ColumnSpan="2"/>
+        <Button x:Name="button_Apropos" Content="A propos" HorizontalAlignment="Left" Margin="386,727,-6,0" VerticalAlignment="Top" Width="164" Grid.Column="3"/>
+        <StackPanel HorizontalAlignment="Left" Height="177" Margin="266,433,0,0" VerticalAlignment="Top" Width="323" Background="#FFF9F9F9" Grid.ColumnSpan="2">
+            <TextBlock TextWrapping="Wrap" Text="TextBlock" Height="143"/>
+            <Button x:Name="buttonConfirmReceipe" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Height="38" Click="Button_Click" Width="328" Background="Black" RenderTransformOrigin="1.993,-0.439" Margin="-2,0,-3,0"/>
+        </StackPanel>
+
+    </Grid>
+</Page>
