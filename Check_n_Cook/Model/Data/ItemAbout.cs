@@ -15,11 +15,14 @@ namespace Check_n_Cook.Model.Data
 
         public string Subtitle { get; set; }
 
-        public ItemAbout(string image, string title, string subTitle)
+        public string Content { get; set; }
+
+        public ItemAbout(string image, string title, string subTitle, string content)
         {
             this.Image = image;
             this.Title = title;
             this.Subtitle = subTitle;
+            this.Content = content;
         }
     }
 }

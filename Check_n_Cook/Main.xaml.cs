@@ -106,10 +106,10 @@ namespace Check_n_Cook
             resultsFoundViewSource.Source = itemsResult;
 
             List<ItemFavorite> itemsFavorite = new List<ItemFavorite>();
-            itemsFavorite.Add(new ItemFavorite { Name = "Fire Hydrant", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
-            itemsFavorite.Add(new ItemFavorite { Name = "Fire Hydrant",  Image = "Assets/Logo.scale-100.jpg" });
-            itemsFavorite.Add(new ItemFavorite { Name = "Fire Hydrant",Image = "Assets/Logo.scale-100.jpg" });
-            itemsFavorite.Add(new ItemFavorite { Name = "Fire Hydrant", Image = "Assets/Logo.scale-100.jpg" });
+            itemsFavorite.Add(new ItemFavorite("Fire Hydrant","http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg"));
+            itemsFavorite.Add(new ItemFavorite("Fire Hydrant", "Assets/Logo.scale-100.jpg"));
+            itemsFavorite.Add(new ItemFavorite( "Fire Hydrant", "Assets/Logo.scale-100.jpg"));
+            itemsFavorite.Add(new ItemFavorite("Fire Hydrant", "Assets/Logo.scale-100.jpg"));
 
             favoriteViewSource.Source = itemsFavorite;
         }
