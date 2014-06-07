@@ -163,5 +163,21 @@ namespace Check_n_Cook
             textBoxSearch = sender as TextBox;
         }
 
+        private void GoToShoppingList(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ShoppingList));
+            }
+        }
+
+        private void GoToAboutCrew(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(AboutCrew));
+            }
+        }
+
     }
 }
