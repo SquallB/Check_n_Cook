@@ -1,4 +1,3 @@
-﻿
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model.Data
 {
-    public class ItemFavorite
+    public class ItemReceipe
     {
         public string Name { get; set; }
 
         public string Image { get; set; }
 
-        public ItemFavorite(string name, string image)
+        public string Description { get; set; }
+
+        public ItemReceipe(string image, string name, string description)
         {
-            this.Name = name;
             this.Image = image;
+            this.Name = name;
+            this.Description = description;
         }
     }
 }
