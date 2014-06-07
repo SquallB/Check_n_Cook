@@ -27,6 +27,8 @@ namespace Check_n_Cook.Model
 
         public bool Vegetarian { get; set; }
 
+        public string HtmlReceipe { get; set; }
+
         public bool WithAlcohol { get; set; }
 
         public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) {}
