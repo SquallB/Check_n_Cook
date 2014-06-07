@@ -17,7 +17,7 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
+        private List<ItemResult> ItemsResult { get; set; }
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -74,37 +74,37 @@ namespace Check_n_Cook
         {
             navigationHelper.OnNavigatedTo(e);
 
-            List<ItemResult> itemsResult = new List<ItemResult>();
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            itemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            List<ItemResult> ItemsResult = new List<ItemResult>();
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
+            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
 
-            resultsFoundViewSource.Source = itemsResult;
+            resultsFoundViewSource.Source = ItemsResult;
 
             List<ItemFavorite> itemsFavorite = new List<ItemFavorite>();
             itemsFavorite.Add(new ItemFavorite("Fire Hydrant","http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg"));
@@ -114,7 +114,34 @@ namespace Check_n_Cook
 
             favoriteViewSource.Source = itemsFavorite;
         }
+        public async void search(string keyWord)
+        {
+            URLDataRetriever retriever = new URLDataRetriever();
+            AppModel model = new AppModel();
+            bool error = await retriever.GetData(keyWord, model);
+            ItemsResult = new List<ItemResult>();
+            List<Receipe> searchResult = model.Receipes;
+            foreach (Receipe receipe in searchResult)
+            {
 
+                string description = String.Format("Date de publication :{0}/{1}/{2}\r\nAuteur:{3}", receipe.PublicationDate.Day,receipe.PublicationDate.Month,receipe.PublicationDate.Year, receipe.Author.Name);
+                addItemResult(receipe.Title, description, receipe.image);
+                
+            }
+            resultsFoundViewSource.Source = ItemsResult;
+            
+        }
+        public void addItemResult(string name,string description, string image)
+        {
+            if (ItemsResult == null)
+            {
+                ItemsResult = new List<ItemResult>();
+            }
+            else
+            {
+                ItemsResult.Add(new ItemResult { Name = name, Description = description, Image = image });
+            }
+        }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -124,10 +151,12 @@ namespace Check_n_Cook
 
         private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            URLDataRetriever retriever = new URLDataRetriever();
+            /*URLDataRetriever retriever = new URLDataRetriever();
             AppModel model = new AppModel();
             bool error = await retriever.GetData(this.textBoxSearch.Text, model);
-            textBoxSearch.Text = model.Receipes.Count.ToString();
+            textBoxSearch.Text = model.Receipes.Count.ToString();*/
+
+            search(this.textBoxSearch.Text);
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)

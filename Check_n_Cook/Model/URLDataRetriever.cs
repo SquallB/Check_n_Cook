@@ -90,6 +90,25 @@ namespace Check_n_Cook.Model
                         case "withAlcohol":
                             receipe.WithAlcohol = property.Value.GetBoolean();
                             break;
+
+                        case "pictures":
+                            var picturesArray = property.Value.GetArray();
+                            string found = "";
+                            if (picturesArray != null)
+                            {
+                                var pictureObject = picturesArray[0];
+                                    foreach (var picture in pictureObject.GetObject())
+                                    {
+
+                                        if (picture.Key == "url")
+                                        {
+                                            found = picture.Value.GetString();
+                                        }                                   
+                                    }
+                                
+                            }
+                            receipe.image = found;
+                            break;
                     }
                 }
             }

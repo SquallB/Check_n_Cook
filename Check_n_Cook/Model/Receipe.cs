@@ -31,6 +31,8 @@ namespace Check_n_Cook.Model
 
         public bool WithAlcohol { get; set; }
 
+        public string image { get; set; }
+
         public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) {}
 
         public Receipe(String title, User author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol)
