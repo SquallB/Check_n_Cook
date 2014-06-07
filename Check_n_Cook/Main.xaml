@@ -53,7 +53,7 @@
                     <ImageBrush Stretch="UniformToFill" ImageSource="Assets/imageHeader.jpg" />
                 </HubSection.Background>
             </HubSection>
-            <HubSection x:Name="hubSearch" Width="500" Header="Recherche" RequestedTheme="Light">
+            <HubSection x:Name="hubSearch" Width="500" Header="Recherche" RequestedTheme="Light" Loaded="hubSearch_Loaded">
                 <DataTemplate>
                     <Grid Height="317" Width="418">
                         <Grid.RowDefinitions>
