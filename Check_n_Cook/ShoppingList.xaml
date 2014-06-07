@@ -16,6 +16,7 @@
         <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
         <x:String x:Key="AppName">Mon application</x:String>
         <CollectionViewSource x:Name="listReceipeViewSource" />
+        <CollectionViewSource x:Name="listIngredientsViewSource" />
     </Page.Resources>
 
     <!--
@@ -48,7 +49,7 @@
             </Hub.Header>
             <HubSection Width="500" Header="Liste de recette">
                 <DataTemplate>
-                    <GridView x:Name="listREceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
+                    <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -58,14 +59,12 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
+                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
                                         <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button x:Name="seeIngredients" Margin="5,0,0,0" Content="Voir les ingredients"
-                                        VerticalAlignment="Top"
-                                        AutomationProperties.Name="Back"
-                                        AutomationProperties.AutomationId="BackButton"
-                                        AutomationProperties.ItemType="Navigation Button"/>
+                                        <Button x:Name="seeIngredients" Margin="5,0,0,0" 
+                                                Content="Voir les ingredients" 
+                                                Click="ClickHandleIngredients"
+                                                Tag="{Binding Name}" />
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -73,53 +72,52 @@
                     </GridView>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Liste des ingrédients">
+            <HubSection x:Name="hubIngredients" Width="520" Header="Liste des ingrédients">
                 <DataTemplate>
-                    <Grid>
+                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="303" Width="416">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="91*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,10"
-                                   Text="Item Title" />
-                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Grid.Row="1" 
-                                   Text="Quisque in porta lorem dolor amet sed consectetuer ising elit, sed diam non my nibh uis mod wisi quip."/>
-                        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="2" Margin="0,20,0,0"
-                                   Text="Item Sub Title"/>
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" 
-                                   Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper."/>
+                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" >
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                        <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
+                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <TextBlock TextWrapping="Wrap" Text="Aucune recette" Loaded="TextBlockReceipe_Loaded" Style="{StaticResource BodyTextBlockStyle}" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Section 3">
+            <HubSection Header="Outil de gestion">
                 <DataTemplate>
                     <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="400"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="270"/>
-                                <RowDefinition Height="95"/>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto" MinHeight="138" />
+                                <RowDefinition Height="0*" />
                             </Grid.RowDefinitions>
-                            <Image Grid.ColumnSpan="5" Stretch="Fill" Margin="0,0,0,10"/>
-                            <Image Grid.Row="1" Stretch="Fill"/>
-                            <Image Grid.Row="1" Grid.Column="2" Stretch="Fill"/>
-                            <Image Grid.Row="1" Grid.Column="4" Stretch="Fill"/>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Grid.ColumnSpan="5" Margin="0,15,0,0"
-                                       Text="Description Text:"/>
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" Grid.ColumnSpan="5" 
-                                       Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper."/>
+                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34"/>
+                            <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
