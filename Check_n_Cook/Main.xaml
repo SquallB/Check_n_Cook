@@ -44,7 +44,7 @@
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button" Grid.Column="1"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Check 'n' Cook" Height="40" Margin="884,-1,-996,0"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Check'n Cook" Height="40" Margin="884,-1,-996,0"/>
                 </Grid>
             </Hub.Header>
 
@@ -67,9 +67,9 @@
                         <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded"/>
                         <Button Content="Recherche avancée" Grid.Row="1" Margin="-3,5" HorizontalAlignment="Stretch" Height="38"/>
                         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Mon espace" Margin="0,20,0,0" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <Button Content="Accéder à ma liste de course" Grid.Row="3" Margin="-3,11" Width="424" Height="38"/>
+                        <Button Content="Accéder à ma liste de course" Grid.Row="3" Margin="-3,11" Width="424" Height="38" Click="GoToShoppingList"/>
                         <Button Content="Ma planification" Grid.Row="4" Margin="-3,7" Width="424"/>
-                        <Button Content="A propos" Grid.Row="5" Margin="0,12,-3,12" Width="421" RequestedTheme="Light"/>
+                        <Button Content="A propos" Grid.Row="5" Margin="0,12,-3,12" Width="421" RequestedTheme="Light" Click="GoToAboutCrew"/>
                         <Button Content="OK" Margin="361,-3,-3,-3" Height="40" Width="60" Click="Button_Click"/>
                     </Grid>
                 </DataTemplate>

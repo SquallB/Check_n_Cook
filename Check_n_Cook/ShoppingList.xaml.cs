@@ -26,6 +26,8 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        public TextBlock ReceipeTextBlock { get; set; }
+
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -69,6 +71,8 @@ namespace Check_n_Cook
             receipes.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://3.bp.blogspot.com/-Q6PuvmuRGZc/T8_SMDwqmVI/AAAAAAAAAzM/mOBDOKKj0IE/s1600/hsrf.JPG&sa=X&ei=QPSRU9bOCuqS7AavlIHAAg&ved=0CAkQ8wc&usg=AFQjCNFA0-svML0apesgl4DXdO-laQlXZQ", "recette1", "Une bonne recette !"));
 
             listReceipeViewSource.Source = receipes;
+
+            this.ReceipeTextBlock = sender as TextBlock;
         }
 
         #region Inscription de NavigationHelper
@@ -93,5 +97,33 @@ namespace Check_n_Cook
         }
 
         #endregion
+
+        private void ClickHandleIngredients(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+
+
+            if (b != null)
+            {
+                List<ItemReceipe> ingredients = new List<ItemReceipe>();
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+
+                this.listIngredientsViewSource.Source = ingredients;
+                
+                if (this.ReceipeTextBlock != null)
+                {
+                    this.ReceipeTextBlock.Text = (string) b.Tag;
+                }
+            }
+
+        }
+
+        private void TextBlockReceipe_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ReceipeTextBlock = sender as TextBlock;
+        }
+
     }
 }

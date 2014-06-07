@@ -139,11 +139,6 @@ namespace Check_n_Cook
                 if (textbox.Text == "Entrer une recette...")
                 {
                     textbox.Text = "";
-                    /*Receipe rec = new Receipe("", new User("Test"), DateTime.Today, null, 1, 1, 1, false, false);
-                    rec.Id = 57304;
-                    ReceipeRetriever.extractReceipeFromMarmiton(rec);
-                    
-                    textbox.Text = "loaded";*/
                 }
             }
         }
@@ -168,9 +163,20 @@ namespace Check_n_Cook
             textBoxSearch = sender as TextBox;
         }
 
-        private void hubSearch_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void GoToShoppingList(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ShoppingList));
+            }
+        }
 
+        private void GoToAboutCrew(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(AboutCrew));
+            }
         }
 
     }
