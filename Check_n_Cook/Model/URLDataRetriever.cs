@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.UI.Xaml.Controls;
 
 namespace Check_n_Cook.Model
 {
@@ -39,56 +40,67 @@ namespace Check_n_Cook.Model
 
             foreach (var property in item)
             {
-                switch (property.Key)
+                if (property.Value.Stringify() != "null")
                 {
-                    case "author":
-                        receipe.Author = new User(property.Value.GetString());
-                        break;
+                    switch (property.Key)
+                    {
+                        case "author":
+                            receipe.Author = new User(property.Value.GetString());
+                            break;
 
-                    case "cost":
-                        receipe.Cost = new Cost((int)property.Value.GetNumber());
-                        break;
+                        case "cost":
+                            receipe.Cost = new Cost((int)property.Value.GetNumber());
+                            break;
 
-                    case "difficulty":
-                        receipe.Difficulty = new Difficulty((int)property.Value.GetNumber());
-                        break;
+                        case "difficulty":
+                            receipe.Difficulty = new Difficulty((int)property.Value.GetNumber());
+                            break;
 
-                    case "dishType":
-                        receipe.DishType = DishType.GetInstance(property.Value.GetString());
-                        break;
+                        case "dishType":
+                            JsonObject dishType = property.Value.GetObject();
+                            foreach (var dishTypeProperty in dishType)
+                            {
+                                if (dishTypeProperty.Key == "label")
+                                {
+                                    receipe.DishType = DishType.GetInstance(dishTypeProperty.Value.GetString());
+                                }
+                            }
+                            break;
 
-                    case "id":
-                        receipe.Id = (int)property.Value.GetNumber();
-                        break;
+                        case "id":
+                            receipe.Id = (int)property.Value.GetNumber();
+                            break;
 
-                    case "isVegetarian":
-                        receipe.Vegetarian = property.Value.GetBoolean();
-                        break;
+                        case "isVegetarian":
+                            receipe.Vegetarian = property.Value.GetBoolean();
+                            break;
 
-                    case "published":
-                        receipe.PublicationDate = new DateTime();
-                        break; 
+                        case "published":
+                            receipe.PublicationDate = new DateTime();
+                            break;
 
-                    case "rating":
-                        receipe.Rating = new Rating((int)property.Value.GetNumber());
-                        break;
+                        case "rating":
+                            receipe.Rating = new Rating((int)property.Value.GetNumber());
+                            break;
 
-                    case "title":
-                        receipe.Title = property.Value.GetString();
-                        break;
+                        case "title":
+                            receipe.Title = property.Value.GetString();
+                            break;
 
-                    case "withAlcohol":
-                        receipe.WithAlcohol = property.Value.GetBoolean();
-                        break;
+                        case "withAlcohol":
+                            receipe.WithAlcohol = property.Value.GetBoolean();
+                            break;
+                    }
                 }
             }
 
             return receipe;
         }
 
-        public async void getData(String keyWord)
+        public async Task<bool> GetData(String keyWord, AppModel model)
         {
             HttpClient http = new System.Net.Http.HttpClient();
+            bool error = false;
 
             try
             {
@@ -97,21 +109,18 @@ namespace Check_n_Cook.Model
 
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
                 JsonArray jsonArray = getItemsArrayFromJSONObject(jsonObject);
-
                 foreach (var item in jsonArray)
                 {
                     Receipe receipe = getReceipeFromJSONItem(item.GetObject());
+                    model.AddReceipe(receipe);
                 }
             }
             catch (Exception ex)
             {
-                // Log Error.
-                /*txb_result.Text =
-                    "I'm sorry, but I couldn't load the page," +
-                    " possibly due to network problems." +
-                    "Here's the error message I received: "
-                    + ex.ToString();*/
+                error = true;
             }
+
+            return error;
         }
 
         public URLDataRetriever()

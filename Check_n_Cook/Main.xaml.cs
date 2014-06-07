@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,47 @@ namespace Check_n_Cook
         }
 
         #endregion
+
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            URLDataRetriever retriever = new URLDataRetriever();
+            AppModel model = new AppModel();
+            bool error = await retriever.GetData(this.textBoxSearch.Text, model);
+            textBoxSearch.Text = model.Receipes.Count.ToString();
+        }
+
+        private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text == "Entrer une recette...")
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text == "")
+                {
+                    textbox.Text = "Entrer une recette...";
+                }
+            }
+        }
+
+        private TextBox textBoxSearch;
+
+        private void textboxSearchReceipe_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            textBoxSearch = sender as TextBox;
+        }
 
     }
 }
