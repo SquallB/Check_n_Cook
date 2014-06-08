@@ -14,6 +14,25 @@ namespace Check_n_Cook.Model
     {
         public String URL { get; set; }
 
+        private DateTime getDateTimeFromString(String dateString)
+        {
+            String date = dateString.Substring(0, dateString.IndexOf('T'));
+            int posFirstDash = date.IndexOf('-');
+            int posSecondDash = date.IndexOf('-', posFirstDash + 1);
+            int year = int.Parse(date.Substring(0, posFirstDash));
+            int month = int.Parse(date.Substring(posFirstDash + 1, posSecondDash - posFirstDash - 1));
+            int day = int.Parse(date.Substring(posSecondDash + 1, date.Length - posSecondDash - 1));
+
+            String time = dateString.Substring(date.Length + 1, dateString.Length - date.Length - 2);
+            int posFirstColon = time.IndexOf(':');
+            int posSecondColon = time.IndexOf(':', posFirstColon + 1);
+            int hour = int.Parse(time.Substring(0, posFirstColon));
+            int minute = int.Parse(time.Substring(posFirstColon + 1, posSecondColon - posFirstColon - 1));
+            int second = int.Parse(time.Substring(posSecondColon + 1, time.Length - posSecondColon - 1));
+
+            return new DateTime(year, month, day, hour, minute, second);
+        }
+
         private JsonArray getItemsArrayFromJSONObject(JsonObject jsonObject)
         {
             foreach (var item in jsonObject)
@@ -76,7 +95,7 @@ namespace Check_n_Cook.Model
                             break;
 
                         case "published":
-                            receipe.PublicationDate = new DateTime();
+                            receipe.PublicationDate = getDateTimeFromString(property.Value.GetString());
                             break;
 
                         case "rating":
