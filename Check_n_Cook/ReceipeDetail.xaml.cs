@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Check_n_Cook
         public Image ImageReceipe { get; set; }
         public TextBlock ReceipeInstruction { get; set; }
 
+        private Receipe receipe;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -50,6 +52,13 @@ namespace Check_n_Cook
         public ReceipeDetail()
         {
             this.InitializeComponent();
+            this.navigationHelper = new NavigationHelper(this);
+            this.navigationHelper.LoadState += navigationHelper_LoadState;
+        }
+        public ReceipeDetail(Receipe receipe)
+        {
+            this.InitializeComponent();
+            this.receipe = receipe;
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
