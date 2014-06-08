@@ -135,14 +135,14 @@ namespace Check_n_Cook.Model
             return receipe;
         }
 
-        public async Task<bool> GetData(String keyWord, AppModel model)
+        public async Task<bool> GetData(String keyWord, int nbItemsPerPage, int startIndex, AppModel model)
         {
             HttpClient http = new System.Net.Http.HttpClient();
             bool error = false;
 
             try
             {
-                HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord));
+                HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord, nbItemsPerPage, startIndex));
                 string jsonString = await response.Content.ReadAsStringAsync();
 
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
@@ -163,7 +163,7 @@ namespace Check_n_Cook.Model
 
         public URLDataRetriever()
         {
-            this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage=10&StartIndex=1";
+            this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage={1}&StartIndex={2}";
         }
     }
 }
