@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Model.Grade;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,12 @@ namespace Check_n_Cook.Model
 
         public string HtmlReceipe { get; set; }
 
+        public string ToDoInstructions { get; set; }
+
+        public string ingredientsHTML { get; set; }
+
         public bool WithAlcohol { get; set; }
+
 
         public string image { get; set; }
 
