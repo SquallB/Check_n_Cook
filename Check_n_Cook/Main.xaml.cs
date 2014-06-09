@@ -125,7 +125,7 @@ namespace Check_n_Cook
             foreach (Receipe receipe in searchResult)
             {
 
-                string description = String.Format("Date de publication :{0}/{1}/{2}\r\nAuteur:{3}", receipe.PublicationDate.Day,receipe.PublicationDate.Month,receipe.PublicationDate.Year, receipe.Author.Name);
+                string description = String.Format("Note : {0}/5\r\nDifficulté : {1}/5\r\nType : {3}", receipe.Rating.Value, receipe.Difficulty.Value, receipe.Cost.Value,receipe.DishType.Name);
                 addItemResult(receipe.Title, description, receipe.image);
                 
             }
