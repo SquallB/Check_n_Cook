@@ -74,47 +74,8 @@ namespace Check_n_Cook
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
-
-            List<ItemResult> ItemsResult = new List<ItemResult>();
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-            ItemsResult.Add(new ItemResult { Name = "Fire Hydrant", Description = "Red", Image = "Assets/Logo.scale-100.jpg" });
-
-            resultsFoundViewSource.Source = ItemsResult;
-
-            List<ItemFavorite> itemsFavorite = new List<ItemFavorite>();
-            itemsFavorite.Add(new ItemFavorite("Fire Hydrant","http://images.marmitoncdn.org/recipephotos/multiphoto/44/447324ae-6893-456a-9a1f-72217237d3d5_normal.jpg"));
-            itemsFavorite.Add(new ItemFavorite("Fire Hydrant", "Assets/Logo.scale-100.jpg"));
-            itemsFavorite.Add(new ItemFavorite( "Fire Hydrant", "Assets/Logo.scale-100.jpg"));
-            itemsFavorite.Add(new ItemFavorite("Fire Hydrant", "Assets/Logo.scale-100.jpg"));
-
-            favoriteViewSource.Source = itemsFavorite;
         }
+
         public async void search(string keyWord)
         {
             URLDataRetriever retriever = new URLDataRetriever();
@@ -125,14 +86,17 @@ namespace Check_n_Cook
             foreach (Receipe receipe in searchResult)
             {
 
-                string description = String.Format("Note : {0}/5\r\nDifficulté : {1}/5\r\nType : {3}", receipe.Rating.Value, receipe.Difficulty.Value, receipe.Cost.Value,receipe.DishType.Name);
-                addItemResult(receipe.Title, description, receipe.image);
-                
+                string description = String.Format("Note : {0}/5\r\nDifficulté : {1}/5\r\nType : {3}", receipe.Rating.Value, receipe.Difficulty.Value, receipe.Cost.Value, receipe.DishType.Name);
+                receipe.Description = description;
+
+                addItemResult(receipe);
+
             }
             resultsFoundViewSource.Source = ItemsResult;
-            
+
         }
-        public void addItemResult(string name,string description, string image)
+
+        public void addItemResult(Receipe receipe)
         {
             if (ItemsResult == null)
             {
@@ -140,7 +104,7 @@ namespace Check_n_Cook
             }
             else
             {
-                ItemsResult.Add(new ItemResult { Name = name, Description = description, Image = image });
+                ItemsResult.Add(new ItemResult { Receipe = receipe });
             }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -211,8 +175,8 @@ namespace Check_n_Cook
 
         public void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var name = ((ItemResult)e.ClickedItem).Name;
-            this.Frame.Navigate(typeof(ReceipeDetail), name);
+            var item = ((ItemResult)e.ClickedItem);
+            this.Frame.Navigate(typeof(ReceipeDetail), item);
         }
 
     }

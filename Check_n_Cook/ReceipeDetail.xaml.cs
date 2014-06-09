@@ -86,12 +86,13 @@ namespace Check_n_Cook
 
             this.ingredientsViewSource.Source = ingredients;
 
-            string nameReceipe = (string)e.NavigationParameter;
-            this.pageTitle.Text = nameReceipe;
+            ItemResult itemResult = (ItemResult)e.NavigationParameter;
+            Receipe receipe = itemResult.Receipe;
+            this.pageTitle.Text = receipe.Title;
 
-            List<ItemReceipe> receipe = new List<ItemReceipe>();
-            receipe.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", "Pizza", "200G "));
-            this.receipeViewSource.Source = receipe;
+            List<ItemReceipe> receipeView = new List<ItemReceipe>();
+            receipeView.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", "Pizza", "200G "));
+            this.receipeViewSource.Source = receipeView;
         }
 
         #region Inscription de NavigationHelper

@@ -35,8 +35,9 @@ namespace Check_n_Cook.Model
 
         public bool WithAlcohol { get; set; }
 
+        public string Image { get; set; }
 
-        public string image { get; set; }
+        public string Description { get; set; }
 
         public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) {}
 

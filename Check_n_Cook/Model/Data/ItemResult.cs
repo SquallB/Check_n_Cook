@@ -32,5 +32,7 @@ namespace Check_n_Cook.Model.Data
             set { image = value; }
         }
 
+        public Receipe Receipe { get; set; }
+
     }
 }
