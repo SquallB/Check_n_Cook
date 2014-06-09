@@ -7,8 +7,8 @@
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>f0873d4f-de42-4606-b52b-0be5c9643fc1</PackageIdentityName>
-    <IntermediateOutputPath>E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\obj\Debug\</IntermediateOutputPath>
-    <RegisteredManifestChecksum>B66AB287B1F141F3F0F825363B55656BC289477686E01CE8A89297CB3F4FD52E</RegisteredManifestChecksum>
+    <IntermediateOutputPath>E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\</IntermediateOutputPath>
+    <RegisteredManifestChecksum>6A3BF319C35C6AF47D7D2275ABABE632055812FF80E0507A487F0E3B1DACFE21</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>f0873d4f-de42-4606-b52b-0be5c9643fc1_1.0.0.0_neutral__6edv2sgs94dzw</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>f0873d4f-de42-4606-b52b-0be5c9643fc1_6edv2sgs94dzw!App</RegisteredUserModeAppID>
     <RegisteredPackageID>f0873d4f-de42-4606-b52b-0be5c9643fc1</RegisteredPackageID>
@@ -17,52 +17,87 @@
     <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-05T11:07:43.013</Modified>
+      <Modified>2014-06-09T13:04:39.287</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.exe">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.exe">
       <PackagePath>Check %27n%27 Cook.exe</PackagePath>
-      <Modified>2014-06-05T11:07:42.923</Modified>
+      <Modified>2014-06-09T13:04:38.529</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\Logo.scale-100.png">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll">
+      <PackagePath>HtmlAgilityPack.dll</PackagePath>
+      <Modified>2014-06-09T13:04:31.065</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\Check n Cook.png">
+      <PackagePath>Assets\Check n Cook.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-09T13:03:25.646</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\ChecknCookSmall.png">
+      <PackagePath>Assets\ChecknCookSmall.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-09T13:03:25.647</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\ChecknCookStore.png">
+      <PackagePath>Assets\ChecknCookStore.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2014-06-09T13:03:25.648</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\Logo.scale-100.png">
       <PackagePath>Assets\Logo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-03T12:26:21.609</Modified>
+      <Modified>2014-06-09T13:03:25.648</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\SmallLogo.scale-100.png">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\SmallLogo.scale-100.png">
       <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-03T12:26:21.616</Modified>
+      <Modified>2014-06-09T13:03:25.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\SplashScreen.scale-100.png">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\SplashScreen.scale-100.png">
       <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-03T12:26:21.624</Modified>
+      <Modified>2014-06-09T13:03:25.649</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\Assets\StoreLogo.scale-100.png">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\StoreLogo.scale-100.png">
       <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
-      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-03T12:26:21.631</Modified>
+      <Modified>2014-06-09T13:03:25.650</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\App.xbf">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\imageHeader.jpg">
+      <PackagePath>Assets\imageHeader.jpg</PackagePath>
+      <Modified>2014-06-09T13:03:25.656</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Common\ReadMe.txt">
+      <PackagePath>Common\ReadMe.txt</PackagePath>
+      <Modified>2014-06-09T13:03:25.659</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2014-06-05T11:07:42.677</Modified>
+      <Modified>2014-06-09T13:04:38.208</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2014-06-05T11:07:42.677</Modified>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AboutCrew.xbf">
+      <PackagePath>AboutCrew.xbf</PackagePath>
+      <Modified>2014-06-09T13:04:38.208</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.xr.xml">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Main.xbf">
+      <PackagePath>Main.xbf</PackagePath>
+      <Modified>2014-06-09T13:04:38.208</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ReceipeDetail.xbf">
+      <PackagePath>ReceipeDetail.xbf</PackagePath>
+      <Modified>2014-06-09T13:04:38.208</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ShoppingList.xbf">
+      <PackagePath>ShoppingList.xbf</PackagePath>
+      <Modified>2014-06-09T13:04:38.208</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.xr.xml">
       <PackagePath>Check %27n%27 Cook.xr.xml</PackagePath>
-      <Modified>2014-06-05T11:04:27.596</Modified>
+      <Modified>2014-06-09T13:04:38.135</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\Check_n_Cook\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="E:\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2014-06-05T11:07:12.864</Modified>
+      <Modified>2014-06-09T13:04:38.858</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

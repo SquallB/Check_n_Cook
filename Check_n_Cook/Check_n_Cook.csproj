@@ -150,6 +150,7 @@
     <Compile Include="Model\Grade\Grade.cs" />
     <Compile Include="Model\Ingredient.cs" />
     <Compile Include="Model\Grade\Rating.cs" />
+    <Compile Include="Model\ReceipeRetriever.cs" />
     <Compile Include="Model\URLDataRetriever.cs" />
     <Compile Include="Model\Receipe.cs" />
     <Compile Include="Model\User.cs" />
@@ -185,6 +186,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
