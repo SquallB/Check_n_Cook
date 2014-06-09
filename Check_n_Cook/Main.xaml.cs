@@ -119,7 +119,7 @@ namespace Check_n_Cook
         {
             URLDataRetriever retriever = new URLDataRetriever();
             AppModel model = new AppModel();
-            bool error = await retriever.GetData(keyWord, 20, 1, model);
+            bool error = await retriever.GetData(keyWord, 100, 1, model);
             ItemsResult = new List<ItemResult>();
             List<Receipe> searchResult = model.Receipes;
             foreach (Receipe receipe in searchResult)
