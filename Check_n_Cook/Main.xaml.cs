@@ -3,6 +3,7 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -86,9 +87,29 @@ namespace Check_n_Cook
             foreach (Receipe receipe in searchResult)
             {
 
-                string description = String.Format("Note : {0}/5\r\nDifficulté : {1}/5\r\nType : {3}", receipe.Rating.Value, receipe.Difficulty.Value, receipe.Cost.Value, receipe.DishType.Name);
-                receipe.Description = description;
 
+                string title = receipe.Title;
+                TextBlock toto = new TextBlock();
+
+                toto.Text = title;
+                toto.Measure(new Size(1200, 1200));
+                if (toto.DesiredSize.Width > 90)
+                {
+
+
+                    while (toto.DesiredSize.Width > 90)
+                    {
+                        title = title.Remove(title.Length - 1, 1);
+                        toto = new TextBlock();
+                        toto.Text = title;
+                        toto.Measure(new Size(1200, 1200));
+
+                    }
+                    title = title.PadRight(title.Length + 3, '.');
+
+                }
+                receipe.Title = title;
+                
                 addItemResult(receipe);
 
             }
