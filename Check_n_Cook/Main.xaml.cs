@@ -3,6 +3,7 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -206,6 +207,12 @@ namespace Check_n_Cook
             {
                 this.Frame.Navigate(typeof(AboutCrew));
             }
+        }
+
+        public void ItemView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var name = ((ItemResult)e.ClickedItem).Name;
+            this.Frame.Navigate(typeof(ReceipeDetail), name);
         }
 
     }

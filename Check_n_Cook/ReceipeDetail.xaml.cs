@@ -78,11 +78,11 @@ namespace Check_n_Cook
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             List<ItemReceipe> ingredients = new List<ItemReceipe>();
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G MA GUEULE"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G MA GUEULE"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G MA GUEULE"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G MA GUEULE"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G MA GUEULE"));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Patte", "200G "));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Jambon", "200G"));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Cassoulet", "200G "));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));
 
             this.ingredientsViewSource.Source = ingredients;
 
@@ -90,7 +90,7 @@ namespace Check_n_Cook
             this.pageTitle.Text = nameReceipe;
 
             List<ItemReceipe> receipe = new List<ItemReceipe>();
-            receipe.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", "BLALBLA", "200G MA GUEULE"));
+            receipe.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", "Pizza", "200G "));
             this.receipeViewSource.Source = receipe;
         }
 

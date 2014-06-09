@@ -76,7 +76,12 @@
             </HubSection>
             <HubSection Width="1020" Header="Résultat de recherche">
                 <DataTemplate>
-                    <GridView x:Name="ResultatFound" SelectionMode="None" ItemsSource="{Binding Source={StaticResource resultsFoundViewSource}}">
+                    <GridView x:Name="ResultatFound" 
+                              SelectionMode="None" 
+                              ItemsSource="{Binding Source={StaticResource resultsFoundViewSource}}" 
+                              IsItemClickEnabled="True"
+                              ItemClick="ItemView_ItemClick"
+                              >
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
