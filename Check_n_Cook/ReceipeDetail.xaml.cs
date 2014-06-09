@@ -75,7 +75,7 @@ namespace Check_n_Cook
         /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
         /// un dictionnaire d'état conservé par cette page durant une session
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             List<ItemReceipe> ingredients = new List<ItemReceipe>();
             ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
@@ -89,9 +89,18 @@ namespace Check_n_Cook
             ItemResult itemResult = (ItemResult)e.NavigationParameter;
             Receipe receipe = itemResult.Receipe;
             this.pageTitle.Text = receipe.Title;
-
+            ReceipeRetriever rr = new ReceipeRetriever();
+            var task = rr.extractReceipeFromMarmiton(receipe);
             List<ItemReceipe> receipeView = new List<ItemReceipe>();
-            receipeView.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", "Pizza", "200G "));
+
+            if ((await task) == true)
+            {
+                var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+
+                receipeView.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", receipe.ToDoInstructions, "? "));
+
+            }
+
             this.receipeViewSource.Source = receipeView;
         }
 
