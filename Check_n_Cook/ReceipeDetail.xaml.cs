@@ -97,7 +97,7 @@ namespace Check_n_Cook
             {
                 var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
 
-                receipeView.Add(new ItemReceipe("http://www.fruit-style.com/files/2013/04/poire.jpg", receipe.ToDoInstructions, "? "));
+                receipeView.Add(new ItemReceipe("", receipe.ToDoInstructions, ""));
 
             }
 

@@ -54,10 +54,8 @@
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
-                                    <Image Source="{Binding Image}" Width="420" Height="280"/>
-                                    <StackPanel Orientation="Vertical" Width="150">
+                                    <StackPanel Orientation="Vertical" Width="700">
                                         <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="-5,0,0,0"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
