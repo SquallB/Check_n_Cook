@@ -126,7 +126,7 @@ namespace Check_n_Cook.Model
                                     }
                                 
                             }
-                            receipe.image = found;
+                            receipe.Image = found;
                             break;
                     }
                 }
