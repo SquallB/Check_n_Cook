@@ -115,7 +115,7 @@ namespace Check_n_Cook.Model
                             string found = "";
                             if (picturesArray != null)
                             {
-                                var pictureObject = picturesArray[0];
+                                var pictureObject = picturesArray[1];
                                     foreach (var picture in pictureObject.GetObject())
                                     {
 
