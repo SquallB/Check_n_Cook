@@ -139,6 +139,7 @@ namespace Check_n_Cook
             this.Model.ClearReceipes();
             bool error = await this.retriever.GetData(keyWord, 100, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
+            
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -211,7 +212,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ReceipeList));
+                this.Frame.Navigate(typeof(AllReceipeList));
             }
         }
 
