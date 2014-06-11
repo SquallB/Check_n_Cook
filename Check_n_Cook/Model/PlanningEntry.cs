@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model
 {
-    class PlanningEntry
+    public class PlanningEntry
     {
         public DateTime PlanningDate { get; set; }
 
