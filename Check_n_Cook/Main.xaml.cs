@@ -1,6 +1,8 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Events;
 using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
+using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
@@ -15,11 +17,15 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class Main : Page
+    public sealed partial class Main : Page, View
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private List<ItemResult> ItemsResult { get; set; }
+        private URLDataRetriever retriever;
+
+        public AppModel Model { get; set; }
+
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -42,6 +48,9 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.Model = new AppModel();
+            this.Model.AddView(this);
+            this.retriever = new URLDataRetriever();
         }
 
 
@@ -77,56 +86,59 @@ namespace Check_n_Cook
             navigationHelper.OnNavigatedTo(e);
         }
 
-        public async void search(string keyWord)
+        public void Refresh(Event e)
         {
-            URLDataRetriever retriever = new URLDataRetriever();
-            AppModel model = new AppModel();
-            bool error = await retriever.GetData(keyWord, 100, 1, model);
-            ItemsResult = new List<ItemResult>();
-            List<Receipe> searchResult = model.Receipes;
-            foreach (Receipe receipe in searchResult)
+            if (e is ReceipeEvent)
             {
+                ReceipeEvent receipeE = (ReceipeEvent)e;
+                Receipe receipe = receipeE.Receipe;
 
-
-                string title = receipe.Title;
-                TextBlock toto = new TextBlock();
-
-                toto.Text = title;
-                toto.Measure(new Size(1200, 1200));
-                if (toto.DesiredSize.Width > 90)
+                if (receipeE is AddedReceipeEvent)
                 {
+                    string title = receipe.Title;
+                    TextBlock toto = new TextBlock();
 
-
-                    while (toto.DesiredSize.Width > 90)
+                    toto.Text = title;
+                    toto.Measure(new Size(1200, 1200));
+                    if (toto.DesiredSize.Width > 90)
                     {
-                        title = title.Remove(title.Length - 1, 1);
-                        toto = new TextBlock();
-                        toto.Text = title;
-                        toto.Measure(new Size(1200, 1200));
+                        while (toto.DesiredSize.Width > 90)
+                        {
+                            title = title.Remove(title.Length - 1, 1);
+                            toto = new TextBlock();
+                            toto.Text = title;
+                            toto.Measure(new Size(1200, 1200));
 
+                        }
+                        title = title.PadRight(title.Length + 3, '.');
                     }
-                    title = title.PadRight(title.Length + 3, '.');
+                    receipe.Title = title;
 
+                    ItemResult item = new ItemResult { Receipe = receipe };
+                    this.ItemsResult.Add(item);
                 }
-                receipe.Title = title;
-                
-                addItemResult(receipe);
-
+                else if (receipeE is RemovedReceipeEvent)
+                {
+                    foreach (ItemResult item in this.ItemsResult)
+                    {
+                        if (item.Receipe == receipe)
+                        {
+                            this.ItemsResult.Remove(item);
+                        }
+                    }
+                }
+                else if (receipeE is ClearedReceipeEvent)
+                {
+                    this.ItemsResult = new List<ItemResult>();
+                }
             }
-            resultsFoundViewSource.Source = ItemsResult;
-
         }
 
-        public void addItemResult(Receipe receipe)
+        public async void search(string keyWord)
         {
-            if (ItemsResult == null)
-            {
-                ItemsResult = new List<ItemResult>();
-            }
-            else
-            {
-                ItemsResult.Add(new ItemResult { Receipe = receipe });
-            }
+            this.Model.ClearReceipes();
+            bool error = await this.retriever.GetData(keyWord, 100, 1, Model);
+            this.resultsFoundViewSource.Source = this.ItemsResult;
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -137,12 +149,7 @@ namespace Check_n_Cook
 
         private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            /*URLDataRetriever retriever = new URLDataRetriever();
-            AppModel model = new AppModel();
-            bool error = await retriever.GetData(this.textBoxSearch.Text, model);
-            textBoxSearch.Text = model.Receipes.Count.ToString();*/
-
-            search(this.textBoxSearch.Text);
+            this.search(this.textBoxSearch.Text);
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)

@@ -37,5 +37,11 @@ namespace Check_n_Cook.Model
             this.Receipes.Remove(receipe);
             this.RefreshViews(new RemovedReceipeEvent(this, receipe));
         }
+
+        public void ClearReceipes()
+        {
+            this.Receipes.Clear();
+            this.RefreshViews(new ClearedReceipeEvent(this));
+        }
     }
 }

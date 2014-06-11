@@ -131,6 +131,7 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Events\ClearedReceipeEvent.cs" />
     <Compile Include="Events\RemovedReceipeEvent.cs" />
     <Compile Include="Events\AddedReceipeEvent.cs" />
     <Compile Include="Events\Event.cs" />
