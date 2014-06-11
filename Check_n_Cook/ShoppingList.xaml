@@ -116,7 +116,7 @@
                                 <RowDefinition Height="Auto" MinHeight="138" />
                                 <RowDefinition Height="0*" />
                             </Grid.RowDefinitions>
-                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34"/>
+                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34" Click="GoToReceipeList"/>
                             <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
                         </Grid>
                     </StackPanel>

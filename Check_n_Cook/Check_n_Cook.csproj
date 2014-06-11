@@ -111,7 +111,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="AllReceipeList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ReceipeDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ReceipeList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -145,6 +153,8 @@
     <Compile Include="Model\Data\ItemFavorite.cs" />
     <Compile Include="Model\Data\ItemReceipe.cs" />
     <Compile Include="Model\Data\ItemResult.cs" />
+    <Compile Include="Model\Data\SampleDataGroup.cs" />
+    <Compile Include="Model\Data\SimpleDataItem.cs" />
     <Compile Include="Model\DishType.cs" />
     <Compile Include="Model\Grade\Cost.cs" />
     <Compile Include="Model\Grade\Difficulty.cs" />
@@ -157,9 +167,15 @@
     <Compile Include="Model\URLDataRetriever.cs" />
     <Compile Include="Model\Receipe.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="AllReceipeList.xaml.cs">
+      <DependentUpon>AllReceipeList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReceipeDetail.xaml.cs">
       <DependentUpon>ReceipeDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReceipeList.xaml.cs">
+      <DependentUpon>ReceipeList.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShoppingList.xaml.cs">
       <DependentUpon>ShoppingList.xaml</DependentUpon>

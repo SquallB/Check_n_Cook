@@ -91,5 +91,12 @@ namespace Check_n_Cook.Model
 
 
         }
+
+
+        public Receipe(String title, User author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol, string image) :
+            this(title, author, publicationDate, dishType, rating, difficulty, cost, vegetarian, withAlcohol)
+        {
+            this.Image = image;
+        }
     }
 }

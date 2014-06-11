@@ -125,5 +125,13 @@ namespace Check_n_Cook
             this.ReceipeTextBlock = sender as TextBlock;
         }
 
+        private void GoToReceipeList(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ReceipeList));
+            }
+        }
+
     }
 }
