@@ -150,6 +150,8 @@
     <Compile Include="Model\Grade\Grade.cs" />
     <Compile Include="Model\Ingredient.cs" />
     <Compile Include="Model\Grade\Rating.cs" />
+    <Compile Include="Model\PlanningEntry.cs" />
+    <Compile Include="Model\PlanningType.cs" />
     <Compile Include="Model\ReceipeRetriever.cs" />
     <Compile Include="Model\URLDataRetriever.cs" />
     <Compile Include="Model\Receipe.cs" />
