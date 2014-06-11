@@ -39,6 +39,10 @@ namespace Check_n_Cook.Model
 
         public string Description { get; set; }
 
+        public PlanningEntry PlanningEntry { get; set; }
+
+
+
         public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) {}
 
         public Receipe(String title, User author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol)
@@ -52,6 +56,40 @@ namespace Check_n_Cook.Model
             this.Cost = new Cost(cost);
             this.Vegetarian = vegetarian;
             this.WithAlcohol = withAlcohol;
+            this.PlanningEntry = null;
+        }
+        public Receipe(String title, User author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol, PlanningEntry planEntry)
+        {
+            this.Title = title;
+            this.Author = author;
+            this.PublicationDate = publicationDate;
+            this.DishType = dishType;
+            this.Rating = new Rating(rating);
+            this.Difficulty = new Difficulty(difficulty);
+            this.Cost = new Cost(cost);
+            this.Vegetarian = vegetarian;
+            this.WithAlcohol = withAlcohol;
+            this.PlanningEntry = planEntry;
+        }
+
+        public void AddToPlan(PlanningEntry planEntry) {
+
+
+
+
+
+
+
+        }
+        public void RemovePlanEntry()
+        {
+
+
+
+
+
+
+
         }
     }
 }
