@@ -6,99 +6,73 @@
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
     <PackageIdentityName>f0873d4f-de42-4606-b52b-0be5c9643fc1</PackageIdentityName>
-    <RegisteredManifestChecksum>94A447AA5120C953EA2609C4FF4387B11520A93A2F1870B37F046FC6ECD821DA</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>f0873d4f-de42-4606-b52b-0be5c9643fc1_1.0.0.0_neutral__6edv2sgs94dzw</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>f0873d4f-de42-4606-b52b-0be5c9643fc1_6edv2sgs94dzw!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>f0873d4f-de42-4606-b52b-0be5c9643fc1</RegisteredPackageID>
-    <RegisteredPackagePublisher>CN=.Sylvain</RegisteredPackagePublisher>
-    <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
     <AppXManifest Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-12T08:06:32.691</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check %27n%27 Cook.exe">
       <PackagePath>Check %27n%27 Cook.exe</PackagePath>
-      <Modified>2014-06-12T08:06:32.445</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll">
       <PackagePath>HtmlAgilityPack.dll</PackagePath>
-      <Modified>2014-06-09T14:41:22.679</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\Check n Cook.png">
       <PackagePath>Assets\Check n Cook.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-09T14:40:24.088</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\ChecknCookSmall.png">
       <PackagePath>Assets\ChecknCookSmall.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-09T14:40:24.090</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\ChecknCookStore.png">
       <PackagePath>Assets\ChecknCookStore.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-06-09T14:40:24.094</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\Logo.scale-100.png">
       <PackagePath>Assets\Logo.scale-100.png</PackagePath>
-      <Modified>2014-06-09T14:40:24.095</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\SmallLogo.scale-100.png">
       <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
-      <Modified>2014-06-09T14:40:24.097</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\SplashScreen.scale-100.png">
       <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
-      <Modified>2014-06-09T14:40:24.099</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\StoreLogo.scale-100.png">
       <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
-      <Modified>2014-06-09T14:40:24.101</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Assets\imageHeader.jpg">
       <PackagePath>Assets\imageHeader.jpg</PackagePath>
-      <Modified>2014-06-09T14:40:24.115</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Common\ReadMe.txt">
       <PackagePath>Common\ReadMe.txt</PackagePath>
-      <Modified>2014-06-09T14:40:24.140</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Scripts\json-serialize.js">
       <PackagePath>Scripts\json-serialize.js</PackagePath>
-      <Modified>2014-06-11T12:06:45.911</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\Scripts\json-serialize.min.js">
       <PackagePath>Scripts\json-serialize.min.js</PackagePath>
-      <Modified>2014-06-11T12:06:45.853</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2014-06-09T14:41:27.645</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AboutCrew.xbf">
       <PackagePath>AboutCrew.xbf</PackagePath>
-      <Modified>2014-06-09T14:41:27.651</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Main.xbf">
       <PackagePath>Main.xbf</PackagePath>
-      <Modified>2014-06-09T14:41:27.654</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ReceipeDetail.xbf">
       <PackagePath>ReceipeDetail.xbf</PackagePath>
-      <Modified>2014-06-09T15:04:09.249</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ShoppingList.xbf">
       <PackagePath>ShoppingList.xbf</PackagePath>
-      <Modified>2014-06-09T14:41:27.663</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2014-06-11T13:30:36.287</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

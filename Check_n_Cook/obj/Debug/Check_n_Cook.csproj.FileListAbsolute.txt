@@ -1,0 +1,54 @@
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Assets\imageHeader.jpg
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\App.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AboutCrew.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Main.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ReceipeDetail.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\ShoppingList.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check 'n' Cook.exe
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check 'n' Cook.pdb
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\resources.pri
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\AppxManifest.xml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\Check_n_Cook.build.appxrecipe
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\bin\Debug\HtmlAgilityPack.pri
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Check_n_Cook.csprojResolveAssemblyReference.cache
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\App.g.i.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\App.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\AboutCrew.g.i.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\AboutCrew.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Main.g.i.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Main.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ReceipeDetail.g.i.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ReceipeDetail.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ShoppingList.g.i.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ShoppingList.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\XamlTypeInfo.g.cs
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\App.xaml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\AboutCrew.xaml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Main.xaml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ReceipeDetail.xaml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ShoppingList.xaml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\App.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\AboutCrew.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Main.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ReceipeDetail.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ShoppingList.xbf
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\XamlSaveStateFile.xml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Check 'n' Cook.exe
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Check 'n' Cook.pdb
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\Check_n_Cook.csproj.GenerateResource.Cache
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\priconfig.xml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\priconfig.xml.intermediate
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\layout.resfiles
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\layout.resfiles.intermediate
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\resources.resfiles
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\resources.resfiles.intermediate
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\pri.resfiles
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\pri.resfiles.intermediate
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\qualifiers.txt
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\qualifiers.txt.intermediate
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\HtmlAgilityPack.pri.xml
+C:\Users\Hugo\Documents\GitHub\Check_n_Cook\Check_n_Cook\obj\Debug\ProjectArchitectures.txt

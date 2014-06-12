@@ -1,0 +1,128 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="Check_n_Cook.ShoppingList"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Check_n_Cook"
+    xmlns:common="using:Check_n_Cook.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <Page.Resources>
+        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+
+        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
+        <x:String x:Key="AppName">Mon application</x:String>
+        <CollectionViewSource x:Name="listReceipeViewSource" />
+        <CollectionViewSource x:Name="listIngredientsViewSource" />
+    </Page.Resources>
+
+    <!--
+        Cette grille sert de panneau racine à la page.
+    -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Hub>
+            <Hub.Header>
+                <!-- Bouton Précédent et titre de la page -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button  x:Name="backButton" Margin="-1,-1,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Liste de course"/>
+                </Grid>
+            </Hub.Header>
+            <HubSection Width="500" Header="Liste de recette">
+                <DataTemplate>
+                    <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
+                                        <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <Button x:ConnectionId='2' x:Name="seeIngredients" Margin="5,0,0,0" 
+                                                Content="Voir les ingredients" 
+                                                                              
+                                                Tag="{Binding Name}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </DataTemplate>
+            </HubSection>
+            <HubSection x:Name="hubIngredients" Width="520" Header="Liste des ingrédients">
+                <DataTemplate>
+                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="303" Width="416">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="91*"/>
+                        </Grid.RowDefinitions>
+                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" >
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                        <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
+                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <TextBlock x:ConnectionId='1' TextWrapping="Wrap" Text="Aucune recette"                                  Style="{StaticResource BodyTextBlockStyle}" />
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+
+            <HubSection Header="Outil de gestion">
+                <DataTemplate>
+                    <!-- largeur de 400 -->
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="400"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto" MinHeight="138" />
+                                <RowDefinition Height="0*" />
+                            </Grid.RowDefinitions>
+                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34"/>
+                            <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+    </Grid>
+</Page>
+
