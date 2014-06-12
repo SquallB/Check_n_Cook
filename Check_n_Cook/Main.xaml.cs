@@ -23,7 +23,6 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private List<ItemResult> ItemsResult { get; set; }
         private URLDataRetriever retriever;
-
         public AppModel Model { get; set; }
 
         /// <summary>

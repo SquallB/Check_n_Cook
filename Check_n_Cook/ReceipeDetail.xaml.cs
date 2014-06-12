@@ -55,7 +55,7 @@ namespace Check_n_Cook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
-        public ReceipeDetail(Receipe receipe)
+        public ReceipeDetail(Receipe receipe, AppModel model)
         {
             this.InitializeComponent();
             this.receipe = receipe;
