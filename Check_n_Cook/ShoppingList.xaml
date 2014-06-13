@@ -118,6 +118,7 @@
                             </Grid.RowDefinitions>
                             <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34" Click="GoToReceipeList"/>
                             <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
+                            <Button Content="Voir les magasins proches" Grid.Row="2" Margin="0,52,-3,52" Width="403" Click="GoToShop_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

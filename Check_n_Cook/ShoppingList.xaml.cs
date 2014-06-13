@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        public AppModel Model { get; set; }
 
         public TextBlock ReceipeTextBlock { get; set; }
 
@@ -66,8 +68,8 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            this.Model = (AppModel)e.NavigationParameter;
             List<ItemReceipe> receipes = new List<ItemReceipe>();
-
             receipes.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://3.bp.blogspot.com/-Q6PuvmuRGZc/T8_SMDwqmVI/AAAAAAAAAzM/mOBDOKKj0IE/s1600/hsrf.JPG&sa=X&ei=QPSRU9bOCuqS7AavlIHAAg&ved=0CAkQ8wc&usg=AFQjCNFA0-svML0apesgl4DXdO-laQlXZQ", "recette1", "Une bonne recette !"));
 
             listReceipeViewSource.Source = receipes;
@@ -130,6 +132,14 @@ namespace Check_n_Cook
             if (this.Frame != null)
             {
                 this.Frame.Navigate(typeof(ReceipeList));
+            }
+        }
+
+        private void GoToShop_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ShopsList), this.Model);
             }
         }
 

@@ -13,10 +13,13 @@ namespace Check_n_Cook.Model
 
         public List<DishType> DishTypes { get; set; }
 
+        public List<Shop> Shops { get; set; }
+
         public AppModel()
         {
             this.Receipes = new List<Receipe>();
             this.DishTypes = new List<DishType>();
+            this.Shops = new List<Shop>();
         }
 
         public void AddReceipe(Receipe receipe)
@@ -42,6 +45,18 @@ namespace Check_n_Cook.Model
         {
             this.Receipes.Clear();
             this.RefreshViews(new ClearedReceipeEvent(this));
+        }
+
+        public void AddShop(Shop shop)
+        {
+            this.Shops.Add(shop);
+            this.RefreshViews(new AddedShopEvent(this, shop));
+        }
+
+        public void RemoveShop(Shop shop)
+        {
+            this.Shops.Remove(shop);
+            this.RefreshViews(new RemovedShopEvent(this, shop));
         }
     }
 }
