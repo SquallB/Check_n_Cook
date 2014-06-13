@@ -100,7 +100,7 @@
                                 <RowDefinition Height="60"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Content="Ajouter cette recette à votre liste de course" Width="406"/>
+                            <Button Content="Ajouter cette recette à votre liste de course" Width="406" Click="Button_Click"/>
                             <Button Content="Ajouter cette recette à vos favoris" Grid.Row="1" Margin="0,13,-3,13" Width="406"/>
                         </Grid>
                     </StackPanel>

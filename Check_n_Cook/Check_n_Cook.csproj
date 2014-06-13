@@ -154,6 +154,7 @@
     <Compile Include="Events\AddedReceipeEvent.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\ReceipeEvent.cs" />
+    <Compile Include="Events\SelectedReceipeEvent.cs" />
     <Compile Include="Events\ShopEvent.cs" />
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>

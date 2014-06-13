@@ -18,6 +18,8 @@ namespace Check_n_Cook.Model.Data
             this.Content = content;
         }
 
+        public SampleDataItem(Receipe receipe) : this(receipe.Id.ToString(), receipe.Title, "", receipe.Image, receipe.ToDoInstructions, "") { }
+
         public string UniqueId { get; private set; }
         public string Title { get; private set; }
         public string Subtitle { get; private set; }

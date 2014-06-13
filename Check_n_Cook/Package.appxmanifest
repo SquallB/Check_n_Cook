@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
   <Identity Name="f0873d4f-de42-4606-b52b-0be5c9643fc1" Publisher="CN=.Sylvain" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>Hello World</DisplayName>
+    <DisplayName>Check 'n' Cook</DisplayName>
     <PublisherDisplayName>.Sylvain</PublisherDisplayName>
     <Logo>Assets\ChecknCookStore.png</Logo>
   </Properties>
@@ -24,6 +24,7 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="picturesLibrary" />
     <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

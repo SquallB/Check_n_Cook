@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +29,7 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        public AppModel Model { get; set; }
         public Image ImageReceipe { get; set; }
         public TextBlock ReceipeInstruction { get; set; }
 
@@ -85,9 +87,8 @@ namespace Check_n_Cook
             ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));
 
             this.ingredientsViewSource.Source = ingredients;
-
-            ItemResult itemResult = (ItemResult)e.NavigationParameter;
-            Receipe receipe = itemResult.Receipe;
+            this.Model = (AppModel)e.NavigationParameter;
+            this.receipe = this.Model.SelectedReceipe;
             this.pageTitle.Text = receipe.Title;
             ReceipeRetriever rr = new ReceipeRetriever();
             var task = rr.extractReceipeFromMarmiton(receipe);
@@ -126,6 +127,14 @@ namespace Check_n_Cook
         }
 
         #endregion
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Model.FavouriteReceipes.Add(this.receipe);
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+            StorageFile receipeFile = await folder.CreateFileAsync("receipes.json", CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
+        }
 
     }
 }

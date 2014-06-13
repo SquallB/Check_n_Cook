@@ -5,7 +5,10 @@ using Check_n_Cook.Model.Data;
 using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Windows.Data.Json;
 using Windows.Foundation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -64,9 +67,24 @@ namespace Check_n_Cook
         /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
         /// un dictionnaire d'état conservé par cette page durant une session
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
+            if (this.Model.FavouriteReceipes.Count == 0)
+            {
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                try
+                {
+                    StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
+                    String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+                    foreach (var jsonReceipe in jsonArray)
+                    {
+                        this.Model.FavouriteReceipes.Add(new Receipe(jsonReceipe.Stringify()));
+                    }
+                }
+                catch (FileNotFoundException ex) { }
+            }
         }
 
         #region Inscription de NavigationHelper
@@ -147,7 +165,7 @@ namespace Check_n_Cook
 
         #endregion
 
-        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             this.search(this.textBoxSearch.Text);
         }
@@ -203,15 +221,16 @@ namespace Check_n_Cook
 
         public void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var item = ((ItemResult)e.ClickedItem);
-            this.Frame.Navigate(typeof(ReceipeDetail), item);
+            ItemResult item = ((ItemResult)e.ClickedItem);
+            this.Model.SelectReceipe(item.Receipe);
+            this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
         }
 
         private void GoToReceipeList(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(AllReceipeList));
+                this.Frame.Navigate(typeof(AllReceipeList), this.Model);
             }
         }
 

@@ -66,23 +66,17 @@ namespace Check_n_Cook
         {
             // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
             List<Receipe> receipes = new List<Receipe>();
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", new User("toto"), new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
 
             noonReceipeViewSource.Source = receipes;
 

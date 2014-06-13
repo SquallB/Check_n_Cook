@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
 {
@@ -15,11 +16,17 @@ namespace Check_n_Cook.Model
 
         public List<Shop> Shops { get; set; }
 
+        public List<Receipe> FavouriteReceipes { get; set; }
+
+        public Receipe SelectedReceipe { get; set; }
+
         public AppModel()
         {
             this.Receipes = new List<Receipe>();
             this.DishTypes = new List<DishType>();
             this.Shops = new List<Shop>();
+            this.FavouriteReceipes = new List<Receipe>();
+            this.SelectedReceipe = null;
         }
 
         public void AddReceipe(Receipe receipe)
@@ -47,6 +54,12 @@ namespace Check_n_Cook.Model
             this.RefreshViews(new ClearedReceipeEvent(this));
         }
 
+
+        public void SelectReceipe(Receipe receipe)
+        {
+            this.SelectedReceipe = receipe;
+            this.RefreshViews(new SelectedReceipeEvent(this, receipe));
+        }
         public void AddShop(Shop shop)
         {
             this.Shops.Add(shop);
@@ -57,6 +70,21 @@ namespace Check_n_Cook.Model
         {
             this.Shops.Remove(shop);
             this.RefreshViews(new RemovedShopEvent(this, shop));
+        }
+
+        public String StringifyFavouriteReceipes()
+        {
+            JsonObject jsonObject = new JsonObject();
+            JsonArray jsonArray = new JsonArray();
+
+            foreach (Receipe receipe in this.FavouriteReceipes)
+            {
+                jsonArray.Add(receipe.ToJsonObject());
+            }
+
+            jsonObject["Receipes"] = jsonArray;
+
+            return jsonObject.Stringify();
         }
     }
 }

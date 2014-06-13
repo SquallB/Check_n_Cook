@@ -64,7 +64,7 @@ namespace Check_n_Cook.Model
                     switch (property.Key)
                     {
                         case "author":
-                            receipe.Author = new User(property.Value.GetString());
+                            receipe.Author = property.Value.GetString();
                             break;
 
                         case "cost":

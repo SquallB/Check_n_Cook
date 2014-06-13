@@ -27,6 +27,7 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        public AppModel Model { get; set; }
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -86,56 +87,16 @@ namespace Check_n_Cook
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-
-            /* int i = 1; 
-             string filename = "RECETTE23.txt";
-             StorageFile file = await ApplicationData.Current.RoamingFolder.GetFileAsync(filename);
-             String receipe = await FileIO.ReadTextAsync(file);*/
-            /*do
-            {
-                try
-                {
-
-                    file =
-                    Receipe receipe = (Receipe)await FileIO.ReadBufferAsync(file);
-                    sampleDataGroup.Items.Add(new SampleDataItem("1", "Matin", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-                    i++;
-                }
-                catch (Exception exp)
-                {
-                    this.pageTitle.Text = exp.Message;
-                }
-
-            } while (file != null);*/
-
+            this.Model = (AppModel)e.NavigationParameter;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
             SampleDataGroup sampleDataGroup = new SampleDataGroup("1", "Le 02/10/14", "subTittle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descirption de foflie");
 
-             sampleDataGroup.Items.Add(new SampleDataItem("1", "Matin", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup.Items.Add(new SampleDataItem("1", "Midi", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup.Items.Add(new SampleDataItem("1", "Soir", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-
-             SampleDataGroup sampleDataGroup2 = new SampleDataGroup("2", "2", "subTittle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descirption de foflie");
-             sampleDataGroup2.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup2.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup2.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-
-             SampleDataGroup sampleDataGroup3 = new SampleDataGroup("2", "2", "subTittle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descirption de foflie");
-             sampleDataGroup3.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup3.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup3.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-
-             SampleDataGroup sampleDataGroup4 = new SampleDataGroup("2", "2", "subTittle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descirption de foflie");
-             sampleDataGroup4.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup4.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-             sampleDataGroup4.Items.Add(new SampleDataItem("1", "titl", "subtitle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descprion", "contenet"));
-
-             sampleDataGroups.Add(sampleDataGroup);
-             sampleDataGroups.Add(sampleDataGroup2);
-             sampleDataGroups.Add(sampleDataGroup3);
-             sampleDataGroups.Add(sampleDataGroup4);
+            foreach(Receipe receipe in this.Model.FavouriteReceipes)
+            {
+                sampleDataGroup.Items.Add(new SampleDataItem(receipe));
+            }
 
             sampleDataGroups.Add(sampleDataGroup);
             this.DefaultViewModel["Groups"] = sampleDataGroups;
