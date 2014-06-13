@@ -108,7 +108,11 @@ namespace Check_n_Cook
 
             SearchManager searchManager = MyMap.SearchManager;
             ReverseGeocodeRequestOptions requestOptions = new ReverseGeocodeRequestOptions(location);
-            LocationDataResponse response = await searchManager.ReverseGeocodeAsync(requestOptions);
+            LocationDataResponse response;
+            do
+            {
+                response = await searchManager.ReverseGeocodeAsync(requestOptions);
+            } while (response.LocationData.Count == 0 || response.LocationData == null);
             GeocodeLocation currentLocation = response.LocationData[0];
 
             CustomPushPin userPin = new CustomPushPin(location);
