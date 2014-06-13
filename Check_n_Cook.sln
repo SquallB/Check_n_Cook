@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Check_n_Cook", "Check_n_Cook\Check_n_Cook.csproj", "{05B50FBB-2E98-4209-87B7-51DBE7BC180D}"
 EndProject
@@ -17,9 +17,9 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.Build.0 = Debug|x86
+		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|ARM.Build.0 = Debug|ARM
 		{05B50FBB-2E98-4209-87B7-51DBE7BC180D}.Debug|ARM.Deploy.0 = Debug|ARM

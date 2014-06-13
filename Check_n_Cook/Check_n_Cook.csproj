@@ -107,11 +107,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main.xaml">
+    <Page Include="AllReceipeList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AllReceipeList.xaml">
+    <Page Include="Main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -135,6 +135,9 @@
   <ItemGroup>
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AllReceipeList.xaml.cs">
+      <DependentUpon>AllReceipeList.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -177,9 +180,6 @@
     <Compile Include="Model\URLDataRetriever.cs" />
     <Compile Include="Model\Receipe.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="AllReceipeList.xaml.cs">
-      <DependentUpon>AllReceipeList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReceipeDetail.xaml.cs">
       <DependentUpon>ReceipeDetail.xaml</DependentUpon>
