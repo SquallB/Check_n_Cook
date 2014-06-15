@@ -23,7 +23,7 @@ namespace Check_n_Cook
     /// <summary>
     /// A page that displays a grouped collection of items.
     /// </summary>
-    public sealed partial class AllReceipeList : Page
+    public sealed partial class PlanningReceipe : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -46,7 +46,7 @@ namespace Check_n_Cook
             get { return this.defaultViewModel; }
         }
 
-        public AllReceipeList()
+        public PlanningReceipe()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
@@ -135,7 +135,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ReceipeList));
+                this.Frame.Navigate(typeof(ModifyReceipeList));
             }
         }
 
@@ -144,7 +144,7 @@ namespace Check_n_Cook
 
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ReceipeList));
+                this.Frame.Navigate(typeof(ModifyReceipeList));
             }
         }
     }

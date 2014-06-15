@@ -118,6 +118,7 @@ namespace Check_n_Cook.Model
             JsonObject jsonObject = new JsonObject();
             jsonObject.SetNamedValue("Id", JsonValue.CreateNumberValue(this.Id));
             jsonObject.SetNamedValue("Title", JsonValue.CreateStringValue(this.Title));
+            jsonObject.SetNamedValue("Image", JsonValue.CreateStringValue(this.Image));
 
             return jsonObject;
         }
@@ -127,8 +128,8 @@ namespace Check_n_Cook.Model
             JsonObject jsonObject = JsonObject.Parse(jsonString);
             this.Id = (int)jsonObject.GetNamedNumber("Id", 0.0);
             this.Title = jsonObject.GetNamedString("Title", "");
+            this.Image = jsonObject.GetNamedString("Image", "");
             this.ToDoInstructions = "";
-            this.Image = "";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Check_n_Cook.Common;
 using Check_n_Cook.Model;
+using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,9 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        public AppModel Model { get; set; }
+
+        public TextBlock ReceipeTextBlock { get; set; }
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -64,22 +68,13 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
-            List<Receipe> receipes = new List<Receipe>();
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            this.Model = (AppModel)e.NavigationParameter;
+            List<ItemReceipe> receipes = new List<ItemReceipe>();
+            receipes.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://3.bp.blogspot.com/-Q6PuvmuRGZc/T8_SMDwqmVI/AAAAAAAAAzM/mOBDOKKj0IE/s1600/hsrf.JPG&sa=X&ei=QPSRU9bOCuqS7AavlIHAAg&ved=0CAkQ8wc&usg=AFQjCNFA0-svML0apesgl4DXdO-laQlXZQ", "recette1", "Une bonne recette !"));
 
-            noonReceipeViewSource.Source = receipes;
+            listReceipeViewSource.Source = receipes;
 
+            this.ReceipeTextBlock = sender as TextBlock;
         }
 
         #region Inscription de NavigationHelper
@@ -105,14 +100,47 @@ namespace Check_n_Cook
 
         #endregion
 
-        private void GoToDetailReceipe_Click(object sender, ItemClickEventArgs e)
+        private void ClickHandleIngredients(object sender, RoutedEventArgs e)
         {
+            Button b = sender as Button;
+
+
+            if (b != null)
+            {
+                List<ItemReceipe> ingredients = new List<ItemReceipe>();
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+
+                this.listIngredientsViewSource.Source = ingredients;
+                
+                if (this.ReceipeTextBlock != null)
+                {
+                    this.ReceipeTextBlock.Text = (string) b.Tag;
+                }
+            }
 
         }
 
-        public void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void TextBlockReceipe_Loaded(object sender, RoutedEventArgs e)
         {
+            this.ReceipeTextBlock = sender as TextBlock;
+        }
 
+        private void GoToReceipeList(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ModifyReceipeList));
+            }
+        }
+
+        private void GoToShop_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ShopsList), this.Model);
+            }
         }
 
     }

@@ -12,11 +12,11 @@
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
-        <CollectionViewSource x:Name="morningReceipeViewSource" />
-        <CollectionViewSource x:Name="noonReceipeViewSource" />
-        <CollectionViewSource x:Name="evenningReceipeViewSource" />
-        <x:String x:Key="AppName">Mon application</x:String>
 
+        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
+        <x:String x:Key="AppName">Mon application</x:String>
+        <CollectionViewSource x:Name="listReceipeViewSource" />
+        <CollectionViewSource x:Name="listIngredientsViewSource" />
     </Page.Resources>
 
     <!--
@@ -43,40 +43,13 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-                    <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Liste de recette"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="500" Header="Matin">
+            <HubSection Width="500" Header="Recettes">
                 <DataTemplate>
-                    <GridView x:Name="ResultatFound" 
-                              SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource morningReceipeViewSource}}" 
-                              IsItemClickEnabled="True"
-                              ItemClick="GoToDetailReceipe_Click"
-                              >
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="10" />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Receipe.Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
-                                        <TextBlock Text="{Binding Receipe.Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Content="Enlever cette recette" Margin="-3,25,-3,2" Width="406" Height="34" Click="RemoveReceipe_Click"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
-                </DataTemplate>
-            </HubSection>
-            <HubSection Width="600" Header="Midi">
-                <DataTemplate>
-                    <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource noonReceipeViewSource}}">
+                    <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -87,11 +60,11 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
                                     <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                        <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         <Button x:Name="seeIngredients" Margin="5,0,0,0" 
-                                                Content="Supprimer" 
-                                                Click="RemoveReceipe_Click"
-                                                Tag="{Binding Title}" />
+                                                Content="Voir les ingredients" 
+                                                Click="ClickHandleIngredients"
+                                                Tag="{Binding Name}" />
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -99,32 +72,55 @@
                     </GridView>
                 </DataTemplate>
             </HubSection>
-
-            <HubSection Width="500" Header="Soir">
+            <HubSection x:Name="hubIngredients" Width="520" Header="Ingrédients">
                 <DataTemplate>
-                    <GridView x:Name="ResultatFound" 
-                              SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource evenningReceipeViewSource}}" 
-                              IsItemClickEnabled="True"
-                              ItemClick="GoToDetailReceipe_Click"
-                              >
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="10" />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Receipe.Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
-                                        <TextBlock Text="{Binding Receipe.Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Content="Enlever cette recette" Margin="-3,25,-3,2" Width="406" Height="34" Click="RemoveReceipe_Click"/>
+                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="303" Width="416">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="91*"/>
+                        </Grid.RowDefinitions>
+                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" >
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                        <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
+                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <TextBlock TextWrapping="Wrap" Text="Aucune recette" Loaded="TextBlockReceipe_Loaded" Style="{StaticResource BodyTextBlockStyle}" />
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+
+            <HubSection Header="Outil de gestion">
+                <DataTemplate>
+                    <!-- largeur de 400 -->
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="400"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto" MinHeight="138" />
+                                <RowDefinition Height="0*" />
+                            </Grid.RowDefinitions>
+                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34" Click="GoToReceipeList"/>
+                            <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
+                            <Button Content="Voir les magasins proches" Grid.Row="2" Margin="0,52,-3,52" Width="403" Click="GoToShop_Click"/>
+                        </Grid>
+                    </StackPanel>
                 </DataTemplate>
             </HubSection>
         </Hub>

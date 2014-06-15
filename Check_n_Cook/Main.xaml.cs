@@ -74,7 +74,7 @@ namespace Check_n_Cook
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 try
                 {
-                    StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
+                    StorageFile receipesFile = await folder.GetFileAsync("receipesFavorite.json");
                     String jsonString = await FileIO.ReadTextAsync(receipesFile);
                     JsonObject jsonObject = JsonObject.Parse(jsonString);
                     JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
@@ -84,6 +84,8 @@ namespace Check_n_Cook
                     }
                 }
                 catch (FileNotFoundException ex) { }
+
+                this.favoriteViewSource.Source = this.Model.FavouriteReceipes;
             }
         }
 
@@ -207,7 +209,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ShoppingList), this.Model);
+                this.Frame.Navigate(typeof(ReceipeList), this.Model);
             }
         }
 
@@ -230,7 +232,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(AllReceipeList), this.Model);
+                this.Frame.Navigate(typeof(PlanningReceipe), this.Model);
             }
         }
 

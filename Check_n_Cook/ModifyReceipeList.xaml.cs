@@ -1,20 +1,17 @@
 ﻿using Check_n_Cook.Common;
 using Check_n_Cook.Model;
-using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
@@ -24,16 +21,11 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ReceipeDetail : Page
+    public sealed partial class ModifyReceipeList : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public AppModel Model { get; set; }
-        public Image ImageReceipe { get; set; }
-        public TextBlock ReceipeInstruction { get; set; }
-
-        private Receipe receipe;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -51,16 +43,9 @@ namespace Check_n_Cook
             get { return this.navigationHelper; }
         }
 
-        public ReceipeDetail()
+        public ModifyReceipeList()
         {
             this.InitializeComponent();
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
-        }
-        public ReceipeDetail(Receipe receipe, AppModel model)
-        {
-            this.InitializeComponent();
-            this.receipe = receipe;
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
@@ -77,32 +62,24 @@ namespace Check_n_Cook
         /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
         /// un dictionnaire d'état conservé par cette page durant une session
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
-        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            List<ItemReceipe> ingredients = new List<ItemReceipe>();
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Patte", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Jambon", "200G"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Cassoulet", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));
+            // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
+            List<Receipe> receipes = new List<Receipe>();
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
+            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
 
-            this.ingredientsViewSource.Source = ingredients;
-            this.Model = (AppModel)e.NavigationParameter;
-            this.receipe = this.Model.SelectedReceipe;
-            this.pageTitle.Text = receipe.Title;
-            ReceipeRetriever rr = new ReceipeRetriever();
-            var task = rr.extractReceipeFromMarmiton(receipe);
-            List<ItemReceipe> receipeView = new List<ItemReceipe>();
+            noonReceipeViewSource.Source = receipes;
 
-            if ((await task) == true)
-            {
-                var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
-
-                receipeView.Add(new ItemReceipe("", receipe.ToDoInstructions, ""));
-
-            }
-
-            this.receipeViewSource.Source = receipeView;
         }
 
         #region Inscription de NavigationHelper
@@ -128,12 +105,14 @@ namespace Check_n_Cook
 
         #endregion
 
-        private async void AddReceipeFavorite_Click(object sender, RoutedEventArgs e)
+        private void GoToDetailReceipe_Click(object sender, ItemClickEventArgs e)
         {
-            this.Model.FavouriteReceipes.Add(this.receipe);
-            StorageFolder folder = KnownFolders.PicturesLibrary;
-            StorageFile receipeFile = await folder.CreateFileAsync("receipesFavorite.json", CreationCollisionOption.ReplaceExisting);
-            await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
+
+        }
+
+        public void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
         }
 
     }
