@@ -42,7 +42,7 @@
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button" HorizontalAlignment="Right"/>
+                        AutomationProperties.ItemType="Navigation Button" HorizontalAlignment="Stretch"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
                 </Grid>
@@ -109,5 +109,6 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
+        <WebView x:Name="description" HorizontalAlignment="Left" Height="545" Margin="34,178,0,0" VerticalAlignment="Top" Width="598" Loaded="description_Loaded"/>
     </Grid>
 </Page>

@@ -55,6 +55,7 @@ namespace Check_n_Cook
             this.Model = new AppModel();
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
 
@@ -130,6 +131,29 @@ namespace Check_n_Cook
             navigationHelper.OnNavigatedTo(e);
         }
 
+        private ItemResult CreateItemResult(Receipe receipe)
+        {
+            ItemResult item = new ItemResult { Receipe = receipe };
+            item.Name = receipe.Title;
+            TextBlock toto = new TextBlock();
+
+            toto.Text = item.Name;
+            toto.Measure(new Size(1200, 1200));
+            if (toto.DesiredSize.Width > 90)
+            {
+                while (toto.DesiredSize.Width > 90)
+                {
+                    item.Name = item.Name.Remove(item.Name.Length - 1, 1);
+                    toto.Text = item.Name;
+                    toto.Measure(new Size(1200, 1200));
+
+                }
+                item.Name = item.Name.PadRight(item.Name.Length + 3, '.');
+            }
+
+            return item;
+        }
+
         public void Refresh(Event e)
         {
             if (e is ReceipeEvent)
@@ -139,27 +163,7 @@ namespace Check_n_Cook
 
                 if (receipeE is AddedReceipeEvent)
                 {
-                    string title = receipe.Title;
-                    TextBlock toto = new TextBlock();
-
-                    toto.Text = title;
-                    toto.Measure(new Size(1200, 1200));
-                    if (toto.DesiredSize.Width > 90)
-                    {
-                        while (toto.DesiredSize.Width > 90)
-                        {
-                            title = title.Remove(title.Length - 1, 1);
-                            toto = new TextBlock();
-                            toto.Text = title;
-                            toto.Measure(new Size(1200, 1200));
-
-                        }
-                        title = title.PadRight(title.Length + 3, '.');
-                    }
-                    receipe.Title = title;
-
-                    ItemResult item = new ItemResult { Receipe = receipe };
-                    this.ItemsResult.Add(item);
+                    this.ItemsResult.Add(this.CreateItemResult(receipe));
                 }
                 else if (receipeE is RemovedReceipeEvent)
                 {
