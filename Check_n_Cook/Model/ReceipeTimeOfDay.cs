@@ -7,21 +7,19 @@ using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
 {
-    public class ReceipeTimeOfDay
+    public class ReceipeTimeOfDay : ReceipeTime
     {
         public List<Receipe> Receipes { get; set; }
-        public string TimeOfDay { get; set; }
-        public string Date { get; set; }
         public ReceipeTimeOfDay(string timeOfDay)
         {
             this.Receipes = new List<Receipe>();
-            this.TimeOfDay = timeOfDay;
+            this.Time.TimeOfDay = timeOfDay;
         }
 
         public ReceipeTimeOfDay(JsonObject jsonObject)
         {
             JsonObject receipeToDJson = JsonObject.Parse(jsonObject.Stringify());
-            this.TimeOfDay = receipeToDJson.GetNamedString("TimeOfDay");
+            this.Time.TimeOfDay = receipeToDJson.GetNamedString("TimeOfDay");
             JsonArray receipesJson = receipeToDJson.GetNamedArray("Receipes");
             this.Receipes = new List<Receipe>();
 
@@ -41,7 +39,7 @@ namespace Check_n_Cook.Model
                 receipes.Add(receipe.ToJsonObject());
             }
             jsonObject.SetNamedValue("Receipes", receipes);
-            jsonObject.SetNamedValue("TimeOfDay", JsonValue.CreateStringValue(this.TimeOfDay));
+            jsonObject.SetNamedValue("TimeOfDay", JsonValue.CreateStringValue(this.Time.TimeOfDay));
 
             return jsonObject;
         }

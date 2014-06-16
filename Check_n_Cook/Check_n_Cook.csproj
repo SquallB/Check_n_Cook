@@ -140,7 +140,11 @@
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
+    <Compile Include="Events\GoToReceipeEvent.cs" />
+    <Compile Include="Events\GoToReceipeListEvent.cs" />
     <Compile Include="Model\ReceipeDate.cs" />
+    <Compile Include="Model\ReceipeTime.cs" />
     <Compile Include="Model\ReceipeTimeOfDay.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="PlanningReceipe.xaml.cs">

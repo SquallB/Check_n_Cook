@@ -104,7 +104,7 @@ namespace Check_n_Cook
                     {
                         JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
                         ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
-                        this.Model.ReceipeList.Add(receipeDate.Date, receipeDate);
+                        this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
                     }
                 }
                 catch (Exception ex)

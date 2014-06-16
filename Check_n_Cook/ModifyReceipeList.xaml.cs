@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Events;
 using Check_n_Cook.Model;
 using System;
 using System.Collections.Generic;
@@ -65,13 +66,17 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.Model = e.NavigationParameter as AppModel;
+            GoToModifyReceipeListEvent evnt = e.NavigationParameter as GoToModifyReceipeListEvent;
+            if (evnt != null)
+            {
+                this.Model = evnt.AppModel;
+                Time time = evnt.Time;
+                ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
 
-            List<Receipe> receipes = new List<Receipe>();
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-
-            noonReceipeViewSource.Source = receipes;
+                morningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Matin"].Receipes;
+                noonReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Midi"].Receipes;
+                evenningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Soir"].Receipes;
+            }
 
         }
 

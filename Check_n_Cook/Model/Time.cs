@@ -11,6 +11,11 @@ namespace Check_n_Cook.Model
         public string Date { get; set; }
         public string TimeOfDay { get; set; }
 
+        public Time()
+        {
+                
+        }
+
         public Time(string date, string timeOfDay)
         {
             this.Date = date;

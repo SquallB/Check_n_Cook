@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Events;
 using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
@@ -27,6 +28,7 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         public AppModel Model { get; set; }
+        private Time time;
 
         public TextBlock ReceipeTextBlock { get; set; }
 
@@ -77,7 +79,8 @@ namespace Check_n_Cook
                 {
                     receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
                 }
-                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Date +" ("+receipeTimeOfDay.TimeOfDay+")";
+                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Time.Date +" ("+receipeTimeOfDay.Time.TimeOfDay+")";
+                this.time = receipeTimeOfDay.Time;
             }
             else if (e.NavigationParameter is ReceipeDate)
             {
@@ -89,7 +92,8 @@ namespace Check_n_Cook
                         receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
                     }
                 }
-                this.pageTitle.Text = "Liste de recette pour le " + receipeDate.Date + " (La journée)";
+                this.pageTitle.Text = "Liste de recette pour le " + receipeDate.Time.Date + " (La journée)";
+                this.time = receipeDate.Time;
             }
 
             listReceipeViewSource.Source = receipes;
@@ -146,11 +150,11 @@ namespace Check_n_Cook
             this.ReceipeTextBlock = sender as TextBlock;
         }
 
-        private void GoToReceipeList(object sender, RoutedEventArgs e)
+        private void GoToModifyReceipeList_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ModifyReceipeList));
+                this.Frame.Navigate(typeof(ModifyReceipeList), new GoToModifyReceipeListEvent( this.Model ,this.time));
             }
         }
 

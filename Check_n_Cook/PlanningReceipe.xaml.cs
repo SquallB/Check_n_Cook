@@ -107,7 +107,7 @@ namespace Check_n_Cook
                 {
                     JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
                     ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
-                    SampleDataGroup sampleDataGroup = new SampleDataGroup(receipeDate.Date);
+                    SampleDataGroup sampleDataGroup = new SampleDataGroup(receipeDate.Time.Date);
 
                     foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
                     {
@@ -117,8 +117,8 @@ namespace Check_n_Cook
                         {
                             imgs.Add(receipe.Image);
                         }
-                        
-                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Date, imgs, receipeTimeOfDay.TimeOfDay));
+
+                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
                     }
 
                     sampleDataGroups.Add(sampleDataGroup);
@@ -205,7 +205,7 @@ namespace Check_n_Cook
                     ReceipeTimeOfDay receipeTimeOfDay = receipeDate.ReceipeTimeOfDay[time.TimeOfDay];
                     if (receipeTimeOfDay != null)
                     {
-                        receipeTimeOfDay.Date = receipeDate.Date;
+                        receipeTimeOfDay.Time.Date = receipeDate.Time.Date;
                         this.Frame.Navigate(typeof(ReceipeList), receipeTimeOfDay);
                     }
                 }
