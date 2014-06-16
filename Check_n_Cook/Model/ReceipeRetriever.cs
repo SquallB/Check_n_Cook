@@ -50,7 +50,7 @@ namespace Check_n_Cook.Model
             {
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
-                    rec.ToDoInstructions = curDiv0.InnerText;
+                    rec.ToDoInstructions = curDiv0.InnerHtml;
                     isNotEmpty = true;
                 }
 

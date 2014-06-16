@@ -94,13 +94,15 @@ namespace Check_n_Cook
             this.pageTitle.Text = receipe.Title;
             ReceipeRetriever rr = new ReceipeRetriever();
             var task = rr.extractReceipeFromMarmiton(receipe);
+            
             List<ItemReceipe> receipeView = new List<ItemReceipe>();
 
             if ((await task) == true)
             {
                 var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
 
-                receipeView.Add(new ItemReceipe("", receipe.ToDoInstructions, ""));
+                wb.NavigateToString(receipe.ToDoInstructions);
+                //receipeView.Add(new ItemReceipe("", receipe.ToDoInstructions, ""));
 
             }
 
@@ -181,6 +183,13 @@ namespace Check_n_Cook
             }
 
         }
+        public WebView wb;
+        private void description_Loaded(object sender, RoutedEventArgs e)
+        {
+            WebView wb = sender as WebView;
+            this.wb = wb;
+        }
+
 
     }
 }

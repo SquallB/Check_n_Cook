@@ -109,5 +109,6 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
+        <WebView x:Name="description" HorizontalAlignment="Left" Height="545" Margin="34,178,0,0" VerticalAlignment="Top" Width="598" Loaded="description_Loaded"/>
     </Grid>
 </Page>
