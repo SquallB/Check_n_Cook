@@ -80,9 +80,9 @@
                     </ListView>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Carte des magasins">
+            <HubSection Width="932" Header="Carte des magasins">
                 <DataTemplate>
-                    <Maps:Map x:Name="myMap" HorizontalAlignment="Left" VerticalAlignment="Top" Height="464" Width="680" Credentials="Am4EOiuDtu2EfQB8a6o2DIot4B5gXFN8md02pM06gwOnyZl1tL7-h4Da7TiRKdez" ZoomLevel="5" ViewRestriction="OneWorldOnly" ManipulationMode="All" PreloadArea="Large" ShowBreadcrumb="True" Heading="1" CompositeMode="SourceOver" ShowNavigationBar="False" Loaded="myMap_Loaded"/>
+                    <Maps:Map x:Name="myMap" HorizontalAlignment="Left" VerticalAlignment="Top" Height="546" Width="811" Credentials="Am4EOiuDtu2EfQB8a6o2DIot4B5gXFN8md02pM06gwOnyZl1tL7-h4Da7TiRKdez" ZoomLevel="5" ViewRestriction="OneWorldOnly" ManipulationMode="All" PreloadArea="Large" ShowBreadcrumb="True" Heading="1" CompositeMode="SourceOver" ShowNavigationBar="True" Loaded="myMap_Loaded" HomeRegion=""/>
                 </DataTemplate>
             </HubSection>
         </Hub>
