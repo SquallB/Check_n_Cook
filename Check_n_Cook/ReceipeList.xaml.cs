@@ -68,12 +68,31 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.Model = (AppModel)e.NavigationParameter;
             List<ItemReceipe> receipes = new List<ItemReceipe>();
-            receipes.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://3.bp.blogspot.com/-Q6PuvmuRGZc/T8_SMDwqmVI/AAAAAAAAAzM/mOBDOKKj0IE/s1600/hsrf.JPG&sa=X&ei=QPSRU9bOCuqS7AavlIHAAg&ved=0CAkQ8wc&usg=AFQjCNFA0-svML0apesgl4DXdO-laQlXZQ", "recette1", "Une bonne recette !"));
+
+            if (e.NavigationParameter is ReceipeTimeOfDay)
+            {
+                ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)e.NavigationParameter;
+                foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                {
+                    receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                }
+                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Date +" ("+receipeTimeOfDay.TimeOfDay+")";
+            }
+            else if (e.NavigationParameter is ReceipeDate)
+            {
+                ReceipeDate receipeDate = (ReceipeDate)e.NavigationParameter;
+                foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                {
+                    foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                    {
+                        receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                    }
+                }
+                this.pageTitle.Text = "Liste de recette pour le " + receipeDate.Date + " (La journée)";
+            }
 
             listReceipeViewSource.Source = receipes;
-
             this.ReceipeTextBlock = sender as TextBlock;
         }
 
@@ -113,10 +132,10 @@ namespace Check_n_Cook
                 ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
 
                 this.listIngredientsViewSource.Source = ingredients;
-                
+
                 if (this.ReceipeTextBlock != null)
                 {
-                    this.ReceipeTextBlock.Text = (string) b.Tag;
+                    this.ReceipeTextBlock.Text = (string)b.Tag;
                 }
             }
 

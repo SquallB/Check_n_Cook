@@ -25,6 +25,7 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private AppModel Model;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -64,17 +65,9 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
+            this.Model = e.NavigationParameter as AppModel;
+
             List<Receipe> receipes = new List<Receipe>();
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
-            receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
             receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
             receipes.Add(new Receipe("fe", "toto", new DateTime(1, 1, 1), DishType.GetInstance("midi"), 5, 5, 2, true, true, "http://www.cuisine-de-bebe.com/wp-content/uploads/le-potiron.jpg"));
 

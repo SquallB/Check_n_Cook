@@ -90,6 +90,10 @@ namespace Check_n_Cook
         /// session.  The state will be null the first time a page is visited.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (this.Model == null)
+            {
+                this.Model = e.NavigationParameter as AppModel;
+            }
             StorageFolder folder = KnownFolders.PicturesLibrary;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
             try
@@ -113,8 +117,8 @@ namespace Check_n_Cook
                         {
                             imgs.Add(receipe.Image);
                         }
-
-                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeTimeOfDay.TimeOfDay, imgs));
+                        
+                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Date, imgs, receipeTimeOfDay.TimeOfDay));
                     }
 
                     sampleDataGroups.Add(sampleDataGroup);
@@ -190,11 +194,36 @@ namespace Check_n_Cook
 
         public void GoToReceipeList_CLick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
-            if (this.Frame != null)
+            Button button = sender as Button;
+            if (this.Frame != null && button != null)
             {
-                this.Frame.Navigate(typeof(ModifyReceipeList));
+                Time time = (Time)button.DataContext;
+
+                ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
+                if (receipeDate != null)
+                {
+                    ReceipeTimeOfDay receipeTimeOfDay = receipeDate.ReceipeTimeOfDay[time.TimeOfDay];
+                    if (receipeTimeOfDay != null)
+                    {
+                        receipeTimeOfDay.Date = receipeDate.Date;
+                        this.Frame.Navigate(typeof(ReceipeList), receipeTimeOfDay);
+                    }
+                }
             }
         }
+
+        private void GoToReceipeListAll_CLick(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (this.Frame != null && button != null)
+            {
+                string date = (string)button.DataContext;
+
+                ReceipeDate receipeDate = this.Model.ReceipeList[date];
+
+                this.Frame.Navigate(typeof(ReceipeList), receipeDate);
+            }
+        }
+
     }
 }

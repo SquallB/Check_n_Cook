@@ -99,43 +99,51 @@ namespace Check_n_Cook
 
         private async void myMap_Loaded(object sender, RoutedEventArgs e)
         {
-            this.MyMap = (Map)sender;
-            Geolocator geolocator = new Geolocator();
-            Geoposition position = await geolocator.GetGeopositionAsync();
-            double latitude = position.Coordinate.Point.Position.Latitude;
-            double longitude = position.Coordinate.Point.Position.Longitude;
-            Location location = new Location(latitude, longitude);
-
-            SearchManager searchManager = MyMap.SearchManager;
-            ReverseGeocodeRequestOptions requestOptions = new ReverseGeocodeRequestOptions(location);
-            LocationDataResponse response;
-            do
+            try
             {
-                response = await searchManager.ReverseGeocodeAsync(requestOptions);
-            } while (response.LocationData.Count == 0 || response.LocationData == null);
-            GeocodeLocation currentLocation = response.LocationData[0];
+                this.MyMap = (Map)sender;
+                Geolocator geolocator = new Geolocator();
+                Geoposition position = await geolocator.GetGeopositionAsync();
+                double latitude = position.Coordinate.Point.Position.Latitude;
+                double longitude = position.Coordinate.Point.Position.Longitude;
+                Location location = new Location(latitude, longitude);
 
-            CustomPushPin userPin = new CustomPushPin(location);
-            userPin.Pin.Style = this.Resources["PushPinStyle"] as Style;
+                SearchManager searchManager = MyMap.SearchManager;
+                ReverseGeocodeRequestOptions requestOptions = new ReverseGeocodeRequestOptions(location);
+                LocationDataResponse response;
+                do
+                {
+                    response = await searchManager.ReverseGeocodeAsync(requestOptions);
+                } while (response.LocationData.Count == 0 || response.LocationData == null);
+                GeocodeLocation currentLocation = response.LocationData[0];
 
-            ToolTipService.SetToolTip(userPin.Pin, "Vous");
-            MyMap.Children.Add(userPin.Pin);
+                CustomPushPin userPin = new CustomPushPin(location);
+                userPin.Pin.Style = this.Resources["PushPinStyle"] as Style;
 
-            MyMap.ZoomLevel = 12;
-            MyMap.Center = location;
+                ToolTipService.SetToolTip(userPin.Pin, "Vous");
+                MyMap.Children.Add(userPin.Pin);
 
-            PagesJaunesShopRetriever retriever = new PagesJaunesShopRetriever();
-            bool nothing = await retriever.GetShops(currentLocation.Address.Locality, this.Model);
-            this.shopsViewSource.Source = this.Model.Shops;
+                MyMap.ZoomLevel = 12;
+                MyMap.Center = location;
 
-            this.ShopViews = new List<ShopView>();
-            
-            this.ShopViews = await this.createShopViews(this.Model.Shops, searchManager);
+                PagesJaunesShopRetriever retriever = new PagesJaunesShopRetriever();
+                bool nothing = await retriever.GetShops(currentLocation.Address.Locality, this.Model);
+                this.shopsViewSource.Source = this.Model.Shops;
 
-            foreach (ShopView shopView in this.ShopViews)
-            {
-                this.MyMap.Children.Add(shopView.Pin.Pin);
+                this.ShopViews = new List<ShopView>();
+
+                this.ShopViews = await this.createShopViews(this.Model.Shops, searchManager);
+
+                foreach (ShopView shopView in this.ShopViews)
+                {
+                    this.MyMap.Children.Add(shopView.Pin.Pin);
+                }
             }
+            catch (Exception ex)
+            {
+
+            }
+            
         }
 
         private async Task<List<ShopView>> createShopViews(List<Shop> shops, SearchManager searchManager)

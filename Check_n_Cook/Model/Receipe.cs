@@ -59,6 +59,7 @@ namespace Check_n_Cook.Model
             this.WithAlcohol = withAlcohol;
             this.PlanningEntry = null;
         }
+
         public Receipe(String title, String author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol, PlanningEntry planEntry)
         {
             this.Title = title;

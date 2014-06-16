@@ -11,7 +11,7 @@ namespace Check_n_Cook.Model
     {
         public List<Receipe> Receipes { get; set; }
         public string TimeOfDay { get; set; }
-
+        public string Date { get; set; }
         public ReceipeTimeOfDay(string timeOfDay)
         {
             this.Receipes = new List<Receipe>();
