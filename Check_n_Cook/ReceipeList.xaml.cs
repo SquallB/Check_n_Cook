@@ -70,21 +70,24 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
+            this.Model = evnt.AppModel;
+            this.time = evnt.Time;
             List<ItemReceipe> receipes = new List<ItemReceipe>();
 
-            if (e.NavigationParameter is ReceipeTimeOfDay)
+            if (evnt.ReceipeTime is ReceipeTimeOfDay)
             {
-                ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)e.NavigationParameter;
+                ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)evnt.ReceipeTime;
                 foreach (Receipe receipe in receipeTimeOfDay.Receipes)
                 {
                     receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
                 }
-                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Time.Date +" ("+receipeTimeOfDay.Time.TimeOfDay+")";
+                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Time.Date + " (" + receipeTimeOfDay.Time.TimeOfDay + ")";
                 this.time = receipeTimeOfDay.Time;
             }
-            else if (e.NavigationParameter is ReceipeDate)
+            else if (evnt.ReceipeTime is ReceipeDate)
             {
-                ReceipeDate receipeDate = (ReceipeDate)e.NavigationParameter;
+                ReceipeDate receipeDate = (ReceipeDate)evnt.ReceipeTime;
                 foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
                 {
                     foreach (Receipe receipe in receipeTimeOfDay.Receipes)
@@ -154,7 +157,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ModifyReceipeList), new GoToModifyReceipeListEvent( this.Model ,this.time));
+                this.Frame.Navigate(typeof(ModifyReceipeList), new GoToModifyReceipeListEvent(this.Model, this.time));
             }
         }
 

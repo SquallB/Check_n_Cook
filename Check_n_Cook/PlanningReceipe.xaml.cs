@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Events;
 using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
@@ -206,7 +207,7 @@ namespace Check_n_Cook
                     if (receipeTimeOfDay != null)
                     {
                         receipeTimeOfDay.Time.Date = receipeDate.Time.Date;
-                        this.Frame.Navigate(typeof(ReceipeList), receipeTimeOfDay);
+                        this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, time, receipeTimeOfDay));
                     }
                 }
             }
@@ -218,10 +219,11 @@ namespace Check_n_Cook
             if (this.Frame != null && button != null)
             {
                 string date = (string)button.DataContext;
-
+                Time time = new Time();
+                time.Date = date;
                 ReceipeDate receipeDate = this.Model.ReceipeList[date];
 
-                this.Frame.Navigate(typeof(ReceipeList), receipeDate);
+                this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, time, receipeDate));
             }
         }
 

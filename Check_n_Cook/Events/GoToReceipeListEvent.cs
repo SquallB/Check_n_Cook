@@ -9,12 +9,12 @@ namespace Check_n_Cook.Events
 {
     public class GoToReceipeListEvent : GoToReceipeEvent
     {
-        public ReceipeTime receipeTime { get; set; }
+        public ReceipeTime ReceipeTime { get; set; }
 
         public GoToReceipeListEvent(AppModel model, Time time, ReceipeTime receipeTime)
             : base(model, time)
         {
-            this.receipeTime = receipeTime;
+            this.ReceipeTime = receipeTime;
         }
     }
 }
