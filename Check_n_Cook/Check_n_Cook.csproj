@@ -107,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ContinuationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PlanningReceipe.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +143,10 @@
   <ItemGroup>
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasePrintPage.cs" />
+    <Compile Include="ContinuationPage.xaml.cs">
+      <DependentUpon>ContinuationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
     <Compile Include="Events\GoToReceipeEvent.cs" />

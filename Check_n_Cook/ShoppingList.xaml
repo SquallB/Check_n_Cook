@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:BasePrintPage
     x:Name="pageRoot"
     x:Class="Check_n_Cook.ShoppingList"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
@@ -124,4 +124,4 @@
             </HubSection>
         </Hub>
     </Grid>
-</Page>
+</local:BasePrintPage>
