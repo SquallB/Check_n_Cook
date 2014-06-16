@@ -91,7 +91,7 @@
                 <DataTemplate>
                     <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
-                        <Grid>
+                        <Grid Height="308" Width="408">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="400"/>
                             </Grid.ColumnDefinitions>
@@ -100,8 +100,10 @@
                                 <RowDefinition Height="60"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Content="Ajouter cette recette à votre liste de course" Width="406"/>
-                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="1" Margin="0,13,-3,13" Width="406" Click="AddReceipeFavorite_Click"/>
+                            <Button Content="Ajouter cette recette à votre liste de course" Width="406" Click="AddReceipeList_Click"/>
+                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="2" Margin="0,66,-3,88" Width="403" Click="AddReceipeFavorite_Click"/>
+                            <DatePicker HorizontalAlignment="Left" Margin="118,28,0,0" Grid.Row="1" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" />
+                            <ComboBox HorizontalAlignment="Left" Margin="3,28,0,0" Grid.Row="1" VerticalAlignment="Top" Width="102" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

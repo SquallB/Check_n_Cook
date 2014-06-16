@@ -32,7 +32,8 @@ namespace Check_n_Cook
         public AppModel Model { get; set; }
         public Image ImageReceipe { get; set; }
         public TextBlock ReceipeInstruction { get; set; }
-
+        private string Date;
+        private string TimeOfDay;
         private Receipe receipe;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -56,6 +57,7 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.Date = DateTime.Today.ToString("d");
         }
         public ReceipeDetail(Receipe receipe, AppModel model)
         {
@@ -134,6 +136,50 @@ namespace Check_n_Cook
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile receipeFile = await folder.CreateFileAsync("receipesFavorite.json", CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
+        }
+
+        private async void AddReceipeList_Click(object sender, RoutedEventArgs e)
+        {
+            this.Model.AddReceipeList(this.receipe, this.TimeOfDay, this.Date);
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+            StorageFile receipeFile = await folder.CreateFileAsync("receipes.json", CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyReceipesList());
+        }
+
+        private void DatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        {
+            DatePicker datePicker = sender as DatePicker;
+            if (datePicker != null)
+            {
+                DateTime dateTime = datePicker.Date.Date;
+                this.Date = dateTime.Date.ToString("d");
+            }
+        }
+
+        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if (comboBox != null)
+            {
+                comboBox.Items.Add("Matin");
+                comboBox.Items.Add("Midi");
+                comboBox.Items.Add("Soir");
+                comboBox.SelectedIndex = 0;
+                this.TimeOfDay = comboBox.Items[comboBox.SelectedIndex].ToString();
+            }
+        }
+
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                this.TimeOfDay = comboBox.Items[comboBox.SelectedIndex].ToString();
+            }
+
         }
 
     }

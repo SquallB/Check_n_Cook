@@ -1,9 +1,6 @@
 ﻿using Check_n_Cook.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
@@ -20,12 +17,15 @@ namespace Check_n_Cook.Model
 
         public Receipe SelectedReceipe { get; set; }
 
+        public Dictionary<string, ReceipeDate> ReceipeList { get; set; }
+
         public AppModel()
         {
             this.Receipes = new List<Receipe>();
             this.DishTypes = new List<DishType>();
             this.Shops = new List<Shop>();
             this.FavouriteReceipes = new List<Receipe>();
+            this.ReceipeList = new Dictionary<string, ReceipeDate>();
             this.SelectedReceipe = null;
         }
 
@@ -40,6 +40,23 @@ namespace Check_n_Cook.Model
 
 
             this.RefreshViews(new AddedReceipeEvent(this, receipe));
+        }
+
+        public void AddReceipeList(Receipe receipe, string timeOfDay, string date)
+        {
+            ReceipeDate receipeDate = null;
+
+            if (ReceipeList.ContainsKey(date))
+            {
+                receipeDate = ReceipeList[date];
+            }
+            else
+            {
+                receipeDate = new ReceipeDate(date);
+                ReceipeList.Add(date, receipeDate);
+            }
+
+            receipeDate.ReceipeTimeOfDay[timeOfDay].Receipes.Add(receipe);
         }
 
         public void RemoveReceipe(Receipe receipe)
@@ -80,6 +97,21 @@ namespace Check_n_Cook.Model
             foreach (Receipe receipe in this.FavouriteReceipes)
             {
                 jsonArray.Add(receipe.ToJsonObject());
+            }
+
+            jsonObject["Receipes"] = jsonArray;
+
+            return jsonObject.Stringify();
+        }
+
+        public String StringifyReceipesList()
+        {
+            JsonObject jsonObject = new JsonObject();
+            JsonArray jsonArray = new JsonArray();
+
+            foreach (ReceipeDate receipeDate in this.ReceipeList.Values)
+            {
+                jsonArray.Add(receipeDate.ToJsonObject());
             }
 
             jsonObject["Receipes"] = jsonArray;

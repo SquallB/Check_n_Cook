@@ -87,6 +87,29 @@ namespace Check_n_Cook
 
                 this.favoriteViewSource.Source = this.Model.FavouriteReceipes;
             }
+
+            if (this.Model.ReceipeList.Count == 0)
+            {
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                try
+                {
+                    StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
+                    String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+
+                    foreach (var jsonDate in jsonArray)
+                    {
+                        JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
+                        ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
+                        this.Model.ReceipeList.Add(receipeDate.Date, receipeDate);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
 
         #region Inscription de NavigationHelper
@@ -158,7 +181,7 @@ namespace Check_n_Cook
             this.Model.ClearReceipes();
             bool error = await this.retriever.GetData(keyWord, 100, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
-            
+
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

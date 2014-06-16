@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -87,18 +88,66 @@ namespace Check_n_Cook
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.Model = (AppModel)e.NavigationParameter;
+            StorageFolder folder = KnownFolders.PicturesLibrary;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
-            SampleDataGroup sampleDataGroup = new SampleDataGroup("1", "Le 02/10/14", "subTittle", "http://www.freecapsules.com/187-790-large/carotte-60-gelules.jpg", "descirption de foflie");
-
-            foreach(Receipe receipe in this.Model.FavouriteReceipes)
+            try
             {
-                sampleDataGroup.Items.Add(new SampleDataItem(receipe));
+                StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
+                String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                JsonObject jsonObject = JsonObject.Parse(jsonString);
+                JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+
+                foreach (var jsonDate in jsonArray)
+                {
+                    JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
+                    ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
+                    SampleDataGroup sampleDataGroup = new SampleDataGroup(receipeDate.Date);
+
+                    foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                    {
+                        List<string> imgs = new List<string>();
+
+                        foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                        {
+                            imgs.Add(receipe.Image);
+                        }
+
+                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeTimeOfDay.TimeOfDay, imgs));
+                    }
+
+                    sampleDataGroups.Add(sampleDataGroup);
+
+                }
+
+            }
+            catch (FileNotFoundException ex)
+            {
+
             }
 
-            sampleDataGroups.Add(sampleDataGroup);
+            int n = sampleDataGroups.Count;
+            bool swapped = true;
+            while (swapped)
+            {
+                swapped = false;
+                for (int i = 0; i < n; i++)
+                {
+                    DateTime date1 = Convert.ToDateTime(sampleDataGroups[i].Title);
+                    DateTime date2 = Convert.ToDateTime(sampleDataGroups[i + 1].Title);
+
+                    if (DateTime.Compare(date1, date2) > 0)
+                    {
+                        swapped = true;
+                        SampleDataGroup tmp = sampleDataGroups[i];
+                        sampleDataGroups[i] = sampleDataGroups[i + 1];
+                        sampleDataGroups[i + 1] = tmp;
+                    }
+                    n--;
+                }
+            }
+
             this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
