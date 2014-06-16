@@ -55,6 +55,7 @@ namespace Check_n_Cook
             this.Model = new AppModel();
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
+            this.retriever.AdvancedSearch = this.dishTypeSearch;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 

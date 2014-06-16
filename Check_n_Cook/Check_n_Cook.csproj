@@ -155,6 +155,7 @@
     <Compile Include="Model\ReceipeTime.cs" />
     <Compile Include="Model\ReceipeTimeOfDay.cs" />
     <Compile Include="Model\Time.cs" />
+    <Compile Include="Model\Unit.cs" />
     <Compile Include="PlanningReceipe.xaml.cs">
       <DependentUpon>PlanningReceipe.xaml</DependentUpon>
     </Compile>
