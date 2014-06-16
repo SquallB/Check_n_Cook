@@ -13,6 +13,9 @@ namespace Check_n_Cook.Model
     public class URLDataRetriever
     {
         public String URL { get; set; }
+        public List<string> AdvancedSearch { get; set; }
+
+        public int AdvancedDifficulty { get; set; }
 
         private DateTime getDateTimeFromString(String dateString)
         {
@@ -142,6 +145,7 @@ namespace Check_n_Cook.Model
 
             try
             {
+
                 HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord, nbItemsPerPage, startIndex));
                 string jsonString = await response.Content.ReadAsStringAsync();
 
@@ -150,7 +154,39 @@ namespace Check_n_Cook.Model
                 foreach (var item in jsonArray)
                 {
                     Receipe receipe = getReceipeFromJSONItem(item.GetObject());
-                    model.AddReceipe(receipe);
+                    if (AdvancedSearch == null || AdvancedSearch.Count == 0)
+                    {
+                        if (AdvancedDifficulty == 0)
+                        {
+                            model.AddReceipe(receipe);
+                        }
+                        else
+                        {
+                            if (AdvancedDifficulty == receipe.Difficulty.Value)
+                            {
+                                model.AddReceipe(receipe);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (AdvancedSearch.Contains(receipe.DishType.Name))
+                        {
+                            if (AdvancedDifficulty == 0)
+                            {
+                                model.AddReceipe(receipe);
+                            }
+                            else
+                            {
+                                if (AdvancedDifficulty == receipe.Difficulty.Value)
+                                {
+                                    model.AddReceipe(receipe);
+                                }
+                            }
+                            
+                        }
+                    }
+                    
                 }
             }
             catch (Exception ex)

@@ -11,6 +11,7 @@ using Windows.Foundation;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
@@ -25,6 +26,7 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private List<ItemResult> ItemsResult { get; set; }
+        List<string> dishTypeSearch = new List<string>();
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
 
@@ -259,5 +261,81 @@ namespace Check_n_Cook
             }
         }
 
+        public Button advanced { get; set; }
+        private void advancedSearch_Click(object sender, RoutedEventArgs e)
+        {
+            advanced = sender as Button;
+            advanced.Flyout.ShowAt(advanced);
+
+        }
+
+        private void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
+        {
+            Button delete = sender as Button;
+            advanced.Flyout.Hide();
+
+        }
+        public int difficulty = 0;
+        public bool sliderEnabled = false;
+
+        private void chkDishType1_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox control = sender as CheckBox;
+            if (((string)control.Content).Equals("Plat"))
+            {
+                dishTypeSearch.Add("Plat principal");
+            }
+            else if (((string)control.Content).Equals("Dessert"))
+            {
+                dishTypeSearch.Add("Dessert");
+            }
+            else if (((string)control.Content).Equals("Entrée"))
+            {
+                dishTypeSearch.Add("Entree");
+            }
+
+            if (((string)control.Content).Equals("Toutes"))
+            {
+                sliderEnabled = false;
+                difficulty = 0;
+                retriever.AdvancedDifficulty = difficulty;
+            }
+
+        }
+
+        private void chkDishType3_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox control = sender as CheckBox;
+            if (((string)control.Content).Equals("Plat"))
+            {
+                dishTypeSearch.Remove("Plat principal");
+            }
+            else if (((string)control.Content).Equals("Dessert"))
+            {
+                dishTypeSearch.Remove("Dessert");
+            }
+            else if (((string)control.Content).Equals("Entrée"))
+            {
+                dishTypeSearch.Remove("Entree");
+            }
+
+            if (((string)control.Content).Equals("Toutes"))
+            {
+                sliderEnabled = true;
+                difficulty = 1;
+                retriever.AdvancedDifficulty = difficulty;
+            }
+
+        }
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (sliderEnabled)
+            {
+                Slider slider = sender as Slider;
+                difficulty = (int)slider.Value;
+                retriever.AdvancedDifficulty = difficulty;
+            }
+        }
     }
 }

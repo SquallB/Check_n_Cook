@@ -66,7 +66,63 @@
                             <RowDefinition Height="48*"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded"/>
-                        <Button Content="Recherche avancée" Grid.Row="1" Margin="-3,6" HorizontalAlignment="Stretch" Height="38"/>
+                        <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" Margin="-3,6" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
+                            <Button.Flyout>
+                                <Flyout Placement="Full">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="60"/>
+                                            <RowDefinition Height="100"/>
+                                            <RowDefinition Height="200"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="40"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Height="32" Width="394" UseLayoutRounding="True" VerticalAlignment="Top">
+                                            Recherche avancée
+                                        </TextBlock>
+                                        <MenuFlyoutSeparator Grid.Row="1"/>
+                                        <TextBlock Height="32" Width="394" Grid.Row="1">
+                                            Types de plats :
+                                        </TextBlock>
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="133"/>
+                                                <ColumnDefinition Width="133"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <CheckBox x:Name="chkDishType1" Content="Entrée" HorizontalAlignment="Left" Height="33" Margin="7,67,0,0" Width="126" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked" />
+                                            <CheckBox x:Name="chkDishType2" Content="Plat" HorizontalAlignment="Left" Margin="7,69,0,0" VerticalAlignment="Top" Width="121" Grid.Column="1" Height="31" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked"/>
+                                            <CheckBox x:Name="chkDishType3" Content="Dessert" Grid.Column="2" HorizontalAlignment="Left" Margin="-3,67,-7,0" VerticalAlignment="Top" Width="143" Height="33" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked"/>
+                                        </Grid>
+
+                                        <MenuFlyoutSeparator Grid.Row="2"/>
+                                        <TextBlock Height="32" Width="394" Grid.Row="2">
+                                            Difficultée :
+                                        </TextBlock>
+                                        <Grid  Width="400" Height="50" Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="133"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox x:Name="chkDifficulty" Content="Toutes" HorizontalAlignment="Left" Height="43" Margin="7,41,0,-34" Width="126" Checked="chkDishType1_Checked" IsChecked="True" Unchecked="chkDishType3_Unchecked" />
+                                            <Slider Margin="0,36,0,-34" Grid.Column="1" Maximum="5" Minimum="1" ValueChanged="Slider_ValueChanged" />
+                                        </Grid>
+
+
+
+
+
+                                        <Button Click="DeleteConfirmation_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="4">
+                                            OK
+                                        </Button>
+
+
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
                         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Mon espace" Margin="0,20,0,0" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         <Button Content="Accéder à ma liste de course" Grid.Row="3" Width="424" Click="GoToShoppingList"/>
                         <Button Content="Ma planification" Grid.Row="5" Width="424"/>
