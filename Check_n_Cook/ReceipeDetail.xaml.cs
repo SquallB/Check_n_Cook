@@ -82,13 +82,12 @@ namespace Check_n_Cook
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             List<ItemReceipe> ingredients = new List<ItemReceipe>();
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
+            /*ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
             ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Patte", "200G "));
             ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Jambon", "200G"));
             ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Cassoulet", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));
+            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));*/
 
-            this.ingredientsViewSource.Source = ingredients;
             this.Model = (AppModel)e.NavigationParameter;
             this.receipe = this.Model.SelectedReceipe;
             this.pageTitle.Text = receipe.Title;
@@ -97,16 +96,24 @@ namespace Check_n_Cook
             
             List<ItemReceipe> receipeView = new List<ItemReceipe>();
 
-            if ((await task) == true)
+			if ((await task) == true)
             {
                 var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                rr.handleIngredients(rr.ingredientPart, receipe);
 
                 wb.NavigateToString(receipe.ToDoInstructions);
-                //receipeView.Add(new ItemReceipe("", receipe.ToDoInstructions, ""));
+                this.receipeViewSource.Source = receipeView;
+
+                foreach (var ing in receipe.ingredients)
+                {
+                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()));
+
+                }
 
             }
 
-            this.receipeViewSource.Source = receipeView;
+            this.ingredientsViewSource.Source = ingredients;
+
         }
 
         #region Inscription de NavigationHelper

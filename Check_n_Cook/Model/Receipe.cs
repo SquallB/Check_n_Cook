@@ -42,6 +42,9 @@ namespace Check_n_Cook.Model
 
         public PlanningEntry PlanningEntry { get; set; }
 
+        public List<Ingredient> ingredients;
+
+
 
 
         public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) { }
@@ -58,6 +61,8 @@ namespace Check_n_Cook.Model
             this.Vegetarian = vegetarian;
             this.WithAlcohol = withAlcohol;
             this.PlanningEntry = null;
+            this.ingredients = new List<Ingredient>();
+
         }
 
         public Receipe(String title, String author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol, PlanningEntry planEntry)
@@ -72,6 +77,8 @@ namespace Check_n_Cook.Model
             this.Vegetarian = vegetarian;
             this.WithAlcohol = withAlcohol;
             this.PlanningEntry = planEntry;
+            this.ingredients = new List<Ingredient>();
+
         }
 
         public void AddToPlan(PlanningEntry planEntry)
