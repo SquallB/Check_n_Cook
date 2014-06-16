@@ -257,7 +257,7 @@ namespace Check_n_Cook
             this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
         }
 
-        private void GoToReceipeList(object sender, RoutedEventArgs e)
+        private void GoToPlanningReceipe_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
             {

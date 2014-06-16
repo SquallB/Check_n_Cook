@@ -144,7 +144,7 @@
                         <Button Content="Ma planification" Grid.Row="5" Width="424"/>
                         <Button Content="A propos" Grid.Row="6" Width="424" RequestedTheme="Light" Click="GoToAboutCrew"/>
                         <Button Content="OK" Margin="361,-3,-3,45" Height="40" Width="60" Click="Button_Click" Grid.RowSpan="2"/>
-                        <Button Content="Accéder à ma liste de recette" Grid.Row="4" Width="424" Click="GoToReceipeList"/>
+                        <Button Content="Accéder à ma liste de recette" Grid.Row="4" Width="424" Click="GoToPlanningReceipe_Click"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
