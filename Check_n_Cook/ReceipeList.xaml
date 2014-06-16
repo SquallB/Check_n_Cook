@@ -44,7 +44,10 @@
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Liste de recette"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top">
+                    	<Run Text="Liste de recette"/>
+                    	<Run Text="s"/>
+                    </TextBlock>
                 </Grid>
             </Hub.Header>
             <HubSection Width="500" Header="Recettes">

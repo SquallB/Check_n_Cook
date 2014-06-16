@@ -154,6 +154,7 @@
     <Compile Include="Model\ReceipeDate.cs" />
     <Compile Include="Model\ReceipeTime.cs" />
     <Compile Include="Model\ReceipeTimeOfDay.cs" />
+    <Compile Include="Events\RemovedReceipeListEvent.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Model\Unit.cs" />
     <Compile Include="PlanningReceipe.xaml.cs">

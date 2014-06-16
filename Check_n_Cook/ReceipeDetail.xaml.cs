@@ -82,11 +82,6 @@ namespace Check_n_Cook
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             List<ItemReceipe> ingredients = new List<ItemReceipe>();
-            /*ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Riz", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Patte", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Jambon", "200G"));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "Cassoulet", "200G "));
-            ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", "BLALBLA", "200G"));*/
 
             this.Model = (AppModel)e.NavigationParameter;
             this.receipe = this.Model.SelectedReceipe;

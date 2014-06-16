@@ -64,9 +64,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
+                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
                                         <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Content="Enlever cette recette" Margin="-3,25,-3,2" Height="34" Click="RemoveReceipe_Click"/>
+                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" Tag="Matin"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -76,7 +76,12 @@
             </HubSection>
             <HubSection Width="600" Header="Midi">
                 <DataTemplate>
-                    <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource noonReceipeViewSource}}">
+                    <GridView x:Name="ResultatFound" 
+                              SelectionMode="None" 
+                              ItemsSource="{Binding Source={StaticResource noonReceipeViewSource}}" 
+                              IsItemClickEnabled="True"
+                              ItemClick="GoToDetailReceipe_Click"
+                              >
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -88,10 +93,7 @@
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
                                     <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
                                         <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button x:Name="seeIngredients" Margin="5,0,0,0" 
-                                                Content="Supprimer" 
-                                                Click="RemoveReceipe_Click"
-                                                Tag="{Binding Title}" />
+                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" DataContext="{Binding}" Tag="Midi"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -117,9 +119,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
+                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
                                         <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Content="Enlever cette recette" Margin="-3,25,-3,2" Height="34" Click="RemoveReceipe_Click"/>
+                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" Tag="Soir"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
