@@ -32,7 +32,7 @@ namespace Check_n_Cook.Model
 
         public string ToDoInstructions { get; set; }
 
-        public string ingredientsHTML { get; set; }
+        public string IngredientsHTML { get; set; }
 
         public bool WithAlcohol { get; set; }
 
@@ -44,7 +44,7 @@ namespace Check_n_Cook.Model
 
 
 
-        public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) {}
+        public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) { }
 
         public Receipe(String title, String author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol)
         {
@@ -73,7 +73,8 @@ namespace Check_n_Cook.Model
             this.PlanningEntry = planEntry;
         }
 
-        public void AddToPlan(PlanningEntry planEntry) {
+        public void AddToPlan(PlanningEntry planEntry)
+        {
 
 
 
@@ -100,17 +101,24 @@ namespace Check_n_Cook.Model
             this.Image = image;
         }
 
-        public String Stringify()
+        public Receipe(String jsonString)
         {
-            JsonArray jsonArray = new JsonArray();
-
-            JsonObject jsonObject = new JsonObject();
-            jsonObject["Id"] = JsonValue.CreateNumberValue(this.Id);
-            jsonObject["Title"] = JsonValue.CreateStringValue(this.Title);
-            /*jsonObject["PublicationDate"] = JsonValue.CreateStringValue(this.PublicationDate.ToString());
-            jsonObject["ToDoInstructions"] = JsonValue.CreateStringValue(this.ToDoInstructions):*/
-
-            return jsonObject.Stringify();
+            JsonObject jsonObject = JsonObject.Parse(jsonString);
+            this.Id = (int)jsonObject.GetNamedNumber("Id");
+            this.Title = jsonObject.GetNamedString("Title");
+            this.Author = jsonObject.GetNamedString("Author");
+            this.PublicationDate = Convert.ToDateTime(jsonObject.GetNamedString("PublicationDate"));
+            this.DishType = DishType.GetInstance(jsonObject.GetNamedObject("DishType").GetNamedString("Name"));
+            this.Rating = new Rating(jsonObject.GetNamedObject("Rating").Stringify());
+            this.Difficulty = new Difficulty(jsonObject.GetNamedObject("Difficulty").Stringify());
+            this.Cost = new Cost(jsonObject.GetNamedObject("Cost").Stringify());
+            this.Vegetarian = jsonObject.GetNamedBoolean("Vegetarian");
+            this.HtmlReceipe = jsonObject.GetNamedString("HtmlReceipe");
+            //this.ToDoInstructions = jsonObject.GetNamedString("ToDoInstructions");
+            this.IngredientsHTML = jsonObject.GetNamedString("IngredientsHTML");
+            this.WithAlcohol = jsonObject.GetNamedBoolean("WithAlcohol");
+            this.Image = jsonObject.GetNamedString("Image");
+            this.Description = jsonObject.GetNamedString("Description");
         }
 
         public JsonObject ToJsonObject()
@@ -118,18 +126,26 @@ namespace Check_n_Cook.Model
             JsonObject jsonObject = new JsonObject();
             jsonObject.SetNamedValue("Id", JsonValue.CreateNumberValue(this.Id));
             jsonObject.SetNamedValue("Title", JsonValue.CreateStringValue(this.Title));
+            jsonObject.SetNamedValue("Author", JsonValue.CreateStringValue(this.Author));
+            jsonObject.SetNamedValue("PublicationDate", JsonValue.CreateStringValue(this.PublicationDate.ToString()));
+            jsonObject.SetNamedValue("DishType", this.DishType.ToJsonObject());
+            jsonObject.SetNamedValue("Rating", this.Rating.ToJsonObject());
+            jsonObject.SetNamedValue("Difficulty", this.Difficulty.ToJsonObject());
+            jsonObject.SetNamedValue("Cost", this.Cost.ToJsonObject());
+            jsonObject.SetNamedValue("Vegetarian", JsonValue.CreateBooleanValue(this.Vegetarian));
+            jsonObject.SetNamedValue("HtmlReceipe", JsonValue.CreateStringValue("HtmlReceipe"));
+            //jsonObject.SetNamedValue("ToDoInstructions", JsonValue.CreateStringValue(this.ToDoInstructions));
+            jsonObject.SetNamedValue("IngredientsHTML", JsonValue.CreateStringValue(this.IngredientsHTML));
+            jsonObject.SetNamedValue("WithAlcohol", JsonValue.CreateBooleanValue(this.WithAlcohol));
             jsonObject.SetNamedValue("Image", JsonValue.CreateStringValue(this.Image));
+            jsonObject.SetNamedValue("Description", JsonValue.CreateStringValue("Description"));
 
             return jsonObject;
         }
 
-        public Receipe(String jsonString)
+        public String Stringify()
         {
-            JsonObject jsonObject = JsonObject.Parse(jsonString);
-            this.Id = (int)jsonObject.GetNamedNumber("Id", 0.0);
-            this.Title = jsonObject.GetNamedString("Title", "");
-            this.Image = jsonObject.GetNamedString("Image", "");
-            this.ToDoInstructions = "";
+            return this.ToJsonObject().Stringify();
         }
     }
 }

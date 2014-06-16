@@ -61,7 +61,7 @@ namespace Check_n_Cook.Model
 
                 if (currentPart.GetAttributeValue("class", "") == "m_content_recette_ingredients")
                 {
-                    rec.ingredientsHTML = currentPart.InnerText;
+                    rec.IngredientsHTML = currentPart.InnerText;
                     isNotEmpty = true;
 
                 }

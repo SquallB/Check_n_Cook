@@ -132,7 +132,7 @@ namespace Check_n_Cook
             while (swapped)
             {
                 swapped = false;
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i < n - 1; i++)
                 {
                     DateTime date1 = Convert.ToDateTime(sampleDataGroups[i].Title);
                     DateTime date2 = Convert.ToDateTime(sampleDataGroups[i + 1].Title);

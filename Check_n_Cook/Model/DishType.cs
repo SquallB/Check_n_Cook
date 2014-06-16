@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
 {
@@ -49,6 +50,19 @@ namespace Check_n_Cook.Model
         public static bool Exists(String name)
         {
             return instances.ContainsKey(name);
+        }
+
+        public JsonObject ToJsonObject()
+        {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.SetNamedValue("Name", JsonValue.CreateStringValue(this.Name));
+
+            return jsonObject;
+        }
+
+        public String Stringify()
+        {
+            return this.ToJsonObject().Stringify();
         }
     }
 }
