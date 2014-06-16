@@ -33,11 +33,10 @@ namespace Check_n_Cook.Model
             foreach (HtmlNode shopNode in shopsNodes)
             {
                 HtmlNode titleNode = shopNode.Descendants("h2").ElementAt(0);
-                String title = titleNode.Descendants("span").Where(d => !d.Attributes.Contains("class")).ElementAt(0).InnerText;
+                String title = titleNode.Descendants("span").Where(d => !d.Attributes.Contains("class")).ElementAt(0).InnerText.Replace("&#039;", "'");
 
                 HtmlNode localisationBlock = shopNode.Descendants("div").Where(d => d.Attributes.Contains("class") && d.Attributes["class"].Value.Contains("localisationBlock")).ElementAt(0);
-                String address = localisationBlock.Descendants("p").ElementAt(0).InnerHtml;
-                address = address.Replace("<br>", " ").Replace("&nbsp;", " ").Replace("<strong>", "").Replace("</strong>", "");
+                String address = localisationBlock.Descendants("p").ElementAt(0).InnerHtml.Replace("<br>", " ").Replace("&nbsp;", " ").Replace("<strong>", "").Replace("</strong>", "");
 
                 model.AddShop(new Shop(title, address));
             }

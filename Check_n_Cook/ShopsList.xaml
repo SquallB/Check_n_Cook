@@ -73,9 +73,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{Binding Name}" FontSize="20" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
-                                        <TextBlock Text="{Binding Address}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                    </StackPanel>
+                                    <TextBlock Text="{Binding Address}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
