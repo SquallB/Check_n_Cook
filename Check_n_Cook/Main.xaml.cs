@@ -341,5 +341,13 @@ namespace Check_n_Cook
                 retriever.AdvancedDifficulty = difficulty;
             }
         }
+
+        private void textboxSearchReceipe_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                this.search(this.textBoxSearch.Text);
+            }
+        }
     }
 }

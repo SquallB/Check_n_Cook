@@ -65,7 +65,7 @@
                             <RowDefinition Height="48*"/>
                             <RowDefinition Height="48*"/>
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded"/>
+                        <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded" KeyDown="textboxSearchReceipe_KeyDown"/>
                         <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" Margin="-3,6" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
                             <Button.Flyout>
                                 <Flyout Placement="Full">
