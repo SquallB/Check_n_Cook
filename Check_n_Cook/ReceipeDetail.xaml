@@ -42,7 +42,7 @@
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button" HorizontalAlignment="Right"/>
+                        AutomationProperties.ItemType="Navigation Button" HorizontalAlignment="Stretch"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
                 </Grid>
