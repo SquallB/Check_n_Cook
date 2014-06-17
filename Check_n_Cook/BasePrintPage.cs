@@ -157,8 +157,6 @@ namespace Check_n_Cook
             // Remove the handler for printing initialization.
             PrintManager printMan = PrintManager.GetForCurrentView();
             printMan.PrintTaskRequested -= PrintTaskRequested;
-
-            PrintingRoot.Children.Clear();
         }
 
         protected event EventHandler pagesCreated;
