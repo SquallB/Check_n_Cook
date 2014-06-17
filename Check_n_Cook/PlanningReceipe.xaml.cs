@@ -114,7 +114,7 @@ namespace Check_n_Cook
                     {
                         List<string> imgs = new List<string>();
 
-                        foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                        foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                         {
                             imgs.Add(receipe.Image);
                         }
