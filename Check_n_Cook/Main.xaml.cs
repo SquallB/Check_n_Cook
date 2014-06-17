@@ -29,7 +29,8 @@ namespace Check_n_Cook
         List<string> dishTypeSearch = new List<string>();
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
-
+        public Slider sliderSearch;
+        public ProgressBar progress;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -56,6 +57,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
+            
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -108,12 +110,14 @@ namespace Check_n_Cook
                         ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
                         this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
                     }
+                    
                 }
                 catch (Exception ex)
                 {
 
                 }
             }
+            
         }
 
         #region Inscription de NavigationHelper
@@ -185,9 +189,12 @@ namespace Check_n_Cook
 
         public async void search(string keyWord)
         {
+            progress.Visibility = Visibility.Visible;
             this.Model.ClearReceipes();
-            bool error = await this.retriever.GetData(keyWord, 100, 1, Model);
+            
+            bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
+            progress.Visibility = Visibility.Collapsed;
 
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -199,7 +206,9 @@ namespace Check_n_Cook
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            
             this.search(this.textBoxSearch.Text);
+            
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -280,8 +289,6 @@ namespace Check_n_Cook
             advanced.Flyout.Hide();
 
         }
-        public int difficulty = 0;
-        public bool sliderEnabled = false;
 
         private void chkDishType1_Checked(object sender, RoutedEventArgs e)
         {
@@ -301,9 +308,24 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                sliderEnabled = false;
-                difficulty = 0;
-                retriever.AdvancedDifficulty = difficulty;
+                
+                retriever.AdvancedDifficulty = 0;
+                if (sliderSearch != null)
+                {
+                    sliderSearch.IsEnabled = false;
+                    
+                }
+                
+            }
+
+            if (((string)control.Content).Equals("Végétarien"))
+            {
+                this.retriever.AdvancedVegetarian = true;
+            }
+
+            if (((string)control.Content).Equals("Alcool"))
+            {
+                this.retriever.AdvancedAlcool = true;
             }
 
         }
@@ -326,21 +348,30 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                sliderEnabled = true;
-                difficulty = 1;
-                retriever.AdvancedDifficulty = difficulty;
+                
+                retriever.AdvancedDifficulty = (int)sliderSearch.Value;
+                sliderSearch.IsEnabled = true;
+               
             }
+            if (((string)control.Content).Equals("Végétarien"))
+            {
+                this.retriever.AdvancedVegetarian = false;
+            }
+
+            if (((string)control.Content).Equals("Alcool"))
+            {
+                this.retriever.AdvancedAlcool = false;
+            }
+
 
         }
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (sliderEnabled)
-            {
-                Slider slider = sender as Slider;
-                difficulty = (int)slider.Value;
-                retriever.AdvancedDifficulty = difficulty;
-            }
+            
+            Slider slider = sender as Slider;
+            retriever.AdvancedDifficulty = (int)slider.Value;
+            
         }
 
         private void textboxSearchReceipe_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -349,6 +380,16 @@ namespace Check_n_Cook
             {
                 this.search(this.textBoxSearch.Text);
             }
+        }
+        
+        private void Slider_Loaded(object sender, RoutedEventArgs e)
+        {
+            sliderSearch = sender as Slider;
+        }
+
+        private void progress_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.progress = sender as ProgressBar;
         }
     }
 }
