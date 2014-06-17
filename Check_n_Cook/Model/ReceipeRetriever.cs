@@ -95,21 +95,23 @@ namespace Check_n_Cook.Model
                             hasUnity = true;
                             indiceUnity = counterOfWord;
                         }
-                        else if (arg != " " && arg != "")
+                        else 
                         {
                             if(hasUnity) {
                                 if (indiceUnity == counterOfWord - 1)
                                 {
-                                    arg = arg.Replace("de ", "");
-                                    arg = arg.Replace(" de", "");
-                                    arg = arg.Replace("de", "");
-                                    if (arg.IndexOf(" ") <= 2 && arg.IndexOf(" ") > -1)
-                                    {
-                                        arg = arg.Substring(1);
-                                    }
+                                    arg = arg.Replace( "de", "");
+                                    arg = arg.Replace("d'", "");
+
+                                    arg = arg.Replace(" ", "");
+
                                 }
                             }
-                            currentIng.name += arg + " ";
+                            if (arg != "" && arg != " ")
+                            {
+                                currentIng.name += arg + " ";
+
+                            }
                         }
                         counterOfWord++;
 
