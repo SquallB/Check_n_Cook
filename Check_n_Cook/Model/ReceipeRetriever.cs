@@ -127,7 +127,13 @@ namespace Check_n_Cook.Model
             {
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
-                    rec.ToDoInstructions = curDiv0.InnerHtml;
+                    //rec.ToDoInstructions = curDiv0.InnerHtml;
+                   String htmlToDo = curDiv0.InnerHtml;
+                   var linksToHide =  curDiv0.Elements("a");
+                   foreach (var currentLink in linksToHide) {
+                       htmlToDo = htmlToDo.Replace(currentLink.OuterHtml, currentLink.InnerText);
+                   }
+                   rec.ToDoInstructions = htmlToDo;
                     isNotEmpty = true;
                 }
 
