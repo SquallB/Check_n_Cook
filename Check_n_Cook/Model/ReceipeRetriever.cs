@@ -76,22 +76,39 @@ namespace Check_n_Cook.Model
                     currentIng.name = "";
                     currentIng.unity = new Unit("");
                     currentIng.quantity = "";
+                    Boolean hasUnity = false;
+                    int indiceUnity = 0;
                     foreach (var currentArg in listofArgs)
                     {
                         var arg = currentArg.Replace(" ", "");
+                        
                         if (counterOfWord == 1)
                         {
                             currentIng.quantity = arg;
 
 
                         }
-                        else if (arg == "cuillères" || arg == "g" || arg == "L")
+                        else if (arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
                         {
 
                             currentIng.unity = new Unit(arg);
+                            hasUnity = true;
+                            indiceUnity = counterOfWord;
                         }
                         else if (arg != " " && arg != "")
                         {
+                            if(hasUnity) {
+                                if (indiceUnity == counterOfWord - 1)
+                                {
+                                    arg = arg.Replace("de ", "");
+                                    arg = arg.Replace(" de", "");
+                                    arg = arg.Replace("de", "");
+                                    if (arg.IndexOf(" ") <= 2 && arg.IndexOf(" ") > -1)
+                                    {
+                                        arg = arg.Substring(1);
+                                    }
+                                }
+                            }
                             currentIng.name += arg + " ";
                         }
                         counterOfWord++;
@@ -99,6 +116,8 @@ namespace Check_n_Cook.Model
                     }
                     if (currentIng.name.Length > 0 && counterOfWord > 0 && currentIng.name != "")
                     {
+                        string newstring = currentIng.name[0].ToString().ToUpper() + currentIng.name.Substring(1).ToLower();
+                        currentIng.name = newstring;
                         rec.ingredients.Add(currentIng);
 
                     }
@@ -127,7 +146,6 @@ namespace Check_n_Cook.Model
             {
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
-                    //rec.ToDoInstructions = curDiv0.InnerHtml;
                    String htmlToDo = curDiv0.InnerHtml;
                    var linksToHide =  curDiv0.Elements("a");
                    foreach (var currentLink in linksToHide) {
