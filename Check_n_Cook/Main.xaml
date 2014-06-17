@@ -64,6 +64,7 @@
                             <RowDefinition Height="48"/>
                             <RowDefinition Height="48*"/>
                             <RowDefinition Height="48*"/>
+                            <RowDefinition Height="48*"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded" KeyDown="textboxSearchReceipe_KeyDown"/>
                         <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" Margin="-3,6" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
@@ -143,19 +144,24 @@
                         <Button Content="Accéder à ma liste de course" Grid.Row="3" Width="424" Click="GoToShoppingList"/>
                         <Button Content="Ma planification" Grid.Row="5" Width="424"/>
                         <Button Content="A propos" Grid.Row="6" Width="424" RequestedTheme="Light" Click="GoToAboutCrew"/>
-                        <Button Content="OK" Margin="361,-3,-3,45" Height="40" Width="60" Click="Button_Click" Grid.RowSpan="2"/>
+                        <ProgressBar x:Name="progress" Height="32" IsIndeterminate="True" Grid.Row="7" Margin="3,2,0,0" Loaded="progress_Loaded" Visibility="Collapsed" Foreground="Black"/>
+                        <Button Content="OK" Margin="361,-3,-3,45" Height="40" Width="60" Click="Button_Click" Grid.RowSpan="2" HorizontalAlignment="Stretch"/>
                         <Button Content="Accéder à ma liste de recette" Grid.Row="4" Width="424" Click="GoToPlanningReceipe_Click"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
+
             <HubSection Width="1020" Header="Résultat de recherche">
+
                 <DataTemplate>
+
                     <GridView x:Name="ResultatFound" 
                               SelectionMode="None" 
                               ItemsSource="{Binding Source={StaticResource resultsFoundViewSource}}" 
                               IsItemClickEnabled="True"
                               ItemClick="ItemView_ItemClick"
                               >
+
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -174,6 +180,7 @@
                         </GridView.ItemTemplate>
                     </GridView>
                 </DataTemplate>
+
             </HubSection>
 
             <HubSection Header="Vos recettes favorites">
@@ -192,6 +199,11 @@
                     </ListView>
                 </DataTemplate>
             </HubSection>
+
+
         </Hub>
+
+
+
     </Grid>
 </Page>
