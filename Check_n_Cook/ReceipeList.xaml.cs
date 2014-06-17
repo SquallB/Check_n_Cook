@@ -78,7 +78,7 @@ namespace Check_n_Cook
             if (evnt.ReceipeTime is ReceipeTimeOfDay)
             {
                 ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)evnt.ReceipeTime;
-                foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                 {
                     receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
                 }
@@ -90,7 +90,7 @@ namespace Check_n_Cook
                 ReceipeDate receipeDate = (ReceipeDate)evnt.ReceipeTime;
                 foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
                 {
-                    foreach (Receipe receipe in receipeTimeOfDay.Receipes)
+                    foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                     {
                         receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
                     }

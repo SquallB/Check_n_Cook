@@ -119,11 +119,11 @@ namespace Check_n_Cook
             {
                 RemovedReceipeListEvent srcEvnt = (RemovedReceipeListEvent)e;
                 Time time = srcEvnt.Time;
-                List<Receipe> previousList = this.Model.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay].Receipes;
-                List<Receipe> newList = new List<Receipe>();
-                foreach (Receipe receipe in previousList)
+                Dictionary<string, Receipe> previousList = this.Model.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay].Receipes;
+                Dictionary<string, Receipe> newList = new Dictionary<string, Receipe>();
+                foreach (Receipe receipe in previousList.Values)
                 {
-                    newList.Add(receipe);
+                    newList[receipe.Title] = receipe;
                 }
                 if (time.TimeOfDay.Equals("Matin"))
                 {
