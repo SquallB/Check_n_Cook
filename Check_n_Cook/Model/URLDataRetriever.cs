@@ -17,6 +17,9 @@ namespace Check_n_Cook.Model
 
         public int AdvancedDifficulty { get; set; }
 
+        public bool AdvancedVegetarian { get; set; }
+        public bool AdvancedAlcool { get; set; }
+
         private DateTime getDateTimeFromString(String dateString)
         {
             String date = dateString.Substring(0, dateString.IndexOf('T'));
@@ -158,13 +161,20 @@ namespace Check_n_Cook.Model
                     {
                         if (AdvancedDifficulty == 0)
                         {
-                            model.AddReceipe(receipe);
+                            if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
+                            {
+                                model.AddReceipe(receipe);
+                            }
+                            
                         }
                         else
                         {
                             if (AdvancedDifficulty == receipe.Difficulty.Value)
                             {
-                                model.AddReceipe(receipe);
+                                if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
+                                {
+                                    model.AddReceipe(receipe);
+                                }
                             }
                         }
                     }
@@ -174,13 +184,19 @@ namespace Check_n_Cook.Model
                         {
                             if (AdvancedDifficulty == 0)
                             {
-                                model.AddReceipe(receipe);
+                                if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
+                                {
+                                    model.AddReceipe(receipe);
+                                }
                             }
                             else
                             {
                                 if (AdvancedDifficulty == receipe.Difficulty.Value)
                                 {
-                                    model.AddReceipe(receipe);
+                                    if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
+                                    {
+                                        model.AddReceipe(receipe);
+                                    }
                                 }
                             }
                             
@@ -200,6 +216,7 @@ namespace Check_n_Cook.Model
         public URLDataRetriever()
         {
             this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage={1}&StartIndex={2}";
+            
         }
     }
 }

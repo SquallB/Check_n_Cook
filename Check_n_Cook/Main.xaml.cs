@@ -29,7 +29,7 @@ namespace Check_n_Cook
         List<string> dishTypeSearch = new List<string>();
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
-
+        public Slider sliderSearch;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -56,6 +56,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
+            
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -303,7 +304,23 @@ namespace Check_n_Cook
             {
                 sliderEnabled = false;
                 difficulty = 0;
-                retriever.AdvancedDifficulty = difficulty;
+                retriever.AdvancedDifficulty = 0;
+                if (sliderSearch != null)
+                {
+                    sliderSearch.IsEnabled = false;
+                    
+                }
+                
+            }
+
+            if (((string)control.Content).Equals("Végétarien"))
+            {
+                this.retriever.AdvancedVegetarian = true;
+            }
+
+            if (((string)control.Content).Equals("Alcool"))
+            {
+                this.retriever.AdvancedAlcool = true;
             }
 
         }
@@ -329,7 +346,19 @@ namespace Check_n_Cook
                 sliderEnabled = true;
                 difficulty = 1;
                 retriever.AdvancedDifficulty = difficulty;
+                sliderSearch.IsEnabled = true;
+                difficulty = (int)sliderSearch.Value;
             }
+            if (((string)control.Content).Equals("Végétarien"))
+            {
+                this.retriever.AdvancedVegetarian = false;
+            }
+
+            if (((string)control.Content).Equals("Alcool"))
+            {
+                this.retriever.AdvancedAlcool = false;
+            }
+
 
         }
 
@@ -349,6 +378,11 @@ namespace Check_n_Cook
             {
                 this.search(this.textBoxSearch.Text);
             }
+        }
+        
+        private void Slider_Loaded(object sender, RoutedEventArgs e)
+        {
+            sliderSearch = sender as Slider;
         }
     }
 }
