@@ -81,11 +81,16 @@ namespace Check_n_Cook
                     this.addedView = true;
                 }
                 Time time = evnt.Time;
-                ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
-                this.date = receipeDate.Time.Date;
-                morningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Matin"].Receipes;
-                noonReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Midi"].Receipes;
-                evenningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Soir"].Receipes;
+
+                if (this.Model.ReceipeList.ContainsKey(time.Date))
+                {
+                    ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
+                    this.date = receipeDate.Time.Date;
+                    morningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Matin"].Receipes.Values;
+                    noonReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Midi"].Receipes.Values;
+                    evenningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Soir"].Receipes.Values;
+                }
+                
             }
 
         }
@@ -119,12 +124,17 @@ namespace Check_n_Cook
             {
                 RemovedReceipeListEvent srcEvnt = (RemovedReceipeListEvent)e;
                 Time time = srcEvnt.Time;
-                Dictionary<string, Receipe> previousList = this.Model.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay].Receipes;
                 Dictionary<string, Receipe> newList = new Dictionary<string, Receipe>();
-                foreach (Receipe receipe in previousList.Values)
+
+                if (this.Model.ReceipeList.ContainsKey(time.Date))
                 {
-                    newList[receipe.Title] = receipe;
+                    Dictionary<string, Receipe> previousList = this.Model.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay].Receipes;
+                    foreach (Receipe receipe in previousList.Values)
+                    {
+                        newList[receipe.Title] = receipe;
+                    }
                 }
+
                 if (time.TimeOfDay.Equals("Matin"))
                 {
 

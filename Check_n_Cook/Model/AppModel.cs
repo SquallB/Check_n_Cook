@@ -64,6 +64,19 @@ namespace Check_n_Cook.Model
             if (this.ReceipeList.Count != 0 && this.ReceipeList[date] != null && this.ReceipeList[date].ReceipeTimeOfDay[timeOfDay] != null)
             {
                 this.ReceipeList[date].ReceipeTimeOfDay[timeOfDay].RemoveReceipe(receipe);
+                bool deletedReceipeDate = true;
+                foreach (ReceipeTimeOfDay receipeTimeOfDay in this.ReceipeList[date].ReceipeTimeOfDay.Values)
+                {
+                    if (receipeTimeOfDay.Receipes.Count != 0)
+                    {
+                        deletedReceipeDate = false;
+                    }
+                }
+
+                if (deletedReceipeDate)
+                {
+                    this.ReceipeList.Remove(date);
+                }
                 this.RefreshViews(new RemovedReceipeListEvent(this, receipe, new Time(date, timeOfDay)));
             }
         }

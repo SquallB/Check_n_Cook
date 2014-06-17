@@ -20,7 +20,7 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ShoppingList : BasePrintPage
+    public sealed partial class ShoppingList : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -90,18 +90,5 @@ namespace Check_n_Cook
         }
 
         #endregion
-
-        protected override void PreparePrintContent()
-        {
-            if (firstPage == null)
-            {
-                firstPage = new ShoppingList();
-            }
-
-            // Add the (newley created) page to the printing root which is part of the visual tree and force it to go
-            // through layout so that the linked containers correctly distribute the content inside them.
-            PrintingRoot.InvalidateMeasure();
-            PrintingRoot.UpdateLayout();
-        }
     }
 }

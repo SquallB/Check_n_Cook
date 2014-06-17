@@ -29,7 +29,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Hub>
+        <Hub x:Name="Check_n_Cook">
             <Hub.Header>
                 <!-- Bouton Précédent et titre de la page -->
                 <Grid>
@@ -55,7 +55,7 @@
             </HubSection>
             <HubSection x:Name="hubSearch" Width="500" Header="Recherche" RequestedTheme="Light">
                 <DataTemplate>
-                    <Grid Height="317" Width="418">
+                    <Grid Height="265" Width="418">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="48" />
@@ -63,11 +63,9 @@
                             <RowDefinition Height="48*" />
                             <RowDefinition Height="48"/>
                             <RowDefinition Height="48*"/>
-                            <RowDefinition Height="48*"/>
-                            <RowDefinition Height="48*"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="0,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded" KeyDown="textboxSearchReceipe_KeyDown"/>
-                        <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" Margin="-3,6" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
+                        <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
                             <Button.Flyout>
                                 <Flyout Placement="Full">
                                     <Grid>
@@ -141,12 +139,11 @@
                             </Button.Flyout>
                         </Button>
                         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Mon espace" Margin="0,20,0,0" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <Button Content="Accéder à ma liste de course" Grid.Row="3" Width="424" Click="GoToShoppingList"/>
-                        <Button Content="Ma planification" Grid.Row="5" Width="424"/>
-                        <Button Content="A propos" Grid.Row="6" Width="424" RequestedTheme="Light" Click="GoToAboutCrew"/>
-                        <ProgressBar x:Name="progress" Height="32" IsIndeterminate="True" Grid.Row="7" Margin="3,2,0,0" Loaded="progress_Loaded" Visibility="Collapsed" Foreground="Black"/>
+                        <Button Grid.Row="4" Width="424" Content="Les magasins les plus proches" Click="GoToShop_Click"/>
+                        <Button Content="A propos" Grid.Row="5" Width="424" RequestedTheme="Light" Click="GoToAboutCrew"/>
+                        <ProgressBar x:Name="progress" Height="32" IsIndeterminate="True" Grid.Row="5" Margin="3,71,0,0" Loaded="progress_Loaded" Visibility="Collapsed" Foreground="Black"/>
                         <Button Content="OK" Margin="361,-3,-3,45" Height="40" Width="60" Click="Button_Click" Grid.RowSpan="2" HorizontalAlignment="Stretch"/>
-                        <Button Content="Accéder à ma liste de recette" Grid.Row="4" Width="424" Click="GoToPlanningReceipe_Click"/>
+                        <Button Grid.Row="3" Width="424" Click="GoToPlanningReceipe_Click" Content="Mon planning"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>

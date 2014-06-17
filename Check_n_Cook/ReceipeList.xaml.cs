@@ -15,7 +15,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using Windows.Graphics.Printing;
+using Windows.UI.Xaml.Printing;
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
@@ -161,11 +162,11 @@ namespace Check_n_Cook
             }
         }
 
-        private void GoToShop_Click(object sender, RoutedEventArgs e)
+        private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ShopsList), this.Model);
+                this.Frame.Navigate(typeof(ShoppingList), this.Model);
             }
         }
 

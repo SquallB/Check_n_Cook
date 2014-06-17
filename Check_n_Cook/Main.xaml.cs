@@ -196,6 +196,8 @@ namespace Check_n_Cook
             this.resultsFoundViewSource.Source = this.ItemsResult;
             progress.Visibility = Visibility.Collapsed;
 
+            Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
+
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -390,6 +392,14 @@ namespace Check_n_Cook
         private void progress_Loaded(object sender, RoutedEventArgs e)
         {
             this.progress = sender as ProgressBar;
+        }
+
+        private void GoToShop_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(ShopsList), this.Model);
+            }
         }
     }
 }

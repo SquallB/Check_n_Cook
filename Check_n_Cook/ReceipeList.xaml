@@ -100,7 +100,7 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
-                        <TextBlock TextWrapping="Wrap" Text="Aucune recette" Loaded="TextBlockReceipe_Loaded" Style="{StaticResource BodyTextBlockStyle}" />
+                        <TextBlock TextWrapping="Wrap" Text="Aucun ingredient" Loaded="TextBlockReceipe_Loaded" Style="{StaticResource BodyTextBlockStyle}" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -114,14 +114,12 @@
                                 <ColumnDefinition Width="400"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="60"/>
-                                <RowDefinition Height="60"/>
-                                <RowDefinition Height="Auto" MinHeight="138" />
+                                <RowDefinition Height="38"/>
+                                <RowDefinition Height="38"/>
                                 <RowDefinition Height="0*" />
                             </Grid.RowDefinitions>
-                            <Button Content="Modifier ma liste de course" Margin="-3,25,-3,2" Width="406" Height="34" Click="GoToModifyReceipeList_Click"/>
-                            <Button Content="Imprimer ma liste de course" Grid.Row="1" Width="406" Height="34"/>
-                            <Button Content="Voir les magasins proches" Grid.Row="2" Margin="0,52,-3,52" Width="403" Click="GoToShop_Click"/>
+                            <Button Content="Modifier ma liste de recettes" Width="406" Height="34" Click="GoToModifyReceipeList_Click"/>
+                            <Button Content="Voir ma liste de course" Grid.Row="1" Width="406" Height="34" Click="GoToShoppingList_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
