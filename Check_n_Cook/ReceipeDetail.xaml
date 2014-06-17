@@ -49,7 +49,7 @@
             </Hub.Header>
             <HubSection Width="700" Header="Instruction">
                 <DataTemplate>
-                    <WebView x:Name="description" Height="822"  Width="568" Loaded="description_Loaded"/>
+                    <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center"/>
 
                 </DataTemplate>
             </HubSection>
