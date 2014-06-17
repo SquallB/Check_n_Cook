@@ -144,6 +144,7 @@
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BasePrintPage.cs" />
     <Compile Include="ContinuationPage.xaml.cs">
       <DependentUpon>ContinuationPage.xaml</DependentUpon>
     </Compile>
