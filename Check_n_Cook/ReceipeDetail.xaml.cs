@@ -24,7 +24,7 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ReceipeDetail : Page
+    public sealed partial class ReceipeDetail : BasePrintPage
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -35,6 +35,7 @@ namespace Check_n_Cook
         private string Date;
         private string TimeOfDay;
         private Receipe receipe;
+        private List<ItemReceipe> ingredients;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -58,6 +59,7 @@ namespace Check_n_Cook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.Date = DateTime.Today.ToString("d");
+            this.ingredients = new List<ItemReceipe>();
         }
         public ReceipeDetail(Receipe receipe, AppModel model)
         {
@@ -65,6 +67,7 @@ namespace Check_n_Cook
             this.receipe = receipe;
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.ingredients = new List<ItemReceipe>();
         }
 
 
@@ -81,8 +84,6 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            List<ItemReceipe> ingredients = new List<ItemReceipe>();
-
             this.Model = (AppModel)e.NavigationParameter;
             this.receipe = this.Model.SelectedReceipe;
             this.pageTitle.Text = receipe.Title;
@@ -108,7 +109,7 @@ namespace Check_n_Cook
             }
 
             this.ingredientsViewSource.Source = ingredients;
-
+            this.RegisterForPrinting();
         }
 
         #region Inscription de NavigationHelper
@@ -129,6 +130,7 @@ namespace Check_n_Cook
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            this.UnregisterForPrinting();
             navigationHelper.OnNavigatedFrom(e);
         }
 
@@ -192,6 +194,15 @@ namespace Check_n_Cook
             this.wb = wb;
         }
 
-
+        /// <summary>
+        /// Provide print content for scenario 1 first page
+        /// </summary>
+        protected override void PreparePrintContent()
+        {
+            if (firstPage == null)
+            {
+                firstPage = new ReceipeDetailPrint(this.receipe, this.ingredients);
+            }
+        }
     }
 }
