@@ -309,6 +309,17 @@ namespace Check_n_Cook
             return textLink;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // init printing 
+            RegisterForPrinting();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            UnregisterForPrinting();
+        }
+
         #region Navigation
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
