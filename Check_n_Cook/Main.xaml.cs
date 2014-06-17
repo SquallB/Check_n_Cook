@@ -86,7 +86,7 @@ namespace Check_n_Cook
                     JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
                     foreach (var jsonReceipe in jsonArray)
                     {
-                        this.Model.FavouriteReceipes.Add(new Receipe(jsonReceipe.Stringify()));
+                        this.Model.AddReceipeFavorite(new Receipe(jsonReceipe.Stringify()));
                     }
                 }
                 catch (FileNotFoundException ex) { }

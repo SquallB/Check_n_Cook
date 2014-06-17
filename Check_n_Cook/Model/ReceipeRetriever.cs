@@ -74,7 +74,7 @@ namespace Check_n_Cook.Model
 
                     Ingredient currentIng = new Ingredient();
                     currentIng.name = "";
-                    currentIng.unity = new Unit("");
+                    currentIng.unity = "";
                     currentIng.quantity = "";
                     Boolean hasUnity = false;
                     int indiceUnity = 0;
@@ -91,7 +91,7 @@ namespace Check_n_Cook.Model
                         else if (arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
                         {
 
-                            currentIng.unity = new Unit(arg);
+                            currentIng.unity =(string)arg;
                             hasUnity = true;
                             indiceUnity = counterOfWord;
                         }

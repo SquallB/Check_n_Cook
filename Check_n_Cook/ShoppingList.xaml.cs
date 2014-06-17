@@ -1,4 +1,6 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Events;
+using Check_n_Cook.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +26,8 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private AppModel model;
+        private Time time;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -63,7 +67,34 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: assignez une collection de groupes pouvant être liés à this.DefaultViewModel["Groups"]
+            GoToModifyReceipeListEvent evnt = e.NavigationParameter as GoToModifyReceipeListEvent;
+
+            if (evnt != null)
+            {
+                this.model = evnt.AppModel;
+                this.time = evnt.Time;
+
+                if (this.model.ReceipeList.ContainsKey(time.Date))
+                {
+                    ReceipeDate receipeDate = this.model.ReceipeList[time.Date];
+
+                    List<Ingredient> ingredients = new List<Ingredient>();
+
+                    foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                    {
+                        foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
+                        {
+                            foreach(Ingredient ingredient in receipe.ingredients)
+                            {
+                                ingredients.Add(ingredient);
+                            }
+                        }
+                    }
+
+                    this.ingredientsViewSource.Source = ingredients;
+                }
+            }
+
         }
 
         #region Inscription de NavigationHelper

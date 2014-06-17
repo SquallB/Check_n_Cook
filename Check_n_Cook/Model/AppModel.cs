@@ -13,7 +13,7 @@ namespace Check_n_Cook.Model
 
         public List<Shop> Shops { get; set; }
 
-        public List<Receipe> FavouriteReceipes { get; set; }
+        public Dictionary<string, Receipe> FavouriteReceipes { get; set; }
 
         public Receipe SelectedReceipe { get; set; }
 
@@ -24,7 +24,7 @@ namespace Check_n_Cook.Model
             this.Receipes = new List<Receipe>();
             this.DishTypes = new List<DishType>();
             this.Shops = new List<Shop>();
-            this.FavouriteReceipes = new List<Receipe>();
+            this.FavouriteReceipes = new Dictionary<string, Receipe>();
             this.ReceipeList = new Dictionary<string, ReceipeDate>();
             this.SelectedReceipe = null;
         }
@@ -40,6 +40,11 @@ namespace Check_n_Cook.Model
 
 
             this.RefreshViews(new AddedReceipeEvent(this, receipe));
+        }
+
+        public void AddReceipeFavorite(Receipe receipe)
+        {
+            this.FavouriteReceipes[receipe.Title] = receipe;
         }
 
         public void AddReceipeList(Receipe receipe, string timeOfDay, string date)
@@ -116,7 +121,7 @@ namespace Check_n_Cook.Model
             JsonObject jsonObject = new JsonObject();
             JsonArray jsonArray = new JsonArray();
 
-            foreach (Receipe receipe in this.FavouriteReceipes)
+            foreach (Receipe receipe in this.FavouriteReceipes.Values)
             {
                 jsonArray.Add(receipe.ToJsonObject());
             }

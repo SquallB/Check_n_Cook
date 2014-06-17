@@ -127,6 +127,15 @@ namespace Check_n_Cook.Model
             this.WithAlcohol = jsonObject.GetNamedBoolean("WithAlcohol");
             this.Image = jsonObject.GetNamedString("Image");
             this.Description = jsonObject.GetNamedString("Description");
+
+            this.ingredients = new List<Ingredient>();
+
+            JsonArray ingredientsJson = jsonObject.GetNamedArray("Ingredients");
+            foreach (var ingredientObject in ingredientsJson)
+            {
+                Ingredient ingredient = new Ingredient(JsonObject.Parse(ingredientObject.Stringify()));
+
+            }
         }
 
         public JsonObject ToJsonObject()
@@ -147,6 +156,14 @@ namespace Check_n_Cook.Model
             jsonObject.SetNamedValue("WithAlcohol", JsonValue.CreateBooleanValue(this.WithAlcohol));
             jsonObject.SetNamedValue("Image", JsonValue.CreateStringValue(this.Image));
             jsonObject.SetNamedValue("Description", JsonValue.CreateStringValue("Description"));
+
+            JsonArray ingredientsJson = new JsonArray();
+
+            foreach (Ingredient ingredient in ingredients)
+            {
+                ingredientsJson.Add(ingredient.ToJsonObject());
+            }
+            jsonObject.SetNamedValue("Ingredients", ingredientsJson);
 
             return jsonObject;
         }

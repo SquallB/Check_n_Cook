@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 
 namespace Check_n_Cook.Model
 {
@@ -10,14 +11,14 @@ namespace Check_n_Cook.Model
     {
         public String name { get; set; }
         public String quantity { get; set; }
-
-        public Unit unity { get; set; }
+        public string unity { get; set; }
+        public string Description { get { if (unity != null && quantity != null) { return quantity + " " + unity; } else { return ""; } } }
 
         public Ingredient()
         {
 
         }
-        public Ingredient(String name, String qty, Unit unity)
+        public Ingredient(String name, String qty, string unity)
         {
             this.name = name;
             this.quantity = qty;
@@ -25,5 +26,22 @@ namespace Check_n_Cook.Model
 
         }
 
+        public Ingredient(JsonObject jsonObject)
+        {
+            this.unity = jsonObject.GetNamedString("name");
+            this.quantity = jsonObject.GetNamedString("quantity");
+            this.name = jsonObject.GetNamedString("unity");
+        }
+
+        public JsonObject ToJsonObject()
+        {
+            JsonObject jsonObject = new JsonObject();
+
+            jsonObject.SetNamedValue("name", JsonValue.CreateStringValue(this.name));
+            jsonObject.SetNamedValue("quantity", JsonValue.CreateStringValue(this.quantity));
+            jsonObject.SetNamedValue("unity", JsonValue.CreateStringValue(this.unity));
+
+            return jsonObject;
+        }
     }
 }
