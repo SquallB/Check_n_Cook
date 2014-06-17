@@ -239,7 +239,7 @@ namespace Check_n_Cook
         {
             if (this.Frame != null)
             {
-                this.Frame.Navigate(typeof(ReceipeList), this.Model);
+                this.Frame.Navigate(typeof(ShoppingList), this.Model);
             }
         }
 
