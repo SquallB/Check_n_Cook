@@ -157,51 +157,7 @@ namespace Check_n_Cook.Model
                 foreach (var item in jsonArray)
                 {
                     Receipe receipe = getReceipeFromJSONItem(item.GetObject());
-                    if (AdvancedSearch == null || AdvancedSearch.Count == 0)
-                    {
-                        if (AdvancedDifficulty == 0)
-                        {
-                            if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
-                            {
-                                model.AddReceipe(receipe);
-                            }
-                            
-                        }
-                        else
-                        {
-                            if (AdvancedDifficulty == receipe.Difficulty.Value)
-                            {
-                                if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
-                                {
-                                    model.AddReceipe(receipe);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (AdvancedSearch.Contains(receipe.DishType.Name))
-                        {
-                            if (AdvancedDifficulty == 0)
-                            {
-                                if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
-                                {
-                                    model.AddReceipe(receipe);
-                                }
-                            }
-                            else
-                            {
-                                if (AdvancedDifficulty == receipe.Difficulty.Value)
-                                {
-                                    if (((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true)))
-                                    {
-                                        model.AddReceipe(receipe);
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }
+                    addReceipe(receipe, model);
                     
                 }
             }
@@ -211,6 +167,34 @@ namespace Check_n_Cook.Model
             }
 
             return error;
+        }
+        public bool checkDifficulty(Receipe receipe)
+        {
+            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
+        }
+
+        public bool checkOptions(Receipe receipe)
+        {
+            return ((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true));
+        }
+        public bool checkType(Receipe receipe)
+        {
+            return (AdvancedSearch == null || AdvancedSearch.Count == 0) || AdvancedSearch.Contains(receipe.DishType.Name);
+           
+        }
+        public void addReceipe(Receipe receipe, AppModel model)
+        {
+            if (checkType(receipe))
+            {
+                if (checkDifficulty(receipe))
+                {
+                    if (checkOptions(receipe))
+                    {
+                        model.AddReceipe(receipe);
+                    }
+                }
+               
+            }
         }
 
         public URLDataRetriever()
