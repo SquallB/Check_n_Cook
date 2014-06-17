@@ -20,7 +20,7 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ShoppingList : BasePrintPage
+    public sealed partial class ShoppingList : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -79,13 +79,11 @@ namespace Check_n_Cook
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.RegisterForPrinting();
             navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.UnregisterForPrinting();
             navigationHelper.OnNavigatedFrom(e);
         }
 
