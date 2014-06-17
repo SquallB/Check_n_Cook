@@ -101,7 +101,7 @@ namespace Check_n_Cook
 
                 foreach (var ing in receipe.ingredients)
                 {
-                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()));
+                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()+" "+ing.unity.name));
 
                 }
 

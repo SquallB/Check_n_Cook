@@ -8,7 +8,7 @@ namespace Check_n_Cook.Model
 {
     public class  Unit
     {
-        private String name;
+        public String name;
 
         public Unit()
         {

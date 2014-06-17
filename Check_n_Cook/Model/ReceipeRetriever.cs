@@ -54,8 +54,7 @@ namespace Check_n_Cook.Model
         public void handleIngredients(HtmlNode node, Receipe rec)
         {
             String html = node.InnerText;
-            html = html.Replace("<br>", "");
-            html = html.Replace("</br>", "");
+            int counterOfIng = 0;
             var spans = node.Descendants("span");
             foreach (var span in spans)
             {
@@ -66,40 +65,48 @@ namespace Check_n_Cook.Model
 
             foreach (var indexIng in listOfIng)
             {
-                int counterOfWord = 0;
-                int counterOfIng = 0;
 
-                string[] listofArgs = indexIng.Split(' ');
-                Ingredient currentIng = new Ingredient();
-                /*currentIng.quantity = counterOfIng;
-                currentIng.name = "test";
-                currentIng.unity = new Unit("g");*/
-
-                foreach (var currentArg in listofArgs)
+                if (indexIng != "" && indexIng.Length > 0 && indexIng != " " && indexIng != null && counterOfIng > 0)
                 {
+                    int counterOfWord = 0;
 
-                    if (isNumber(currentArg) && counterOfWord <= 1)
+                    string[] listofArgs = indexIng.Split(' ');
+
+                    Ingredient currentIng = new Ingredient();
+                    currentIng.name = "";
+                    currentIng.unity = new Unit("");
+                    currentIng.quantity = "";
+                    foreach (var currentArg in listofArgs)
                     {
-                        currentIng.quantity = Double.Parse(currentArg);
+                        var arg = currentArg.Replace(" ", "");
+                        if (counterOfWord == 1)
+                        {
+                            currentIng.quantity = arg;
 
+
+                        }
+                        else if (arg == "cuillères" || arg == "g" || arg == "L")
+                        {
+
+                            currentIng.unity = new Unit(arg);
+                        }
+                        else if (arg != " " && arg != "")
+                        {
+                            currentIng.name += arg + " ";
+                        }
+                        counterOfWord++;
 
                     }
-                    else if (currentArg == "cuillères" || currentArg == "g" || currentArg == "L")
+                    if (currentIng.name.Length > 0 && counterOfWord > 0 && currentIng.name != "")
                     {
+                        rec.ingredients.Add(currentIng);
 
-                        currentIng.unity = new Unit(currentArg);
                     }
-                    else if (currentArg != " " && currentArg != "")
-                    {
-                        currentIng.name = currentArg;
-                    }
-                    counterOfWord++;
 
                 }
-                rec.ingredients.Add(currentIng);
-
                 counterOfIng++;
             }
+
         }
         public void handleContentReceipe(HtmlNode node, Receipe rec)
         {
