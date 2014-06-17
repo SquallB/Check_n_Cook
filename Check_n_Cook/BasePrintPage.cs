@@ -96,7 +96,7 @@ namespace Check_n_Cook
         protected virtual void PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs e)
         {
             PrintTask printTask = null;
-            printTask = e.Request.CreatePrintTask("C# Printing SDK Sample", sourceRequested =>
+            printTask = e.Request.CreatePrintTask("Check 'n' Cook Printing", sourceRequested =>
                 {
                     // Print Task event handler is invoked when the print job is completed.
                     printTask.Completed += async (s, args) =>
@@ -172,9 +172,6 @@ namespace Check_n_Cook
         {
             // Clear the cache of preview pages 
             printPreviewPages.Clear();
-            
-            // Clear the printing root of preview pages
-            PrintingRoot.Children.Clear();
 
             // This variable keeps track of the last RichTextBlockOverflow element that was added to a page which will be printed
             RichTextBlockOverflow lastRTBOOnPage;
@@ -262,9 +259,6 @@ namespace Check_n_Cook
             {
                 // If this is the first page add the specific scenario content
                 page = firstPage;
-                //Hide footer since we don't know yet if it will be displayed (this might not be the last page) - wait for layout
-                StackPanel footer = (StackPanel)page.FindName("footer");
-                footer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             else
             {
@@ -287,21 +281,8 @@ namespace Check_n_Cook
             printableArea.Width = firstPage.Width - marginWidth;
             printableArea.Height = firstPage.Height - marginHeight;
 
-            // Add the (newley created) page to the printing root which is part of the visual tree and force it to go
-            // through layout so that the linked containers correctly distribute the content inside them.            
-            PrintingRoot.Children.Add(page);
-            PrintingRoot.InvalidateMeasure();
-            PrintingRoot.UpdateLayout();
-
             // Find the last text container and see if the content is overflowing
             textLink = (RichTextBlockOverflow)page.FindName("continuationPageLinkedContainer");
-
-            // Check if this is the last page
-            if (!textLink.HasOverflowContent && textLink.Visibility == Windows.UI.Xaml.Visibility.Visible)
-            {
-                StackPanel footer = (StackPanel)page.FindName("footer");
-                footer.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            }
 
             // Add the page to the page preview collection
             printPreviewPages.Add(page);
