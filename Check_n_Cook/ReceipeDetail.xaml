@@ -49,18 +49,8 @@
             </Hub.Header>
             <HubSection Width="700" Header="Instruction">
                 <DataTemplate>
-                    <GridView x:Name="ResultatFound" SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource receipeViewSource}}" IsHitTestVisible="False">
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical">
-                                    <StackPanel Orientation="Vertical" Width="700">
-                                        <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="-5,0,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                    <WebView x:Name="description" Height="822"  Width="568" Loaded="description_Loaded"/>
+
                 </DataTemplate>
             </HubSection>
             <HubSection Width="520" Header="Ingredients">
@@ -109,6 +99,6 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
-        <WebView x:Name="description" HorizontalAlignment="Left" Height="545" Margin="34,178,0,0" VerticalAlignment="Top" Width="598" Loaded="description_Loaded"/>
+
     </Grid>
 </Page>
