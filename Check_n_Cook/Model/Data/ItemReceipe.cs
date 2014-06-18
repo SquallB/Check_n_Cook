@@ -14,11 +14,18 @@ namespace Check_n_Cook.Model.Data
 
         public string Description { get; set; }
 
+        public Receipe Receipe { get; set; }
+
         public ItemReceipe(string image, string name, string description)
         {
             this.Image = image;
             this.Name = name;
             this.Description = description;
+        }
+
+        public ItemReceipe( Receipe receipe)
+        {
+            this.Receipe = receipe;
         }
     }
 }

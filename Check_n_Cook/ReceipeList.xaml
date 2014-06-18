@@ -60,14 +60,14 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Name}">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
                                     <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                        <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         <Button x:Name="seeIngredients" Margin="5,0,0,0" 
                                                 Content="Voir les ingredients" 
                                                 Click="ClickHandleIngredients"
-                                                Tag="{Binding Name}" />
+                                                DataContext="{Binding}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -93,7 +93,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding Image}" Width="80" Height="60"/>
                                         <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                             <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         </StackPanel>
                                     </StackPanel>

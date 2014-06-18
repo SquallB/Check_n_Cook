@@ -149,9 +149,24 @@ namespace Check_n_Cook.Model
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
                    String htmlToDo = curDiv0.InnerHtml;
+
                    var linksToHide =  curDiv0.Elements("a");
                    foreach (var currentLink in linksToHide) {
                        htmlToDo = htmlToDo.Replace(currentLink.OuterHtml, currentLink.InnerText);
+                   }
+                   var divEl2 =  curDiv0.Elements("div");
+                   foreach (var currDiv2 in divEl2)
+                   {
+
+                       var paraph = currDiv2.Elements("p");
+                       foreach (var currentParaph in paraph)
+                       {
+                           var linksToHide2 = currentParaph.Elements("a");
+                           foreach (var currentLink2 in linksToHide2)
+                           {
+                               htmlToDo = htmlToDo.Replace(currentLink2.OuterHtml, currentLink2.InnerText);
+                           }
+                       }
                    }
                    rec.ToDoInstructions = htmlToDo;
                     isNotEmpty = true;

@@ -74,14 +74,14 @@ namespace Check_n_Cook
             GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
             this.Model = evnt.AppModel;
             this.time = evnt.Time;
-            List<ItemReceipe> receipes = new List<ItemReceipe>();
+            List<Receipe> receipes = new List<Receipe>();
 
             if (evnt.ReceipeTime is ReceipeTimeOfDay)
             {
                 ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)evnt.ReceipeTime;
                 foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                 {
-                    receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                    receipes.Add(receipe);
                 }
                 this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Time.Date + " (" + receipeTimeOfDay.Time.TimeOfDay + ")";
                 this.time = receipeTimeOfDay.Time;
@@ -93,7 +93,7 @@ namespace Check_n_Cook
                 {
                     foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                     {
-                        receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                        receipes.Add(receipe);
                     }
                 }
                 this.pageTitle.Text = "Liste de recette pour le " + receipeDate.Time.Date + " (La journée)";
@@ -131,22 +131,18 @@ namespace Check_n_Cook
         {
             Button b = sender as Button;
 
-
             if (b != null)
             {
-                List<ItemReceipe> ingredients = new List<ItemReceipe>();
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
-
+                Receipe receipe = (Receipe)b.DataContext;
+                List<Ingredient> ingredients = receipe.ingredients;
+                this.pageTitle.Text = ingredients.Count.ToString();
                 this.listIngredientsViewSource.Source = ingredients;
 
                 if (this.ReceipeTextBlock != null)
                 {
-                    this.ReceipeTextBlock.Text = (string)b.Tag;
+                    this.ReceipeTextBlock.Text = receipe.Title;
                 }
             }
-
         }
 
         private void TextBlockReceipe_Loaded(object sender, RoutedEventArgs e)

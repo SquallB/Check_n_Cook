@@ -88,6 +88,7 @@ namespace Check_n_Cook
             {
                 this.Model = e.NavigationParameter as AppModel;
             }
+
             StorageFolder folder = KnownFolders.PicturesLibrary;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
             try
