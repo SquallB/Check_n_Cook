@@ -215,16 +215,13 @@ namespace Check_n_Cook
             if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text==null|| txtIngredientSearch.Text.Equals("")|| txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
             {
                 this.search(this.textBoxSearch.Text);
-                if (txtIngredientSearch != null)
-                {
-                    txtIngredientSearch.Text = textBoxSearch.Text;
-                }
+                txtIngredientSearch.Text = "Entrez une liste ex : citron-riz-poulet";
             }
             else
             {
-                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', ' ', '\n', '/');
+                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_','\n', '/');
                 await this.searchIngredients(ingredientSearch);
-
+                textBoxSearch.Text = "Entrer une recette...";
             }
             
         }
@@ -327,10 +324,14 @@ namespace Check_n_Cook
 
         }
 
-        private void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
+        private async void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
         {
             Button delete = sender as Button;
+            ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_','\n', '/');
+            textBoxSearch.Text = "Entrer une recette...";
             advanced.Flyout.Hide();
+            await this.searchIngredients(ingredientSearch);
+            
 
         }
 

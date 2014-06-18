@@ -240,6 +240,7 @@ namespace Check_n_Cook.Model
                     }
                     if (count >= bestResults)
                     {
+
                         results[bestResults].Add(receipe);
                     }
                     
@@ -248,7 +249,8 @@ namespace Check_n_Cook.Model
                 model.ClearReceipes();
                 foreach (var receipe in results[bestResults])
                 {
-                    model.AddReceipe(receipe);
+                    
+                    addReceipe(receipe, model);
                 }
                 
             }
