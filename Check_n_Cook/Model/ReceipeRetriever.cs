@@ -16,7 +16,7 @@ namespace Check_n_Cook.Model
         public int id { get; set; }
 
         private Task<HtmlDocument> doc;
-        public HtmlNode ingredientPart; 
+        public HtmlNode ingredientPart;
 
         public ReceipeRetriever()
         {
@@ -25,7 +25,7 @@ namespace Check_n_Cook.Model
 
         public void updateURL(int id)
         {
-            this.URL = "http://www.marmiton.org/recettes/recette_s_"+id+".aspx";
+            this.URL = "http://www.marmiton.org/recettes/recette_s_" + id + ".aspx";
 
         }
         public Boolean isNumber(String number)
@@ -53,20 +53,30 @@ namespace Check_n_Cook.Model
         }
         public void handleIngredients(HtmlNode node, Receipe rec)
         {
-            String html = node.InnerText;
+            String html = node.InnerHtml;
+            String text = node.InnerText;
+
             int counterOfIng = 0;
             var spans = node.Descendants("span");
             foreach (var span in spans)
             {
-                html = html.Replace(span.InnerText, "");
+                html = html.Replace(span.OuterHtml, "");
             }
-            string[] listOfIng = html.Split('-');
+            var linksIng = node.Descendants("a");
+            foreach (var currLinkIng in linksIng)
+            {
+                html = html.Replace(currLinkIng.OuterHtml, currLinkIng.InnerText);
+            }
+
+            string[] stringSeparators = new string[] { "<br>" };
+
+            string[] listOfIng = html.Split(stringSeparators, StringSplitOptions.None);
             rec.ingredients = new List<Ingredient>();
 
             foreach (var indexIng in listOfIng)
             {
 
-                if (indexIng != "" && indexIng.Length > 0 && indexIng != " " && indexIng != null && counterOfIng > 0)
+                if (indexIng != "" && indexIng.Length > 0 && indexIng != " " && indexIng != null && counterOfIng > 0 && indexIng.IndexOf('-') != -1)
                 {
                     int counterOfWord = 0;
 
@@ -80,9 +90,22 @@ namespace Check_n_Cook.Model
                     int indiceUnity = 0;
                     foreach (var currentArg in listofArgs)
                     {
+                        Boolean hasDigit = false;
+                        foreach (char letter in currentArg)
+                        {
+                            if (Char.IsDigit((letter)))
+                            {
+                                hasDigit = true;
+                            }
+
+                        }
+
                         var arg = currentArg.Replace(" ", "");
-                        
-                        if (counterOfWord == 1)
+                        if (counterOfWord == 0)
+                        {
+                            arg = arg.Replace("-", "");
+                        }
+                        if (counterOfWord == 1 && hasDigit)
                         {
                             currentIng.quantity = arg;
 
@@ -91,18 +114,18 @@ namespace Check_n_Cook.Model
                         else if (arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
                         {
 
-                            currentIng.unity =(string)arg;
+                            currentIng.unity = (string)arg;
                             hasUnity = true;
                             indiceUnity = counterOfWord;
                         }
-                        else 
+                        else
                         {
-                            if(hasUnity) {
+                            if (hasUnity)
+                            {
                                 if (indiceUnity == counterOfWord - 1)
                                 {
-                                    arg = arg.Replace( "de", "");
+                                    arg = arg.Replace("de", "");
                                     arg = arg.Replace("d'", "");
-
                                     arg = arg.Replace(" ", "");
 
                                 }
@@ -112,6 +135,7 @@ namespace Check_n_Cook.Model
                                 currentIng.name += arg + " ";
 
                             }
+
                         }
                         counterOfWord++;
 
@@ -146,14 +170,34 @@ namespace Check_n_Cook.Model
             var divs = doc.DocumentNode.Descendants("div");
             foreach (var curDiv0 in divs)
             {
+
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
-                   String htmlToDo = curDiv0.InnerHtml;
-                   var linksToHide =  curDiv0.Elements("a");
-                   foreach (var currentLink in linksToHide) {
-                       htmlToDo = htmlToDo.Replace(currentLink.OuterHtml, currentLink.InnerText);
-                   }
-                   rec.ToDoInstructions = htmlToDo;
+                    curDiv0.Attributes.RemoveAll();
+                    curDiv0.Attributes.Add("style", "font-family:Segoe UI;font-weight: 350;font-size:17px;");
+
+                    String htmlToDo = curDiv0.OuterHtml;
+
+                    var linksToHide = curDiv0.Elements("a");
+                    foreach (var currentLink in linksToHide)
+                    {
+                        htmlToDo = htmlToDo.Replace(currentLink.OuterHtml, currentLink.InnerText);
+                    }
+                    var divEl2 = curDiv0.Elements("div");
+                    foreach (var currDiv2 in divEl2)
+                    {
+
+                        var paraph = currDiv2.Elements("p");
+                        foreach (var currentParaph in paraph)
+                        {
+                            var linksToHide2 = currentParaph.Elements("a");
+                            foreach (var currentLink2 in linksToHide2)
+                            {
+                                htmlToDo = htmlToDo.Replace(currentLink2.OuterHtml, currentLink2.InnerText);
+                            }
+                        }
+                    }
+                    rec.ToDoInstructions = htmlToDo;
                     isNotEmpty = true;
                 }
 
@@ -174,7 +218,7 @@ namespace Check_n_Cook.Model
             return isNotEmpty;
         }
 
-            
+
         public async Task<bool> extractReceipeFromMarmiton(Receipe receipe)
         {
             bool isDone = false;
@@ -195,13 +239,13 @@ namespace Check_n_Cook.Model
 
             HttpResponseMessage response = await http.GetAsync(this.URL);
             receipe.HtmlReceipe = await response.Content.ReadAsStringAsync();
-             isDone = true;
+            isDone = true;
             return isDone;
 
-            
+
         }
-    
+
     }
 
-    
+
 }
