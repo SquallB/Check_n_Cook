@@ -14,7 +14,7 @@ namespace Check_n_Cook.Model
     {
         public String URL { get; set; }
         public List<string> AdvancedSearch { get; set; }
-
+        public string level="";
         public int AdvancedDifficulty { get; set; }
 
         public bool AdvancedVegetarian { get; set; }
@@ -160,6 +160,7 @@ namespace Check_n_Cook.Model
                     addReceipe(receipe, model);
                     
                 }
+                
             }
             catch (Exception ex)
             {
@@ -168,6 +169,77 @@ namespace Check_n_Cook.Model
 
             return error;
         }
+        public async Task<bool> GetDataByIngredients(String[] keyWords, int nbItemsPerPage, int startIndex, AppModel model)
+        {
+            bool error = false;
+            try
+            {
+                
+                List<Receipe>[] results = new List<Receipe>[keyWords.Length];
+                for (int i = 0; i < keyWords.Length; i++)
+                {
+                    
+                    results[i] = new List<Receipe>();
+                    keyWords[i] = keyWords[i].ToUpper();
+                    
+                }
+
+                foreach (var keyWord in keyWords)
+                {
+                    
+                   await this.GetData(keyWord, nbItemsPerPage, startIndex, model);
+                   
+                }
+                int bestResults = 0;
+                
+                foreach (var receipe in model.Receipes)
+                {
+                    int count = 0;
+                    
+                    foreach (var keyWord in keyWords)
+                    {
+                        
+                        bool containsKey = false;
+                        foreach (var ingredient in receipe.ingredients)
+                        {
+                            if (ingredient.name.ToUpper().IndexOf(keyWord) != -1 || ingredient.unity.ToUpper().IndexOf(keyWord) != -1)
+                            {
+                                containsKey = true;
+                                
+                            }
+                        }
+                        if (receipe.Description.ToUpper().IndexOf(keyWord) != -1 || containsKey)
+                        {
+                            count++;
+                        }
+                      
+                        
+                    }
+                    if (count > bestResults)
+                    {
+                        bestResults = count;
+                        
+                    }
+                    
+                    results[count].Add(receipe);
+                }
+               
+                model.ClearReceipes();
+                
+                foreach (var receipe in results[bestResults])
+                {
+                    model.AddReceipe(receipe);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                error = true;
+            }
+
+            return error;
+        }
+        
         public bool checkDifficulty(Receipe receipe)
         {
             return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
