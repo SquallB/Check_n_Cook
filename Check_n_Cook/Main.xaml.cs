@@ -6,6 +6,7 @@ using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Storage;
@@ -27,6 +28,8 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private List<ItemResult> ItemsResult { get; set; }
         List<string> dishTypeSearch = new List<string>();
+        public string[] ingredientSearch;
+        public TextBox txtIngredientSearch;
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
         public Slider sliderSearch;
@@ -206,10 +209,50 @@ namespace Check_n_Cook
 
         #endregion
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+
+            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text==null|| txtIngredientSearch.Text.Equals("")|| txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
+            {
+                this.search(this.textBoxSearch.Text);
+                if (txtIngredientSearch != null)
+                {
+                    txtIngredientSearch.Text = textBoxSearch.Text;
+                }
+            }
+            else
+            {
+                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', ' ', '\n', '/');
+                await this.searchIngredients(ingredientSearch);
+
+                textBoxSearch.Text = retriever.level;
+            }
             
-            this.search(this.textBoxSearch.Text);
+        }
+
+        public async Task<bool> searchIngredients(string[] keyWords)
+        {
+            bool error = false;
+            try
+            {
+                
+                progress.Visibility = Visibility.Visible;
+
+                this.Model.ClearReceipes();
+                error = await this.retriever.GetDataByIngredients(keyWords, 200, 1, Model);
+                this.resultsFoundViewSource.Source = this.ItemsResult;
+
+
+                progress.Visibility = Visibility.Collapsed;
+
+                Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
+                
+            }
+            catch (Exception ex)
+            {
+                error = true;
+            }
+            return error;
             
         }
 
@@ -400,6 +443,13 @@ namespace Check_n_Cook
             {
                 this.Frame.Navigate(typeof(ShopsList), this.Model);
             }
+        }
+
+        private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtIngredientSearch = sender as TextBox;
+            
+            
         }
     }
 }
