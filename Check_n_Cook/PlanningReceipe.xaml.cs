@@ -84,10 +84,7 @@ namespace Check_n_Cook
         /// session.  The state will be null the first time a page is visited.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (this.Model == null)
-            {
-                this.Model = e.NavigationParameter as AppModel;
-            }
+            this.Model = e.NavigationParameter as AppModel;
 
             StorageFolder folder = KnownFolders.PicturesLibrary;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();

@@ -22,7 +22,6 @@ namespace Check_n_Cook.Model
             this.Time.Date = jsonObject.GetNamedString("Date", "");
             this.ReceipeTimeOfDay = new Dictionary<string, ReceipeTimeOfDay>();
 
-            JsonObject objectReceipeDate = JsonObject.Parse(jsonObject.Stringify());
             JsonArray receipeDate = jsonObject.GetNamedArray("ReceipeDate");
 
             foreach (var receipeTimeOfDayJson in receipeDate)
