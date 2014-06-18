@@ -225,7 +225,6 @@ namespace Check_n_Cook
                 ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', ' ', '\n', '/');
                 await this.searchIngredients(ingredientSearch);
 
-                textBoxSearch.Text = retriever.level;
             }
             
         }
@@ -239,7 +238,7 @@ namespace Check_n_Cook
                 progress.Visibility = Visibility.Visible;
 
                 this.Model.ClearReceipes();
-                error = await this.retriever.GetDataByIngredients(keyWords, 200, 1, Model);
+                error = await this.retriever.GetDataByIngredients(keyWords, 100, 1, Model);
                 this.resultsFoundViewSource.Source = this.ItemsResult;
 
 

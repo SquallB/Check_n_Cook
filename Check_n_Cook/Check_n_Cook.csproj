@@ -229,7 +229,13 @@
     <Content Include="Assets\Check n Cook.png" />
     <Content Include="Assets\ChecknCookSmall.png" />
     <Content Include="Assets\ChecknCookStore.png" />
+    <Content Include="Assets\receipeMore.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\imageHeader.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ingredient1.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Logo.scale-100.png" />

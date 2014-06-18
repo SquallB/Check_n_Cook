@@ -195,22 +195,40 @@ namespace Check_n_Cook.Model
                 foreach (var receipe in model.Receipes)
                 {
                     int count = 0;
+                    ReceipeRetriever rr = new ReceipeRetriever();
+                    var task = rr.extractReceipeFromMarmiton(receipe);
+
+
+                    if ((await task) == true)
+                    {
+                        var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                        rr.handleIngredients(rr.ingredientPart, receipe);
+
+
+                        
+
+                    }
                     
                     foreach (var keyWord in keyWords)
                     {
                         
                         bool containsKey = false;
+                        
                         foreach (var ingredient in receipe.ingredients)
                         {
-                            if (ingredient.name.ToUpper().IndexOf(keyWord) != -1 || ingredient.unity.ToUpper().IndexOf(keyWord) != -1)
+                            if (ingredient.name.ToUpper().IndexOf(keyWord) >= 0 || ingredient.unity.ToUpper().IndexOf(keyWord) >= 0)
                             {
                                 containsKey = true;
                                 
                             }
+                            
                         }
-                        if (receipe.Description.ToUpper().IndexOf(keyWord) != -1 || containsKey)
+
+                        if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().IndexOf(keyWord) >= 0))
                         {
+                            
                             count++;
+                            
                         }
                       
                         
@@ -220,12 +238,14 @@ namespace Check_n_Cook.Model
                         bestResults = count;
                         
                     }
+                    if (count >= bestResults)
+                    {
+                        results[bestResults].Add(receipe);
+                    }
                     
-                    results[count].Add(receipe);
                 }
-               
-                model.ClearReceipes();
                 
+                model.ClearReceipes();
                 foreach (var receipe in results[bestResults])
                 {
                     model.AddReceipe(receipe);
@@ -234,6 +254,7 @@ namespace Check_n_Cook.Model
             }
             catch (Exception ex)
             {
+                
                 error = true;
             }
 

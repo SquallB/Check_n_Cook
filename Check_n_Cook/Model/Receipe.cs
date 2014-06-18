@@ -134,6 +134,7 @@ namespace Check_n_Cook.Model
             foreach (var ingredientObject in ingredientsJson)
             {
                 Ingredient ingredient = new Ingredient(JsonObject.Parse(ingredientObject.Stringify()));
+                ingredients.Add(ingredient);
 
             }
         }

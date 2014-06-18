@@ -20,8 +20,8 @@
     </Page.Resources>
 
     <!--
-        Cette grille sert de panneau racine à la page.
-    -->
+Cette grille sert de panneau racine à la page.
+-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -37,20 +37,20 @@
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button  x:Name="backButton" Margin="-1,-1,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                    <Button x:Name="backButton" Margin="-1,-1,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1"
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top">
-                    	<Run Text="Liste de recette"/>
-                    	<Run Text="s"/>
+                     <Run Text="Liste de recette"/>
+                     <Run Text="s"/>
                     </TextBlock>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="500" Header="Recettes">
+            <HubSection Width="500" Header="Recettes" Loaded="HubSection_Loaded">
                 <DataTemplate>
                     <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
                         <GridView.ItemsPanel>
@@ -64,8 +64,8 @@
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
                                     <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
                                         <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button x:Name="seeIngredients" Margin="5,0,0,0" 
-                                                Content="Voir les ingredients" 
+                                        <Button x:Name="seeIngredients" Margin="5,0,0,0"
+                                                Content="Voir les ingredients"
                                                 Click="ClickHandleIngredients"
                                                 Tag="{Binding Name}" />
                                     </StackPanel>
@@ -77,12 +77,12 @@
             </HubSection>
             <HubSection x:Name="hubIngredients" Width="520" Header="Ingrédients">
                 <DataTemplate>
-                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="303" Width="416">
+                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="485" Width="416">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="10*"/>
                             <RowDefinition Height="91*"/>
                         </Grid.RowDefinitions>
-                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" >
+                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" Margin="0,0,0,23" >
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsWrapGrid MaximumRowsOrColumns="10" />
