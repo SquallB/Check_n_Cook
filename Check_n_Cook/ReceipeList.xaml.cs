@@ -135,7 +135,7 @@ namespace Check_n_Cook
             {
                 Receipe receipe = (Receipe)b.DataContext;
                 List<Ingredient> ingredients = receipe.ingredients;
-                this.pageTitle.Text = ingredients.Count.ToString();
+
                 this.listIngredientsViewSource.Source = ingredients;
 
                 if (this.ReceipeTextBlock != null)

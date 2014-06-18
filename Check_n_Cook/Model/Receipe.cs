@@ -133,8 +133,8 @@ namespace Check_n_Cook.Model
             JsonArray ingredientsJson = jsonObject.GetNamedArray("Ingredients");
             foreach (var ingredientObject in ingredientsJson)
             {
-                Ingredient ingredient = new Ingredient(JsonObject.Parse(ingredientObject.Stringify()));
-
+                Ingredient ingredientFound = new Ingredient(JsonObject.Parse(ingredientObject.Stringify()));
+                ingredients.Add(ingredientFound);
             }
         }
 

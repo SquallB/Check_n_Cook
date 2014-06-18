@@ -57,7 +57,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
-            
+
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -94,30 +94,28 @@ namespace Check_n_Cook
                 this.favoriteViewSource.Source = this.Model.FavouriteReceipes;
             }
 
-            if (this.Model.ReceipeList.Count == 0)
+            StorageFolder folderModel = KnownFolders.PicturesLibrary;
+            try
             {
-                StorageFolder folder = KnownFolders.PicturesLibrary;
-                try
-                {
-                    StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
-                    String jsonString = await FileIO.ReadTextAsync(receipesFile);
-                    JsonObject jsonObject = JsonObject.Parse(jsonString);
-                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+                StorageFile receipesFile = await folderModel.GetFileAsync("receipes.json");
+                String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                JsonObject jsonObject = JsonObject.Parse(jsonString);
+                JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
 
-                    foreach (var jsonDate in jsonArray)
-                    {
-                        JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
-                        ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
-                        this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
-                    }
-                    
-                }
-                catch (Exception ex)
+                foreach (var jsonDate in jsonArray)
                 {
-
+                    JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
+                    ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
+                    this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
                 }
+
             }
-            
+            catch (Exception ex)
+            {
+
+            }
+
+
         }
 
         #region Inscription de NavigationHelper
@@ -191,7 +189,7 @@ namespace Check_n_Cook
         {
             progress.Visibility = Visibility.Visible;
             this.Model.ClearReceipes();
-            
+
             bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
             progress.Visibility = Visibility.Collapsed;
@@ -208,9 +206,9 @@ namespace Check_n_Cook
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            
+
             this.search(this.textBoxSearch.Text);
-            
+
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -310,14 +308,14 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                
+
                 retriever.AdvancedDifficulty = 0;
                 if (sliderSearch != null)
                 {
                     sliderSearch.IsEnabled = false;
-                    
+
                 }
-                
+
             }
 
             if (((string)control.Content).Equals("Végétarien"))
@@ -350,10 +348,10 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                
+
                 retriever.AdvancedDifficulty = (int)sliderSearch.Value;
                 sliderSearch.IsEnabled = true;
-               
+
             }
             if (((string)control.Content).Equals("Végétarien"))
             {
@@ -370,10 +368,10 @@ namespace Check_n_Cook
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            
+
             Slider slider = sender as Slider;
             retriever.AdvancedDifficulty = (int)slider.Value;
-            
+
         }
 
         private void textboxSearchReceipe_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -383,7 +381,7 @@ namespace Check_n_Cook
                 this.search(this.textBoxSearch.Text);
             }
         }
-        
+
         private void Slider_Loaded(object sender, RoutedEventArgs e)
         {
             sliderSearch = sender as Slider;
