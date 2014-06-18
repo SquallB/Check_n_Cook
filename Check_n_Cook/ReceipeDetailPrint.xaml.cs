@@ -24,7 +24,7 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ReceipeDetailPrint : BasePrintPage
+    public sealed partial class ReceipeDetailPrint : Page
     {
         private Receipe receipe;
         private List<ItemReceipe> ingredients;
