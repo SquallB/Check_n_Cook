@@ -50,7 +50,7 @@
                     </TextBlock>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="500" Header="Recettes">
+            <HubSection Width="500" Header="Recettes" Loaded="HubSection_Loaded">
                 <DataTemplate>
                     <GridView x:Name="listReceipe" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listReceipeViewSource}}">
                         <GridView.ItemsPanel>
@@ -77,12 +77,12 @@
             </HubSection>
             <HubSection x:Name="hubIngredients" Width="520" Header="Ingrédients">
                 <DataTemplate>
-                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="303" Width="416">
+                    <Grid x:Name="gridIngredients" HorizontalAlignment="Left" Height="485" Width="416">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="10*"/>
                             <RowDefinition Height="91*"/>
                         </Grid.RowDefinitions>
-                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" >
+                        <GridView x:Name="listIngredients" SelectionMode="None" ItemsSource="{Binding Source={StaticResource listIngredientsViewSource}}" Grid.Row="1" Margin="0,0,0,23" >
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsWrapGrid MaximumRowsOrColumns="10" />

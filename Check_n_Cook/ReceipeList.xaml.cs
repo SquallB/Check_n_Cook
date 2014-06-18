@@ -30,7 +30,9 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         public AppModel Model { get; set; }
         private Time time;
-
+        private HubSection hubReceipe;
+        private int nbCountReceipe;
+        private bool day;
         public TextBlock ReceipeTextBlock { get; set; }
 
         /// <summary>
@@ -53,6 +55,7 @@ namespace Check_n_Cook
         public ReceipeList()
         {
             this.InitializeComponent();
+            this.day = false;
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
@@ -83,7 +86,8 @@ namespace Check_n_Cook
                 {
                     receipes.Add(receipe);
                 }
-                this.pageTitle.Text = "Liste de recette pour le " + receipeTimeOfDay.Time.Date + " (" + receipeTimeOfDay.Time.TimeOfDay + ")";
+
+                HandleTitle(receipeTimeOfDay);
                 this.time = receipeTimeOfDay.Time;
             }
             else if (evnt.ReceipeTime is ReceipeDate)
@@ -96,12 +100,43 @@ namespace Check_n_Cook
                         receipes.Add(receipe);
                     }
                 }
-                this.pageTitle.Text = "Liste de recette pour le " + receipeDate.Time.Date + " (La journée)";
+                HandleTitle(receipeDate);
                 this.time = receipeDate.Time;
             }
 
             listReceipeViewSource.Source = receipes;
             this.ReceipeTextBlock = sender as TextBlock;
+        }
+
+        public void HandleTitle(ReceipeTime receipeTime)
+        {
+            this.nbCountReceipe = 0;
+
+            if (receipeTime is ReceipeTimeOfDay)
+            {
+                nbCountReceipe = ((ReceipeTimeOfDay)receipeTime).Receipes.Count;
+
+            }
+            else if (receipeTime is ReceipeDate)
+            {
+                ReceipeDate receipeDate = (ReceipeDate)receipeTime;
+                day = true;
+                foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                {
+                    nbCountReceipe += receipeTimeOfDay.Receipes.Count;
+                }
+            }
+
+
+            if (nbCountReceipe > 1)
+            {
+                this.pageTitle.Text = "Liste de recettes";
+            }
+            else
+            {
+                this.pageTitle.Text = "Liste de recette";
+            }
+
         }
 
         #region Inscription de NavigationHelper
@@ -164,6 +199,37 @@ namespace Check_n_Cook
             {
                 this.Frame.Navigate(typeof(ShoppingList), new GoToModifyReceipeListEvent(this.Model, this.time));
             }
+        }
+
+        private void HubSection_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is HubSection)
+            {
+                this.hubReceipe = (HubSection)sender;
+                if (nbCountReceipe > 1)
+                {
+                    if (!day)
+                    {
+                        this.hubReceipe.Header = "Recettes : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
+                    }
+                    else
+                    {
+                        this.hubReceipe.Header = "Recettes : " + this.time.Date + " (La journée)";
+                    }
+                }
+                else
+                {
+                    if (!day)
+                    {
+                        this.hubReceipe.Header = "Recette : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
+                    }
+                    else
+                    {
+                        this.hubReceipe.Header = "Recette : " + this.time.Date + " (La journée)";
+                    }
+                }
+            }
+
         }
 
     }
