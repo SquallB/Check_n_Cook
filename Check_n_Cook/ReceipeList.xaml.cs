@@ -77,14 +77,14 @@ namespace Check_n_Cook
             GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
             this.Model = evnt.AppModel;
             this.time = evnt.Time;
-            List<ItemReceipe> receipes = new List<ItemReceipe>();
+            List<Receipe> receipes = new List<Receipe>();
 
             if (evnt.ReceipeTime is ReceipeTimeOfDay)
             {
                 ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)evnt.ReceipeTime;
                 foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                 {
-                    receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                    receipes.Add(receipe);
                 }
 
                 HandleTitle(receipeTimeOfDay);
@@ -97,7 +97,7 @@ namespace Check_n_Cook
                 {
                     foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                     {
-                        receipes.Add(new ItemReceipe(receipe.Image, receipe.Title, receipe.Description));
+                        receipes.Add(receipe);
                     }
                 }
                 HandleTitle(receipeDate);
@@ -166,7 +166,6 @@ namespace Check_n_Cook
         {
             Button b = sender as Button;
 
-
             if (b != null && b.DataContext is Receipe)
             {
                 Receipe receipe = (Receipe)b.DataContext;
@@ -175,7 +174,7 @@ namespace Check_n_Cook
 
                 if (this.ReceipeTextBlock != null)
                 {
-                    this.ReceipeTextBlock.Text = (string)b.Tag;
+                    this.ReceipeTextBlock.Text = (string)receipe.Title;
                 }
             }
 

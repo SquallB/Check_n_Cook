@@ -67,7 +67,7 @@ Cette grille sert de panneau racine à la page.
                                         <Button x:Name="seeIngredients" Margin="5,0,0,0"
                                                 Content="Voir les ingredients"
                                                 Click="ClickHandleIngredients"
-                                                Tag="{Binding Name}" />
+                                                Tag="{Binding}" />
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -93,7 +93,7 @@ Cette grille sert de panneau racine à la page.
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding Image}" Width="80" Height="60"/>
                                         <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                             <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         </StackPanel>
                                     </StackPanel>
