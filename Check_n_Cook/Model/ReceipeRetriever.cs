@@ -146,9 +146,13 @@ namespace Check_n_Cook.Model
             var divs = doc.DocumentNode.Descendants("div");
             foreach (var curDiv0 in divs)
             {
+
                 if (curDiv0.GetAttributeValue("class", "") == "m_content_recette_todo")
                 {
-                   String htmlToDo = curDiv0.InnerHtml;
+                   curDiv0.Attributes.RemoveAll();
+                   curDiv0.Attributes.Add("style", "font-family:Segoe UI;font-weight: 350;font-size:17px;");
+                    
+                   String htmlToDo = curDiv0.OuterHtml;
 
                    var linksToHide =  curDiv0.Elements("a");
                    foreach (var currentLink in linksToHide) {
