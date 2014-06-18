@@ -102,7 +102,7 @@ namespace Check_n_Cook
 
                 foreach (var ing in receipe.ingredients)
                 {
-                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()+" "+ing.unity.name));
+                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()+" "+ing.unity));
 
                 }
 
@@ -138,7 +138,7 @@ namespace Check_n_Cook
 
         private async void AddReceipeFavorite_Click(object sender, RoutedEventArgs e)
         {
-            this.Model.FavouriteReceipes.Add(this.receipe);
+            this.Model.AddReceipeFavorite(this.receipe);
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile receipeFile = await folder.CreateFileAsync("receipesFavorite.json", CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
