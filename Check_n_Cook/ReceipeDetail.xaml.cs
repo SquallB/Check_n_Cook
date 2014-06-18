@@ -199,7 +199,7 @@ namespace Check_n_Cook
         /// </summary>
         protected override void PreparePrintContent()
         {
-            this.titleBlock = this.pageTitle;
+            this.title = this.pageTitle.Text;
             this.sectionsToPrint.Add(this.instructionsHub);
             this.sectionsToPrint.Add(this.ingredientsHub);
         }

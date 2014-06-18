@@ -8,15 +8,14 @@
     xmlns:common="using:Check_n_Cook.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" RequestedTheme="Light">
+    mc:Ignorable="d" Opacity="0.995" RequestedTheme="Light">
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
         <x:String x:Key="AppName">Mon application</x:String>
-        <CollectionViewSource x:Name="ingredientsViewSource" />
-        <CollectionViewSource x:Name="receipeViewSource" />
+
     </Page.Resources>
 
     <!--
@@ -31,18 +30,22 @@
 
         <Hub>
             <Hub.Header>
+                <!-- Bouton Précédent et titre de la page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" Loaded="pageTitle_Loaded"/>
+                    <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
                 </Grid>
             </Hub.Header>
-            <HubSection x:Name="printSection">
-            </HubSection>
-        </Hub>
 
+            <HubSection x:Name="printHubSection" Width="780" Margin="0,0,80,0">
+                    <HubSection.Background>
+                        <ImageBrush Stretch="UniformToFill" />
+                    </HubSection.Background>
+                </HubSection>
+        </Hub>
     </Grid>
 </Page>

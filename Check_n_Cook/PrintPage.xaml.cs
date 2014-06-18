@@ -1,20 +1,16 @@
 ﻿using Check_n_Cook.Common;
-using Check_n_Cook.Model;
-using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
@@ -26,17 +22,22 @@ namespace Check_n_Cook
     /// </summary>
     public sealed partial class PrintPage : Page
     {
-        private String title;
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public PrintPage(TextBlock titleBlock, HubSection section)
+        /// <summary>
+        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// </summary>
+        public ObservableDictionary DefaultViewModel
         {
-            this.pageTitle = titleBlock;
-            this.printSection = section;
+            get { return this.defaultViewModel; }
         }
 
-        private void pageTitle_Loaded(object sender, RoutedEventArgs e)
+        public PrintPage(String title, HubSection section)
         {
-            ((TextBlock)sender).Text = this.title;
+            this.InitializeComponent();
+            this.pageTitle.Text = title;
         }
+
+        public PrintPage() : this("", null) { }
     }
 }

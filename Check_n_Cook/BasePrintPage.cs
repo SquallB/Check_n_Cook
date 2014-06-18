@@ -61,7 +61,7 @@ namespace Check_n_Cook
 
         public List<HubSection> sectionsToPrint { get; set; }
 
-        public TextBlock titleBlock;
+        public String title;
 
         /// <summary>
         /// Factory method for every scenario that will create/generate print content specific to each scenario
@@ -173,7 +173,7 @@ namespace Check_n_Cook
 
             foreach (HubSection section in this.sectionsToPrint)
             {
-                PrintPage page = new PrintPage(this.titleBlock, section);
+                PrintPage page = new PrintPage(this.title, section);
 
                 // Set "paper" width
                 page.Width = printPageDescription.PageSize.Width;
