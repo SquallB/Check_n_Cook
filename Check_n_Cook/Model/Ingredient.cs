@@ -13,7 +13,6 @@ namespace Check_n_Cook.Model
         public String quantity { get; set; }
         public string unity { get; set; }
         public string Description { get { if (unity != null && quantity != null) { return quantity + " " + unity; } else { return ""; } } }
-        public string Image { get; set; }
 
         public Ingredient()
         {
@@ -24,7 +23,7 @@ namespace Check_n_Cook.Model
             this.name = name;
             this.quantity = qty;
             this.unity = unity;
-            this.Image = "/Assets/ingredient1.PNG";
+
         }
 
         public Ingredient(JsonObject jsonObject)
@@ -32,7 +31,6 @@ namespace Check_n_Cook.Model
             this.unity = jsonObject.GetNamedString("name");
             this.quantity = jsonObject.GetNamedString("quantity");
             this.name = jsonObject.GetNamedString("unity");
-            this.Image = "/Assets/ingredient1.PNG";
         }
 
         public JsonObject ToJsonObject()

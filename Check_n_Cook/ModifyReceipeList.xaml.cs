@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
+
 namespace Check_n_Cook
 {
     /// <summary>
@@ -159,7 +161,7 @@ namespace Check_n_Cook
         public async void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Button button = sender as Button;
-            if (this.Frame != null && button != null && button.DataContext is Receipe)
+            if (this.Frame != null && button != null)
             {
                 Receipe re = (Receipe)button.DataContext;
                 this.Model.RemoveReceipeList(re, (string)button.Tag, this.date);

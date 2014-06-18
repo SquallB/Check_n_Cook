@@ -6,6 +6,7 @@ using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Storage;
@@ -27,6 +28,8 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private List<ItemResult> ItemsResult { get; set; }
         List<string> dishTypeSearch = new List<string>();
+        public string[] ingredientSearch;
+        public TextBox txtIngredientSearch;
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
         public Slider sliderSearch;
@@ -57,7 +60,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
-
+            
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -94,28 +97,30 @@ namespace Check_n_Cook
                 this.favoriteViewSource.Source = this.Model.FavouriteReceipes;
             }
 
-            StorageFolder folderModel = KnownFolders.PicturesLibrary;
-            try
+            if (this.Model.ReceipeList.Count == 0)
             {
-                StorageFile receipesFile = await folderModel.GetFileAsync("receipes.json");
-                String jsonString = await FileIO.ReadTextAsync(receipesFile);
-                JsonObject jsonObject = JsonObject.Parse(jsonString);
-                JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
-
-                foreach (var jsonDate in jsonArray)
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                try
                 {
-                    JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
-                    ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
-                    this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
+                    StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
+                    String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+
+                    foreach (var jsonDate in jsonArray)
+                    {
+                        JsonObject receipeDateJson = JsonObject.Parse(jsonDate.Stringify());
+                        ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
+                        this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
+                    }
+                    
                 }
+                catch (Exception ex)
+                {
 
+                }
             }
-            catch (Exception ex)
-            {
-
-            }
-
-
+            
         }
 
         #region Inscription de NavigationHelper
@@ -189,7 +194,7 @@ namespace Check_n_Cook
         {
             progress.Visibility = Visibility.Visible;
             this.Model.ClearReceipes();
-
+            
             bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
             progress.Visibility = Visibility.Collapsed;
@@ -204,11 +209,51 @@ namespace Check_n_Cook
 
         #endregion
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-            this.search(this.textBoxSearch.Text);
+            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text==null|| txtIngredientSearch.Text.Equals("")|| txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
+            {
+                this.search(this.textBoxSearch.Text);
+                if (txtIngredientSearch != null)
+                {
+                    txtIngredientSearch.Text = textBoxSearch.Text;
+                }
+            }
+            else
+            {
+                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', ' ', '\n', '/');
+                await this.searchIngredients(ingredientSearch);
 
+                textBoxSearch.Text = retriever.level;
+            }
+            
+        }
+
+        public async Task<bool> searchIngredients(string[] keyWords)
+        {
+            bool error = false;
+            try
+            {
+                
+                progress.Visibility = Visibility.Visible;
+
+                this.Model.ClearReceipes();
+                error = await this.retriever.GetDataByIngredients(keyWords, 200, 1, Model);
+                this.resultsFoundViewSource.Source = this.ItemsResult;
+
+
+                progress.Visibility = Visibility.Collapsed;
+
+                Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
+                
+            }
+            catch (Exception ex)
+            {
+                error = true;
+            }
+            return error;
+            
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -308,14 +353,14 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-
+                
                 retriever.AdvancedDifficulty = 0;
                 if (sliderSearch != null)
                 {
                     sliderSearch.IsEnabled = false;
-
+                    
                 }
-
+                
             }
 
             if (((string)control.Content).Equals("Végétarien"))
@@ -348,10 +393,10 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-
+                
                 retriever.AdvancedDifficulty = (int)sliderSearch.Value;
                 sliderSearch.IsEnabled = true;
-
+               
             }
             if (((string)control.Content).Equals("Végétarien"))
             {
@@ -368,10 +413,10 @@ namespace Check_n_Cook
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-
+            
             Slider slider = sender as Slider;
             retriever.AdvancedDifficulty = (int)slider.Value;
-
+            
         }
 
         private void textboxSearchReceipe_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -381,7 +426,7 @@ namespace Check_n_Cook
                 this.search(this.textBoxSearch.Text);
             }
         }
-
+        
         private void Slider_Loaded(object sender, RoutedEventArgs e)
         {
             sliderSearch = sender as Slider;
@@ -398,6 +443,13 @@ namespace Check_n_Cook
             {
                 this.Frame.Navigate(typeof(ShopsList), this.Model);
             }
+        }
+
+        private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtIngredientSearch = sender as TextBox;
+            
+            
         }
     }
 }

@@ -69,13 +69,7 @@
                             <Image Source="{Binding ImagePath1}" Width="80" Height="60"  Margin="2,0,0,0"/>
                             <Image Source="{Binding ImagePath2}" Width="80" Height="60"  Margin="2,0,0,0"/>
                             <Image Source="{Binding ImagePath3}" Width="80" Height="60"  Margin="2,0,0,0"/>
-                            <Button Margin="2,0,0,0" DataContext="{Binding Time}" Click="GoToReceipeList_CLick">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="/Assets/moreReceipe.png"/>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                            <Button Content="..." Margin="2,0,0,0" DataContext="{Binding Time}" Click="GoToReceipeList_CLick"/>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
@@ -92,7 +86,7 @@
                             <Grid Margin="1,0,0,6">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Title}" Margin="0,0,0,0" Foreground="Black" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
-                                    <Button Height="32" Content="Liste de recettes" DataContext="{Binding Title}" Click="GoToReceipeListAll_CLick" Margin="15, 5, 0, 0">
+                                    <Button Height="32" Content="Liste de recettes" DataContext="{Binding Title}" Click="GoToReceipeListAll_CLick" Margin="5, 0, 0, 0">
                                     </Button>
                                 </StackPanel>
                             </Grid>

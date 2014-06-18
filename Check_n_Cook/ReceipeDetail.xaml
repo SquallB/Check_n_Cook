@@ -29,7 +29,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Hub>
+        <Hub x:Name="mainHub">
             <Hub.Header>
                 <!-- Bouton Précédent et titre de la page -->
                 <Grid>
@@ -47,18 +47,18 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="700" Header="Instruction">
+            <HubSection x:Name="instructionsHub" Width="700" Header="Instructions">
                 <DataTemplate>
+                   
 
-
-                    <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
+                        <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
 
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Ingredients">
+            <HubSection x:Name="ingredientsHub" Width="520" Header="Ingredients">
                 <DataTemplate>
                     <GridView x:Name="ResultatFound" SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}">
+                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="False">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -66,8 +66,8 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Name}">
-                                    <Image Source="{Binding Image}" Width="80" Height="60" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
                                     <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
                                         <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>

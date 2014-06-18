@@ -119,7 +119,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ReceipeDetailPrint.xaml">
+    <Page Include="PrintPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -206,8 +206,8 @@
     <Compile Include="Model\Receipe.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceipeDetailPrint.xaml.cs">
-      <DependentUpon>ReceipeDetailPrint.xaml</DependentUpon>
+    <Compile Include="PrintPage.xaml.cs">
+      <DependentUpon>PrintPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReceipeDetail.xaml.cs">
       <DependentUpon>ReceipeDetail.xaml</DependentUpon>
@@ -236,12 +236,6 @@
     <Content Include="Assets\Check n Cook.png" />
     <Content Include="Assets\ChecknCookSmall.png" />
     <Content Include="Assets\ChecknCookStore.png" />
-    <Content Include="Assets\ingredient1.PNG">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\moreReceipe.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\imageHeader.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
