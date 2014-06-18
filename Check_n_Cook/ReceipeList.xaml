@@ -13,7 +13,6 @@
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
-        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
         <x:String x:Key="AppName">Mon application</x:String>
         <CollectionViewSource x:Name="listReceipeViewSource" />
         <CollectionViewSource x:Name="listIngredientsViewSource" />
