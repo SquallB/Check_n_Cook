@@ -5,6 +5,7 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved
 
+using Check_n_Cook.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,6 +63,8 @@ namespace Check_n_Cook
         public List<HubSection> sectionsToPrint { get; set; }
 
         public String title;
+
+        public Receipe Receipe { get; set; }
 
         /// <summary>
         /// Factory method for every scenario that will create/generate print content specific to each scenario
@@ -173,7 +176,7 @@ namespace Check_n_Cook
 
             foreach (HubSection section in this.sectionsToPrint)
             {
-                PrintPage page = new PrintPage(this.title, section);
+                PrintPage page = new PrintPage(this.Receipe, this.title, section);
 
                 // Set "paper" width
                 page.Width = printPageDescription.PageSize.Width;

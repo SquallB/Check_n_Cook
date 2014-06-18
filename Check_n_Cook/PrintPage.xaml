@@ -42,10 +42,9 @@
             </Hub.Header>
 
             <HubSection x:Name="printHubSection" Width="780" Margin="0,0,80,0">
-                    <HubSection.Background>
-                        <ImageBrush Stretch="UniformToFill" />
-                    </HubSection.Background>
-                </HubSection>
+                <DataTemplate>
+                </DataTemplate>
+            </HubSection>
         </Hub>
     </Grid>
 </Page>

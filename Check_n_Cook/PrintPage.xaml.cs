@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Common;
+using Check_n_Cook.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,12 +33,12 @@ namespace Check_n_Cook
             get { return this.defaultViewModel; }
         }
 
-        public PrintPage(String title, HubSection section)
+        public PrintPage(Receipe receipe, String title, HubSection section)
         {
             this.InitializeComponent();
             this.pageTitle.Text = title;
         }
 
-        public PrintPage() : this("", null) { }
+        public PrintPage() : this(null, "", null) { }
     }
 }
