@@ -194,63 +194,74 @@ namespace Check_n_Cook.Model
                 
                 foreach (var receipe in model.Receipes)
                 {
-                    int count = 0;
-                    ReceipeRetriever rr = new ReceipeRetriever();
-                    var task = rr.extractReceipeFromMarmiton(receipe);
-
-
-                    if ((await task) == true)
+                    if (checkType(receipe))
                     {
-                        var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
-                        rr.handleIngredients(rr.ingredientPart, receipe);
-
-
-                        
-
-                    }
-                    
-                    foreach (var keyWord in keyWords)
-                    {
-                        
-                        bool containsKey = false;
-                        
-                        foreach (var ingredient in receipe.ingredients)
+                        if (checkDifficulty(receipe))
                         {
-                            if (ingredient.name.ToUpper().IndexOf(keyWord) >= 0 || ingredient.unity.ToUpper().IndexOf(keyWord) >= 0)
+                            if (checkOptions(receipe))
                             {
-                                containsKey = true;
-                                
+                                int count = 0;
+                                ReceipeRetriever rr = new ReceipeRetriever();
+                                var task = rr.extractReceipeFromMarmiton(receipe);
+
+
+                                if ((await task) == true)
+                                {
+                                    var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                                    rr.handleIngredients(rr.ingredientPart, receipe);
+
+
+
+
+                                }
+
+                                foreach (var keyWord in keyWords)
+                                {
+
+                                    bool containsKey = false;
+
+                                    foreach (var ingredient in receipe.ingredients)
+                                    {
+                                        if (ingredient.name.ToUpper().IndexOf(keyWord) >= 0 || ingredient.unity.ToUpper().IndexOf(keyWord) >= 0)
+                                        {
+                                            containsKey = true;
+
+                                        }
+
+                                    }
+
+                                    if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().IndexOf(keyWord) >= 0))
+                                    {
+
+                                        count++;
+
+                                    }
+
+
+                                }
+                                if (count > bestResults)
+                                {
+                                    bestResults = count;
+
+                                }
+                                if (count >= bestResults)
+                                {
+
+                                    results[bestResults].Add(receipe);
+                                }
+
                             }
-                            
                         }
-
-                        if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().IndexOf(keyWord) >= 0))
-                        {
-                            
-                            count++;
-                            
-                        }
-                      
-                        
                     }
-                    if (count > bestResults)
-                    {
-                        bestResults = count;
-                        
-                    }
-                    if (count >= bestResults)
-                    {
-
-                        results[bestResults].Add(receipe);
-                    }
+                   
                     
                 }
                 
                 model.ClearReceipes();
                 foreach (var receipe in results[bestResults])
                 {
-                    
-                    addReceipe(receipe, model);
+
+                    model.AddReceipe(receipe);
                 }
                 
             }
