@@ -44,7 +44,7 @@ namespace Check_n_Cook
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
+        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et
         /// gestion de la durée de vie des processus
         /// </summary>
         public NavigationHelper NavigationHelper
@@ -66,12 +66,12 @@ namespace Check_n_Cook
         /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
         /// </summary>
         /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
+        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
         /// </param>
         /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
         /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
         /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// antérieure. L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
@@ -143,11 +143,11 @@ namespace Check_n_Cook
 
         /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
         /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
+        ///
+        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour
         /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
         /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
+        /// Le paramètre de navigation est disponible dans la méthode LoadState
         /// en plus de l'état de page conservé durant une session antérieure.
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -167,14 +167,11 @@ namespace Check_n_Cook
             Button b = sender as Button;
 
 
-            if (b != null)
+            if (b != null && b.DataContext is Receipe)
             {
-                List<ItemReceipe> ingredients = new List<ItemReceipe>();
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
-                ingredients.Add(new ItemReceipe("http://www.google.fr/url?source=imglanding&ct=img&q=http://www.jefaismoimeme.com/wp-content/uploads/2013/10/tomate.jpg&sa=X&ei=4d6SU-WuEs_44QTT2oCwDA&ved=0CAkQ8wc&usg=AFQjCNGbe9N_JdYBZgth7_yOjPPDVlb9ow", "Tomato !", "200g"));
+                Receipe receipe = (Receipe)b.DataContext;
 
-                this.listIngredientsViewSource.Source = ingredients;
+                this.listIngredientsViewSource.Source = receipe.ingredients;
 
                 if (this.ReceipeTextBlock != null)
                 {
