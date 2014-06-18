@@ -59,11 +59,9 @@ namespace Check_n_Cook
         /// </summary>
         internal List<UIElement> printPreviewPages = null;
 
-        /// <summary>
-        /// First page in the printing-content series
-        /// From this "virtual sized" paged content is split(text is flowing) to "printing pages"
-        /// </summary>
-        protected FrameworkElement firstPage;
+        public List<HubSection> sectionsToPrint { get; set; }
+
+        public TextBlock titleBlock;
 
         /// <summary>
         /// Factory method for every scenario that will create/generate print content specific to each scenario
@@ -75,6 +73,7 @@ namespace Check_n_Cook
         public BasePrintPage()
         {
             printPreviewPages = new List<UIElement>();
+            this.sectionsToPrint = new List<HubSection>();
         }
 
         /// <summary>
@@ -159,8 +158,6 @@ namespace Check_n_Cook
             printMan.PrintTaskRequested -= PrintTaskRequested;
         }
 
-        protected event EventHandler pagesCreated;
-
         /// <summary>
         /// This is the event handler for PrintDocument.Paginate. It creates print preview pages for the app.
         /// </summary>
@@ -171,29 +168,27 @@ namespace Check_n_Cook
             // Clear the cache of preview pages 
             printPreviewPages.Clear();
 
-            // This variable keeps track of the last RichTextBlockOverflow element that was added to a page which will be printed
-            RichTextBlockOverflow lastRTBOOnPage;
-
-            // Get the PrintTaskOptions
             PrintTaskOptions printingOptions = ((PrintTaskOptions)e.PrintTaskOptions);
+            PrintPageDescription printPageDescription = printingOptions.GetPageDescription(0);
 
-            // Get the page description to deterimine how big the page is
-            PrintPageDescription pageDescription = printingOptions.GetPageDescription(0);
-
-            // We know there is at least one page to be printed. passing null as the first parameter to
-            // AddOnePrintPreviewPage tells the function to add the first page.
-            lastRTBOOnPage = AddOnePrintPreviewPage(null, pageDescription);
-
-            // We know there are more pages to be added as long as the last RichTextBoxOverflow added to a print preview
-            // page has extra content
-            while (lastRTBOOnPage.HasOverflowContent && lastRTBOOnPage.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            foreach (HubSection section in this.sectionsToPrint)
             {
-                lastRTBOOnPage = AddOnePrintPreviewPage(lastRTBOOnPage, pageDescription);
-            }
+                PrintPage page = new PrintPage(this.titleBlock, section);
 
-            if (pagesCreated != null)
-            {
-                pagesCreated.Invoke(printPreviewPages, null);
+                // Set "paper" width
+                page.Width = printPageDescription.PageSize.Width;
+                page.Height = printPageDescription.PageSize.Height;
+
+                // Get the margins size
+                // If the ImageableRect is smaller than the app provided margins use the ImageableRect
+                double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
+                double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
+
+                // Set-up "printable area" on the "paper"
+                section.Width = page.Width - marginWidth;
+                section.Height = page.Height - marginHeight;
+
+                printPreviewPages.Add(page);
             }
 
             PrintDocument printDoc = (PrintDocument)sender;
@@ -236,56 +231,6 @@ namespace Check_n_Cook
             
             // Indicate that all of the print pages have been provided
             printDoc.AddPagesComplete();
-        }
-
-        /// <summary>
-        /// This function creates and adds one print preview page to the internal cache of print preview
-        /// pages stored in printPreviewPages.
-        /// </summary>
-        /// <param name="lastRTBOAdded">Last RichTextBlockOverflow element added in the current content</param>
-        /// <param name="printPageDescription">Printer's page description</param>
-        protected virtual RichTextBlockOverflow AddOnePrintPreviewPage(RichTextBlockOverflow lastRTBOAdded, PrintPageDescription printPageDescription)
-        {
-            // XAML element that is used to represent to "printing page"
-            FrameworkElement page;
-
-            // The link container for text overflowing in this page
-            RichTextBlockOverflow textLink;
-
-            // Check if this is the first page ( no previous RichTextBlockOverflow)
-            if (lastRTBOAdded == null)
-            {
-                // If this is the first page add the specific scenario content
-                page = firstPage;
-            }
-            else
-            {
-                // Flow content (text) from previous pages
-                page = new ContinuationPage(lastRTBOAdded);
-            }
-
-            // Set "paper" width
-            page.Width = printPageDescription.PageSize.Width;
-            page.Height = printPageDescription.PageSize.Height;
-
-            Grid printableArea = (Grid)page.FindName("printableArea");
-
-            // Get the margins size
-            // If the ImageableRect is smaller than the app provided margins use the ImageableRect
-            double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
-            double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
-
-            // Set-up "printable area" on the "paper"
-            printableArea.Width = firstPage.Width - marginWidth;
-            printableArea.Height = firstPage.Height - marginHeight;
-
-            // Find the last text container and see if the content is overflowing
-            textLink = (RichTextBlockOverflow)page.FindName("continuationPageLinkedContainer");
-
-            // Add the page to the page preview collection
-            printPreviewPages.Add(page);
-
-            return textLink;
         }
 
         #region Navigation

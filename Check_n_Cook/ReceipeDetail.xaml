@@ -29,7 +29,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Hub>
+        <Hub x:Name="mainHub">
             <Hub.Header>
                 <!-- Bouton Précédent et titre de la page -->
                 <Grid>
@@ -47,7 +47,7 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="700" Header="Instruction">
+            <HubSection x:Name="instructionsHub" Width="700" Header="Instructions">
                 <DataTemplate>
                    
 
@@ -55,7 +55,7 @@
 
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Ingredients">
+            <HubSection x:Name="ingredientsHub" Width="520" Header="Ingredients">
                 <DataTemplate>
                     <GridView x:Name="ResultatFound" SelectionMode="None" 
                               ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="False">

@@ -199,10 +199,9 @@ namespace Check_n_Cook
         /// </summary>
         protected override void PreparePrintContent()
         {
-            if (firstPage == null)
-            {
-                firstPage = new ReceipeDetailPrint(this.receipe, this.ingredients);
-            }
+            this.titleBlock = this.pageTitle;
+            this.sectionsToPrint.Add(this.instructionsHub);
+            this.sectionsToPrint.Add(this.ingredientsHub);
         }
     }
 }

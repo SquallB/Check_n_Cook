@@ -1,0 +1,48 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="Check_n_Cook.PrintPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Check_n_Cook"
+    xmlns:common="using:Check_n_Cook.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <Page.Resources>
+        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+
+        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
+        <x:String x:Key="AppName">Mon application</x:String>
+        <CollectionViewSource x:Name="ingredientsViewSource" />
+        <CollectionViewSource x:Name="receipeViewSource" />
+    </Page.Resources>
+
+    <!--
+        Cette grille sert de panneau racine à la page.
+    -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Hub>
+            <Hub.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" Loaded="pageTitle_Loaded"/>
+                </Grid>
+            </Hub.Header>
+            <HubSection x:Name="printSection">
+            </HubSection>
+        </Hub>
+
+    </Grid>
+</Page>

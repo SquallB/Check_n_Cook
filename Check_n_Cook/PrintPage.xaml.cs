@@ -24,19 +24,19 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ReceipeDetailPrint : Page
+    public sealed partial class PrintPage : Page
     {
-        private Receipe receipe;
-        private List<ItemReceipe> ingredients;
+        private String title;
 
-        public ReceipeDetailPrint(Receipe receipe, List<ItemReceipe> ingredients)
+        public PrintPage(TextBlock titleBlock, HubSection section)
         {
-            this.InitializeComponent();
-            this.receipe = receipe;
-            this.ingredients = ingredients;
-            List<ItemReceipe> receipeView = new List<ItemReceipe>();
-            this.pageTitle.Text = receipe.Title;
-            this.ingredientsViewSource.Source = ingredients;
+            this.pageTitle = titleBlock;
+            this.printSection = section;
+        }
+
+        private void pageTitle_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((TextBlock)sender).Text = this.title;
         }
     }
 }
