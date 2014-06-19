@@ -28,9 +28,9 @@ namespace Check_n_Cook.Model
 
         public Ingredient(JsonObject jsonObject)
         {
-            this.unity = jsonObject.GetNamedString("name");
+            this.unity = jsonObject.GetNamedString("unity");
             this.quantity = jsonObject.GetNamedString("quantity");
-            this.name = jsonObject.GetNamedString("unity");
+            this.name = jsonObject.GetNamedString("name");
             this.Image = "/Assets/ingredient1.png";
         }
 
