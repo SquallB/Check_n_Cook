@@ -10,7 +10,7 @@ namespace Check_n_Cook.Model
     public class Ingredient
     {
         public String name { get; set; }
-        public String quantity { get; set; }
+        public string quantity { get; set; }
         public string unity { get; set; }
         public string Description { get { if (unity != null && quantity != null) { return quantity + " " + unity; } else { return ""; } } }
         public string Image { get; set; }
@@ -18,7 +18,7 @@ namespace Check_n_Cook.Model
         {
 
         }
-        public Ingredient(String name, String qty, string unity)
+        public Ingredient(String name, string qty, string unity)
         {
             this.name = name;
             this.quantity = qty;
@@ -43,6 +43,11 @@ namespace Check_n_Cook.Model
             jsonObject.SetNamedValue("unity", JsonValue.CreateStringValue(this.unity));
 
             return jsonObject;
+        }
+
+        public Ingredient ToClone()
+        {
+            return new Ingredient(this.name, this.quantity, this.unity);
         }
     }
 }

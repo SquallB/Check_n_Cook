@@ -78,25 +78,45 @@ namespace Check_n_Cook
                 {
                     ReceipeDate receipeDate = this.model.ReceipeList[time.Date];
 
-                    List<Ingredient> ingredients = new List<Ingredient>();
+                    Dictionary<string, Ingredient> ingredients = new Dictionary<string, Ingredient>();
 
                     foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
                     {
                         foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                         {
-                            foreach(Ingredient ingredient in receipe.ingredients)
+                            foreach (Ingredient ingredient in receipe.ingredients)
                             {
-                                ingredients.Add(ingredient);
+                                if (ingredients.ContainsKey(ingredient.name))
+                                {
+                                    int previousQuantityInt = Int32.Parse(HandleQuantity(ingredients[ingredient.name].quantity));
+                                    int newQuantitty = previousQuantityInt + Int32.Parse(HandleQuantity(ingredient.quantity));
+                                    ingredients[ingredient.name].quantity = newQuantitty.ToString();
+                                }
+                                else
+                                {
+                                    ingredients[ingredient.name] = ingredient.ToClone();
+                                }
                             }
                         }
                     }
 
-                    this.ingredientsViewSource.Source = ingredients;
+                    this.ingredientsViewSource.Source = ingredients.Values;
                 }
             }
 
         }
 
+        public string HandleQuantity(string quantity)
+        {
+            if (quantity == String.Empty || quantity == null)
+            {
+                return "1";
+            }
+            else
+            {
+                return quantity;
+            }
+        }
         #region Inscription de NavigationHelper
 
         /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
