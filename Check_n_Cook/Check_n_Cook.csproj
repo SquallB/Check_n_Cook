@@ -139,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ShoppingListPrintPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutCrew.xaml.cs">
@@ -218,6 +222,9 @@
       <DependentUpon>ShopsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShopView.cs" />
+    <Compile Include="Views\ShoppingListPrintPage.xaml.cs">
+      <DependentUpon>ShoppingListPrintPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\View.cs" />
   </ItemGroup>
   <ItemGroup>
