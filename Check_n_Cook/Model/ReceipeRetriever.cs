@@ -96,7 +96,7 @@ namespace Check_n_Cook.Model
                     currentIng.quantity = "";
                     Boolean hasUnity = false;
                     Boolean hasQty = false;
-
+                    Boolean needMoreDetailUnity = false;
                     int indiceUnity = 0;
                     foreach (var currentArg in listofArgs)
                     {
@@ -121,15 +121,35 @@ namespace Check_n_Cook.Model
 
                             hasQty = true;
                         }
-                        else if (arg.ToUpper() == "kg".ToUpper() || arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
+                        else if (arg.ToUpper() == "kg".ToUpper() || arg.ToUpper() == "tasse".ToUpper() ||  arg.ToUpper() == "bol".ToUpper() || arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
                         {
                             if (hasQty)
                             {
-                                currentIng.unity = (string)arg;
+                                currentIng.unity += (string)arg;
                                 hasUnity = true;
                                 indiceUnity = counterOfWord;
 
                             }
+                            if(arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper()) {
+                                needMoreDetailUnity = true;
+                            }
+                        } else if(needMoreDetailUnity) {
+                            if (hasQty && arg.ToUpper() == "à".ToUpper())
+                            {
+                                currentIng.unity += (string)arg;
+                                hasUnity = true;
+                                indiceUnity = counterOfWord;
+                                needMoreDetailUnity = true;
+
+                            }
+                            if (arg.ToUpper() == "soupe".ToUpper() || arg.ToUpper() == "café".ToUpper())
+                            {
+                                currentIng.unity += (string)arg;
+                                hasUnity = true;
+                                indiceUnity = counterOfWord;
+                                needMoreDetailUnity = false;
+                            }
+
                         }
                         else
                         {
