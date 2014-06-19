@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+                        IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
         <RichTextBlock x:Name="ingredientsBlock" HorizontalAlignment="Left" Height="191" Margin="32,69,0,0" Grid.Row="1" VerticalAlignment="Top" Width="627">
             <Paragraph>
