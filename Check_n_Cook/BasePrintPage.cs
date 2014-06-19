@@ -60,11 +60,7 @@ namespace Check_n_Cook
         /// </summary>
         internal List<UIElement> printPreviewPages = null;
 
-        public List<HubSection> sectionsToPrint { get; set; }
-
-        public String title;
-
-        public Receipe Receipe { get; set; }
+        public List<Page> PagesToPrint { get; set; }
 
         /// <summary>
         /// Factory method for every scenario that will create/generate print content specific to each scenario
@@ -76,7 +72,7 @@ namespace Check_n_Cook
         public BasePrintPage()
         {
             printPreviewPages = new List<UIElement>();
-            this.sectionsToPrint = new List<HubSection>();
+            this.PagesToPrint = new List<Page>();
         }
 
         /// <summary>
@@ -174,24 +170,25 @@ namespace Check_n_Cook
             PrintTaskOptions printingOptions = ((PrintTaskOptions)e.PrintTaskOptions);
             PrintPageDescription printPageDescription = printingOptions.GetPageDescription(0);
 
-            ReceipePrintPage page = new ReceipePrintPage(this.Receipe);
+            foreach (Page page in this.PagesToPrint)
+            {
+                // Set "paper" width
+                page.Width = printPageDescription.PageSize.Width;
+                page.Height = printPageDescription.PageSize.Height;
 
-            // Set "paper" width
-            page.Width = printPageDescription.PageSize.Width;
-            page.Height = printPageDescription.PageSize.Height;
+                // Get the margins size
+                // If the ImageableRect is smaller than the app provided margins use the ImageableRect
+                double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
+                double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
 
-            // Get the margins size
-            // If the ImageableRect is smaller than the app provided margins use the ImageableRect
-            double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
-            double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
+                Grid printableArea = (Grid)page.FindName("printableArea");
 
-            Grid printableArea = (Grid)page.FindName("printableArea");
+                // Set-up "printable area" on the "paper"
+                printableArea.Width = page.Width - marginWidth;
+                printableArea.Height = page.Height - marginHeight;
 
-            // Set-up "printable area" on the "paper"
-            printableArea.Width = page.Width - marginWidth;
-            printableArea.Height = page.Height - marginHeight;
-
-            printPreviewPages.Add(page);
+                printPreviewPages.Add(page);
+            }
 
             PrintDocument printDoc = (PrintDocument)sender;
 

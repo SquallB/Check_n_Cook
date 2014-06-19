@@ -22,12 +22,13 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ShoppingList : Page
+    public sealed partial class ShoppingList : BasePrintPage
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
         private Time time;
+        private Dictionary<string, Ingredient> ingredients;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -79,7 +80,7 @@ namespace Check_n_Cook
                 {
                     ReceipeDate receipeDate = this.model.ReceipeList[time.Date];
 
-                    Dictionary<string, Ingredient> ingredients = new Dictionary<string, Ingredient>();
+                    this.ingredients = new Dictionary<string, Ingredient>();
 
                     foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
                     {
@@ -107,6 +108,8 @@ namespace Check_n_Cook
                     this.ingredientsViewSource.Source = ingredients.Values;
                 }
             }
+
+            this.RegisterForPrinting();
         }
 
         public int HandleQuantity(string quantity, string quantityToAdd)
@@ -180,15 +183,22 @@ namespace Check_n_Cook
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
-            base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            this.UnregisterForPrinting();
             navigationHelper.OnNavigatedFrom(e);
-            base.OnNavigatedFrom(e);
         }
 
         #endregion
+
+        /// <summary>
+        /// Provide print content for scenario 1 first page
+        /// </summary>
+        protected override void PreparePrintContent()
+        {
+            this.PagesToPrint.Add(new ShoppingListPrintPage(this.ingredients));
+        }
     }
 }
