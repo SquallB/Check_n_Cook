@@ -51,6 +51,7 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
 
@@ -88,9 +89,12 @@ namespace Check_n_Cook
                             {
                                 if (ingredients.ContainsKey(ingredient.name))
                                 {
-                                    int previousQuantityInt = Int32.Parse(HandleQuantity(ingredients[ingredient.name].quantity));
-                                    int newQuantitty = previousQuantityInt + Int32.Parse(HandleQuantity(ingredient.quantity));
-                                    ingredients[ingredient.name].quantity = newQuantitty.ToString();
+                                    if (ingredient.quantity != String.Empty && ingredient.quantity != null)
+                                    {
+                                        // int previousQuantityInt = HandleQuantity(ingredients[ingredient.name].quantity);
+                                        //  int newQuantitty = previousQuantityInt + HandleQuantity(ingredient.quantity);
+                                        ingredients[ingredient.name].quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
+                                    }
                                 }
                                 else
                                 {
@@ -103,18 +107,63 @@ namespace Check_n_Cook
                     this.ingredientsViewSource.Source = ingredients.Values;
                 }
             }
-
         }
 
-        public string HandleQuantity(string quantity)
+        public int HandleQuantity(string quantity, string quantityToAdd)
         {
-            if (quantity == String.Empty || quantity == null)
+
+            string[] splitFraction1 = quantity.Split(new Char[] { '/' });
+            string[] splitFraction2 = quantityToAdd.Split(new Char[] { '/' });
+            int a = -1, b = -1, c = -1, d = -1;
+
+            if (splitFraction1.Length == 1)
             {
-                return "1";
+                a = Int32.Parse(splitFraction1[0]);
+            }
+            if (splitFraction1.Length == 2)
+            {
+                a = Int32.Parse(splitFraction1[0]);
+                b = Int32.Parse(splitFraction1[1]);
+            }
+            if (splitFraction2.Length == 1)
+            {
+                c = Int32.Parse(splitFraction2[0]);
+            }
+            if (splitFraction2.Length == 2)
+            {
+                c = Int32.Parse(splitFraction2[0]);
+                d = Int32.Parse(splitFraction2[1]);
+            }
+
+            double result = 0;
+
+            if (b != -1 && d != -1)
+            {
+                result = (a * d + c * b) / (b * d);
+            }
+            else if (b != -1 && d == -1)
+            {
+                result = (a + c * b) / b;
+            }
+            else if (b == -1 && d != -1)
+            {
+                result = (a * d + c) / d;
+            }
+            else if (b == -1 && d == -1)
+            {
+                result = a + c;
+            }
+
+            double resultTrun = Math.Truncate(result);
+
+            if (result == resultTrun)
+            {
+                return (int)result;
             }
             else
             {
-                return quantity;
+
+                return ((int)resultTrun) + 1;
             }
         }
         #region Inscription de NavigationHelper

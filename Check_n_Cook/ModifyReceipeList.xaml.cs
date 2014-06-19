@@ -161,7 +161,7 @@ namespace Check_n_Cook
         public async void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Button button = sender as Button;
-            if (this.Frame != null && button != null)
+            if (this.Frame != null && button != null && button.DataContext is Receipe)
             {
                 Receipe re = (Receipe)button.DataContext;
                 this.Model.RemoveReceipeList(re, (string)button.Tag, this.date);
