@@ -42,77 +42,71 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-                    <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Nouvelle recette"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="500" Header="Section 1">
+            <HubSection Width="500" Header="Champs obligatoires">
                 <DataTemplate>
-                    <Grid Height="503">
+                    <Grid Height="503" Width="418">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="87*"/>
                             <ColumnDefinition Width="332*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" MinHeight="24" />
-                            <RowDefinition Height="Auto" MinHeight="39" />
-                            <RowDefinition Height="440" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="32" />
+                            <RowDefinition Height="37.333" />
+                            <RowDefinition Height="57"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="38"/>
+                            <RowDefinition Height="36"/>
+                            <RowDefinition Height="41.334"/>
+                            <RowDefinition Height="192.999"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,0,430" Grid.ColumnSpan="2"/>
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="2" 
-                                   Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. " Margin="0,276,0,0" Grid.ColumnSpan="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="Auteur" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,-63,27.333" Grid.ColumnSpan="2"/>
+                        <TextBlock TextWrapping="Wrap" Text="Auteur" Grid.Row="1"/>
                         <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="TextBox"/>
+                        <TextBlock TextWrapping="Wrap" Text="Titre"/>
+                        <TextBox Grid.Column="1" TextWrapping="Wrap" Text="TextBox"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Champs optionnels" VerticalAlignment="Top" Margin="0,9.667,0,0" Grid.Row="3" Grid.ColumnSpan="2" Width="292" Height="37" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                        <TextBlock Grid.Row="3" TextWrapping="Wrap" Text="Type de plat" Margin="0,56.667,0,0.333" Grid.RowSpan="2"/>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,56.667,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120" Grid.RowSpan="2"/>
+                        <TextBlock Grid.Row="4" TextWrapping="Wrap" Text="Temps de cuisson" Margin="0,31.667,0,0.333" Grid.RowSpan="2"/>
+                        <TextBox Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="TextBox" Margin="0,31.667,0,0.333" Grid.RowSpan="2"/>
+                        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Difficulté"/>
+                        <ComboBox Grid.Column="1" Grid.Row="6" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="7" TextWrapping="Wrap" Text="Coût"/>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,0.667,0,0" Grid.Row="7" VerticalAlignment="Top" Width="120"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Section 2">
+            <HubSection Width="520" Header="Ingrédients">
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="130" />
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,10"
-                                   Text="Item Title" />
                         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Grid.Row="1" 
-                                   Text="Quisque in porta lorem dolor amet sed consectetuer ising elit, sed diam non my nibh uis mod wisi quip."/>
-                        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="2" Margin="0,20,0,0"
-                                   Text="Item Sub Title"/>
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" 
-                                   Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper."/>
+                                   Text="Quisque in porta lorem dolor amet sed consectetuer ising elit, sed diam non my nibh uis mod wisi quip." Margin="0,0,0,40"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Section 3">
+            <HubSection Header="Instructions">
                 <DataTemplate>
                     <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="400"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="270"/>
-                                <RowDefinition Height="95"/>
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="400"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Image Grid.ColumnSpan="5" Stretch="Fill" Margin="0,0,0,10"/>
-                            <Image Grid.Row="1" Stretch="Fill"/>
-                            <Image Grid.Row="1" Grid.Column="2" Stretch="Fill"/>
-                            <Image Grid.Row="1" Grid.Column="4" Stretch="Fill"/>
-                            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Grid.ColumnSpan="5" Margin="0,15,0,0"
-                                       Text="Description Text:"/>
-                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" Grid.ColumnSpan="5" 
-                                       Text="Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper. Lorem ipsum dolor sit amet, consectetuer ising elit, sed diam nonummy nibh uismod tincidunt ut laoreet suscipit lobortis ni ut wisi quipexerci quis consequat minim veniam, quis nostrud exerci tation ullam corper."/>
+                            <TextBox TextWrapping="Wrap" Text="Vos instructions..."/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
