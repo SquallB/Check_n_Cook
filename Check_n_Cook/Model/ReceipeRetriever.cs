@@ -53,8 +53,8 @@ namespace Check_n_Cook.Model
         }
         public void handleIngredients(HtmlNode node, Receipe rec)
         {
-            String html = node.InnerHtml;
             String text = node.InnerText;
+            String html = node.InnerHtml;
 
             int counterOfIng = 0;
             var spans = node.Descendants("span");
@@ -62,6 +62,7 @@ namespace Check_n_Cook.Model
             {
                 html = html.Replace(span.OuterHtml, "");
             }
+            html = html.Replace("\n", "");
             var linksIng = node.Descendants("a");
             foreach (var currLinkIng in linksIng)
             {
@@ -75,18 +76,27 @@ namespace Check_n_Cook.Model
 
             foreach (var indexIng in listOfIng)
             {
-
-                if (indexIng != "" && indexIng.Length > 0 && indexIng != " " && indexIng != null && counterOfIng > 0 && indexIng.IndexOf('-') != -1)
+                if (indexIng != "" && indexIng.Length > 0 && indexIng != " " && indexIng != null  && indexIng.IndexOf('-') != -1)
                 {
-                    int counterOfWord = 0;
 
-                    string[] listofArgs = indexIng.Split(' ');
+                    int counterOfWord = 0;
+                    var updatedIng = indexIng;
+                    if (indexIng.IndexOf('-') != -1)
+                    {
+                        int firstIndexIng = indexIng.IndexOf('-');
+                        updatedIng = indexIng.Substring(firstIndexIng);
+                    }
+
+
+                    string[] listofArgs = updatedIng.Split(' ');
 
                     Ingredient currentIng = new Ingredient();
                     currentIng.name = "";
                     currentIng.unity = "";
                     currentIng.quantity = "";
                     Boolean hasUnity = false;
+                    Boolean hasQty = false;
+
                     int indiceUnity = 0;
                     foreach (var currentArg in listofArgs)
                     {
@@ -100,8 +110,8 @@ namespace Check_n_Cook.Model
 
                         }
 
-                        var arg = currentArg.Replace(" ", "");
-                        if (counterOfWord == 0)
+                        var arg = currentArg;
+                        if (counterOfWord == 0 )
                         {
                             arg = arg.Replace("-", "");
                         }
@@ -109,14 +119,17 @@ namespace Check_n_Cook.Model
                         {
                             currentIng.quantity = arg;
 
-
+                            hasQty = true;
                         }
-                        else if (arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
+                        else if (arg.ToUpper() == "kg".ToUpper() || arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
                         {
+                            if (hasQty)
+                            {
+                                currentIng.unity = (string)arg;
+                                hasUnity = true;
+                                indiceUnity = counterOfWord;
 
-                            currentIng.unity = (string)arg;
-                            hasUnity = true;
-                            indiceUnity = counterOfWord;
+                            }
                         }
                         else
                         {
@@ -132,6 +145,7 @@ namespace Check_n_Cook.Model
                             }
                             if (arg != "" && arg != " ")
                             {
+                                arg = arg.Replace(",", " et ");
                                 currentIng.name += arg + " ";
 
                             }
@@ -140,7 +154,7 @@ namespace Check_n_Cook.Model
                         counterOfWord++;
 
                     }
-                    if (currentIng.name.Length > 0 && counterOfWord > 0 && currentIng.name != "")
+                    if (currentIng.name.Length > 0 && counterOfWord >= 0 && currentIng.name != "")
                     {
                         string newstring = currentIng.name[0].ToString().ToUpper() + currentIng.name.Substring(1).ToLower();
                         currentIng.name = newstring;
