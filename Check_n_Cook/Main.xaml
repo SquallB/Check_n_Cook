@@ -55,7 +55,7 @@
             </HubSection>
             <HubSection x:Name="hubSearch" Width="500" Header="Recherche" RequestedTheme="Light">
                 <DataTemplate>
-                    <Grid Height="450" Width="418">
+                    <Grid Height="313" Width="418">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="48" />
@@ -63,12 +63,10 @@
                             <RowDefinition Height="48" />
                             <RowDefinition Height="48"/>
                             <RowDefinition Height="48"/>
-                            <RowDefinition Height="48"/>
-                            <RowDefinition Height="48"/>
-                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48*"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="textboxSearchReceipe" TextWrapping="Wrap" Text="Entrer une recette..." Margin="3,0,69,0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Loaded="textboxSearchReceipe_Loaded" KeyDown="textboxSearchReceipe_KeyDown"/>
-                        <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click" Margin="0,5">
+                        <Button x:Name="advancedSearch" Content="Recherche avancée" Grid.Row="1" HorizontalAlignment="Stretch" Height="38" Click="advancedSearch_Click">
                             <Button.Flyout>
                                 <Flyout Placement="Full">
                                     <Grid>
@@ -155,13 +153,11 @@
                             </Button.Flyout>
                         </Button>
                         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Mon espace" Margin="0,20,0,0" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <Button Grid.Row="6" Width="421" Content="Les magasins les plus proches" Click="GoToShop_Click" Height="34" Margin="0,7,-3,7"/>
-                        <Button Content="A propos" Grid.Row="7" Width="421" RequestedTheme="Light" Click="GoToAboutCrew" Height="34" Margin="0,7,-3,7"/>
-                        <ProgressBar x:Name="progress" Height="28" IsIndeterminate="True" Loaded="progress_Loaded"  Foreground="Black" Grid.Row="8" Visibility="Collapsed" Margin="0,11,0,9"/>
+                        <Button Grid.Row="4" Width="424" Content="Les magasins les plus proches" Click="GoToShop_Click"/>
+                        <Button Content="A propos" Grid.Row="5" Width="424" RequestedTheme="Light" Click="GoToAboutCrew"/>
+                        <ProgressBar x:Name="progress" Height="28" IsIndeterminate="True" Margin="0,10" Loaded="progress_Loaded"  Foreground="Black" Grid.Row="6" Visibility="Collapsed"/>
                         <Button Content="OK" Margin="361,-3,0,-3" Height="38" Click="Button_Click" HorizontalAlignment="Stretch"/>
-                        <Button Grid.Row="5" Width="421" Click="GoToPlanningReceipe_Click" Content="Mon planning" Height="34" Margin="0,7,-3,7"/>
-                        <Button Content="Accéder à ma liste de recette du jour" Grid.Row="3" Width="421" Click="GoToReceipeListToday_Click" Margin="0,7,-3,-0.746"/>
-                        <Button Content="Ajouter une recette" Grid.Row="4" Margin="0,6.746,-3,7.254" Width="421" Click="GoToAddReceipe_Click"/>
+                        <Button Grid.Row="3" Width="424" Click="GoToPlanningReceipe_Click" Content="Mon planning"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>

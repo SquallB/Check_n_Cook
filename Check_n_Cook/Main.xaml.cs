@@ -448,23 +448,8 @@ namespace Check_n_Cook
         private void TextBox_Loaded(object sender, RoutedEventArgs e)
         {
             txtIngredientSearch = sender as TextBox;
-        }
-
-        private void GoToReceipeListToday_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Frame != null)
-            {
-                string date = DateTime.Today.Date.ToString("d");
-                this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date])); 
-            }
-        }
-
-        private void GoToAddReceipe_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Frame != null)
-            {
-                this.Frame.Navigate(typeof(AddReceipe));
-            }
+            
+            
         }
     }
 }

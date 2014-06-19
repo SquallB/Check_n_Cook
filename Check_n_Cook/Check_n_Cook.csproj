@@ -110,9 +110,6 @@
     <Page Include="ShoppingListPrintPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    <Page Include="AddReceipe.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReceipePrintPage.xaml">
       <SubType>Designer</SubType>
@@ -150,9 +147,6 @@
   <ItemGroup>
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddReceipe.xaml.cs">
-      <DependentUpon>AddReceipe.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasePrintPage.cs" />
     <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
