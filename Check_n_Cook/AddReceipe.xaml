@@ -12,15 +12,10 @@
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
-
-        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
-        <x:String x:Key="AppName">Mon application</x:String>
+        <CollectionViewSource x:Name="ingredientsViewSource" />
 
     </Page.Resources>
 
-    <!--
-        Cette grille sert de panneau racine à la page.
-    -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -62,7 +57,8 @@
                             <RowDefinition Height="38"/>
                             <RowDefinition Height="36"/>
                             <RowDefinition Height="41.334"/>
-                            <RowDefinition Height="192.999"/>
+                            <RowDefinition Height="40.333"/>
+                            <RowDefinition Height="152.666"/>
                         </Grid.RowDefinitions>
                         <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,-63,27.333" Grid.ColumnSpan="2"/>
                         <TextBlock TextWrapping="Wrap" Text="Auteur" Grid.Row="1"/>
@@ -74,10 +70,11 @@
                         <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,56.667,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120" Grid.RowSpan="2"/>
                         <TextBlock Grid.Row="4" TextWrapping="Wrap" Text="Temps de cuisson" Margin="0,31.667,0,0.333" Grid.RowSpan="2"/>
                         <TextBox Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="TextBox" Margin="0,31.667,0,0.333" Grid.RowSpan="2"/>
-                        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Difficulté"/>
-                        <ComboBox Grid.Column="1" Grid.Row="6" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBlock Grid.Row="7" TextWrapping="Wrap" Text="Coût"/>
+                        <TextBlock Grid.Row="5" TextWrapping="Wrap" Text="Difficulté" Margin="0,37.667,0,0.333" Grid.RowSpan="2"/>
+                        <ComboBox Grid.Column="1" Grid.Row="5" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37.667,0,0" Grid.RowSpan="2"/>
+                        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Coût" Margin="0,35.667,0,0.667" Grid.RowSpan="2"/>
                         <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,0.667,0,0" Grid.Row="7" VerticalAlignment="Top" Width="120"/>
+                        <Button Content="Ajouter la recette" Grid.Row="8" Grid.ColumnSpan="2" Margin="0,3.333,0,3" Width="411"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -85,11 +82,37 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="130" />
+                            <RowDefinition Height="34" />
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Grid.Row="1" 
-                                   Text="Quisque in porta lorem dolor amet sed consectetuer ising elit, sed diam non my nibh uis mod wisi quip." Margin="0,0,0,40"/>
+                        <TextBox HorizontalAlignment="Left" Margin="211,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="85" Height="32" Loaded="TextBoxQuantity_Loaded"/>
+                        <TextBox HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="197" Height="32" Loaded="TextBoxNameIngredient_Loaded"/>
+                        <ComboBox HorizontalAlignment="Left" Margin="310,0,0,0" VerticalAlignment="Top" Width="86" Height="32" Loaded="ComboBoxUnity_Loaded"/>
+                        <Button  Margin="405,0,-19,2" DataContext="{Binding}" Click="AddIngredient_Click" Height="32" Width="35">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="/Assets/ajouter.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <ListView x:Name="FavoritReceipe" Grid.Row="1" SelectionMode="None" ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding quantity}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding unity}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <Button  Margin="2,0,0,0" DataContext="{Binding}" Click="DeleteIngredient_Click">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="/Assets/supprimer.png"/>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -109,6 +132,18 @@
                             <TextBox TextWrapping="Wrap" Text="Vos instructions..."/>
                         </Grid>
                     </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Image (Optionnel)" Width="399">
+                <DataTemplate>
+                    <Grid Height="52" Margin="0,0,-146,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="112*"/>
+                            <ColumnDefinition Width="237*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Left" Margin="23,25,0,0" TextWrapping="Wrap" Text="Lien de l'image" VerticalAlignment="Top" Height="13" Width="73"/>
+                        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="4,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="32" Width="223"/>
+                    </Grid>
                 </DataTemplate>
             </HubSection>
         </Hub>

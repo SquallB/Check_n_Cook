@@ -18,7 +18,7 @@ namespace Check_n_Cook.Model
         {
 
         }
-        public Ingredient(String name, string qty, string unity)
+        public Ingredient(string name, string qty, string unity)
         {
             this.name = name;
             this.quantity = qty;

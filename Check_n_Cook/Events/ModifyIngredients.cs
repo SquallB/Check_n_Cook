@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Events
 {
-    public class Event
+    public class ModifyIngredients : Event
     {
-        public AbstractModel Model { get; set; }
-
-        public Event() : this(null) { }
-
-        public Event(AbstractModel model)
+        public ModifyIngredients()
         {
-            this.Model = model;
+        }
+
+        public ModifyIngredients(NewReceipe model) : base(model)
+        {
+                
         }
     }
 }
