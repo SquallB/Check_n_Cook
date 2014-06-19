@@ -136,7 +136,7 @@ namespace Check_n_Cook.Model
                         } else if(needMoreDetailUnity) {
                             if (hasQty && arg.ToUpper() == "à".ToUpper())
                             {
-                                currentIng.unity += (string)arg;
+                                currentIng.unity += " "+(string)arg+" ";
                                 hasUnity = true;
                                 indiceUnity = counterOfWord;
                                 needMoreDetailUnity = true;
