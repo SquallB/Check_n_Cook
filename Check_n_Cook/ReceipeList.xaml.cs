@@ -34,6 +34,7 @@ namespace Check_n_Cook
         private int nbCountReceipe;
         private bool day;
         public TextBlock ReceipeTextBlock { get; set; }
+        public TextBlock IngredientTextBlock { get; set; }
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -97,7 +98,6 @@ namespace Check_n_Cook
                 {
                     foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                     {
-                        //
                         receipes.Add(receipe);
                     }
                 }
@@ -106,7 +106,6 @@ namespace Check_n_Cook
             }
 
             listReceipeViewSource.Source = receipes;
-            this.ReceipeTextBlock = sender as TextBlock;
         }
 
         public void HandleTitle(ReceipeTime receipeTime)
@@ -173,9 +172,9 @@ namespace Check_n_Cook
 
                 this.listIngredientsViewSource.Source = receipe.ingredients;
 
-                if (this.ReceipeTextBlock != null)
+                if (this.IngredientTextBlock != null)
                 {
-                    this.ReceipeTextBlock.Text = (string)receipe.Title;
+                    this.IngredientTextBlock.Text = (string)receipe.Title;
                 }
             }
 
@@ -183,7 +182,40 @@ namespace Check_n_Cook
 
         private void TextBlockReceipe_Loaded(object sender, RoutedEventArgs e)
         {
-            this.ReceipeTextBlock = sender as TextBlock;
+            if (sender is TextBlock)
+            {
+                this.ReceipeTextBlock = (TextBlock)sender;
+                if (nbCountReceipe > 1)
+                {
+                    if (!day)
+                    {
+                        this.ReceipeTextBlock.Text = "Recettes : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
+                    }
+                    else
+                    {
+                        this.ReceipeTextBlock.Text = "Recettes : " + this.time.Date + " (La journée)";
+                    }
+                }
+                else
+                {
+                    if (!day)
+                    {
+                        this.ReceipeTextBlock.Text = "Recette : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
+                    }
+                    else
+                    {
+                        this.ReceipeTextBlock.Text = "Recette : " + this.time.Date + " (La journée)";
+                    }
+                }
+            }
+        }
+
+        private void TextBlockIngredient_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBlock)
+            {
+                this.IngredientTextBlock = (TextBlock)sender; 
+            }
         }
 
         private void GoToModifyReceipeList_Click(object sender, RoutedEventArgs e)
@@ -209,26 +241,13 @@ namespace Check_n_Cook
                 this.hubReceipe = (HubSection)sender;
                 if (nbCountReceipe > 1)
                 {
-                    if (!day)
-                    {
-                        this.hubReceipe.Header = "Recettes : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
-                    }
-                    else
-                    {
-                        this.hubReceipe.Header = "Recettes : " + this.time.Date + " (La journée)";
-                    }
+                    this.hubReceipe.Header = "Recettes";
                 }
                 else
                 {
-                    if (!day)
-                    {
-                        this.hubReceipe.Header = "Recette : " + this.time.Date + " (" + this.time.TimeOfDay + ")";
-                    }
-                    else
-                    {
-                        this.hubReceipe.Header = "Recette : " + this.time.Date + " (La journée)";
-                    }
+                    this.hubReceipe.Header = "Recette";
                 }
+
             }
 
         }
