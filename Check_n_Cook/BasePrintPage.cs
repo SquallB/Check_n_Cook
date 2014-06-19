@@ -174,25 +174,24 @@ namespace Check_n_Cook
             PrintTaskOptions printingOptions = ((PrintTaskOptions)e.PrintTaskOptions);
             PrintPageDescription printPageDescription = printingOptions.GetPageDescription(0);
 
-            foreach (HubSection section in this.sectionsToPrint)
-            {
-                PrintPage page = new PrintPage(this.Receipe, this.title, section);
+            ReceipePrintPage page = new ReceipePrintPage(this.Receipe);
 
-                // Set "paper" width
-                page.Width = printPageDescription.PageSize.Width;
-                page.Height = printPageDescription.PageSize.Height;
+            // Set "paper" width
+            page.Width = printPageDescription.PageSize.Width;
+            page.Height = printPageDescription.PageSize.Height;
 
-                // Get the margins size
-                // If the ImageableRect is smaller than the app provided margins use the ImageableRect
-                double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
-                double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
+            // Get the margins size
+            // If the ImageableRect is smaller than the app provided margins use the ImageableRect
+            double marginWidth = Math.Max(printPageDescription.PageSize.Width - printPageDescription.ImageableRect.Width, printPageDescription.PageSize.Width * ApplicationContentMarginLeft * 2);
+            double marginHeight = Math.Max(printPageDescription.PageSize.Height - printPageDescription.ImageableRect.Height, printPageDescription.PageSize.Height * ApplicationContentMarginTop * 2);
 
-                // Set-up "printable area" on the "paper"
-                section.Width = page.Width - marginWidth;
-                section.Height = page.Height - marginHeight;
+            Grid printableArea = (Grid)page.FindName("printableArea");
 
-                printPreviewPages.Add(page);
-            }
+            // Set-up "printable area" on the "paper"
+            printableArea.Width = page.Width - marginWidth;
+            printableArea.Height = page.Height - marginHeight;
+
+            printPreviewPages.Add(page);
 
             PrintDocument printDoc = (PrintDocument)sender;
 
