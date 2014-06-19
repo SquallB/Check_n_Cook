@@ -234,6 +234,17 @@ namespace Check_n_Cook
             }
         }
 
+        private void ReceipeClick_Click(object sender, ItemClickEventArgs e)
+        {
+            this.pageTitle.Text = "Clique !";
+            if (e.ClickedItem is Receipe)
+            {
+                Receipe re = ((Receipe)e.ClickedItem);
+                this.Model.SelectReceipe(re);
+                this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
+            }
+        }
+
         private void HubSection_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is HubSection)
