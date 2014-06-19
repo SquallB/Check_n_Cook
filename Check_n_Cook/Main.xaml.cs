@@ -60,7 +60,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
-            
+
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -113,14 +113,14 @@ namespace Check_n_Cook
                         ReceipeDate receipeDate = new ReceipeDate(receipeDateJson);
                         this.Model.ReceipeList.Add(receipeDate.Time.Date, receipeDate);
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
 
                 }
             }
-            
+
         }
 
         #region Inscription de NavigationHelper
@@ -194,7 +194,7 @@ namespace Check_n_Cook
         {
             progress.Visibility = Visibility.Visible;
             this.Model.ClearReceipes();
-            
+
             bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsResult;
             progress.Visibility = Visibility.Collapsed;
@@ -212,18 +212,18 @@ namespace Check_n_Cook
         private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text==null|| txtIngredientSearch.Text.Equals("")|| txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
+            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
             {
                 this.search(this.textBoxSearch.Text);
                 txtIngredientSearch.Text = "Entrez une liste ex : citron-riz-poulet";
             }
             else
             {
-                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_','\n', '/');
+                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', '\n', '/');
                 await this.searchIngredients(ingredientSearch);
                 textBoxSearch.Text = "Entrer une recette...";
             }
-            
+
         }
 
         public async Task<bool> searchIngredients(string[] keyWords)
@@ -231,7 +231,7 @@ namespace Check_n_Cook
             bool error = false;
             try
             {
-                
+
                 progress.Visibility = Visibility.Visible;
 
                 this.Model.ClearReceipes();
@@ -242,14 +242,14 @@ namespace Check_n_Cook
                 progress.Visibility = Visibility.Collapsed;
 
                 Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
-                
+
             }
             catch (Exception ex)
             {
                 error = true;
             }
             return error;
-            
+
         }
 
         private void TextBox_GotFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -327,11 +327,11 @@ namespace Check_n_Cook
         private async void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
         {
             Button delete = sender as Button;
-            ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_','\n', '/');
+            ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', '\n', '/');
             textBoxSearch.Text = "Entrer une recette...";
             advanced.Flyout.Hide();
             await this.searchIngredients(ingredientSearch);
-            
+
 
         }
 
@@ -353,14 +353,14 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                
+
                 retriever.AdvancedDifficulty = 0;
                 if (sliderSearch != null)
                 {
                     sliderSearch.IsEnabled = false;
-                    
+
                 }
-                
+
             }
 
             if (((string)control.Content).Equals("Végétarien"))
@@ -393,10 +393,10 @@ namespace Check_n_Cook
 
             if (((string)control.Content).Equals("Toutes"))
             {
-                
+
                 retriever.AdvancedDifficulty = (int)sliderSearch.Value;
                 sliderSearch.IsEnabled = true;
-               
+
             }
             if (((string)control.Content).Equals("Végétarien"))
             {
@@ -413,10 +413,10 @@ namespace Check_n_Cook
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            
+
             Slider slider = sender as Slider;
             retriever.AdvancedDifficulty = (int)slider.Value;
-            
+
         }
 
         private void textboxSearchReceipe_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -426,7 +426,7 @@ namespace Check_n_Cook
                 this.search(this.textBoxSearch.Text);
             }
         }
-        
+
         private void Slider_Loaded(object sender, RoutedEventArgs e)
         {
             sliderSearch = sender as Slider;
@@ -455,7 +455,10 @@ namespace Check_n_Cook
             if (this.Frame != null)
             {
                 string date = DateTime.Today.Date.ToString("d");
-                this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date])); 
+                if (this.Model.ReceipeList.ContainsKey(date))
+                {
+                    this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date]));
+                }
             }
         }
 
