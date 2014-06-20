@@ -257,6 +257,7 @@
     <Content Include="Assets\hugo_CheckNCook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\mehdi_CheckNCook.PNG" />
     <Content Include="Assets\receipeMore.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
