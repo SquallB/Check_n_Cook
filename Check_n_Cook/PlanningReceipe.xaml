@@ -97,7 +97,7 @@
                     </GridView>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Outil de gestion">
+            <HubSection Width="520" Header="Outil de gestion" >
                 <DataTemplate>
                     <Grid Height="349">
                         <Grid.RowDefinitions>
@@ -105,12 +105,12 @@
                             <RowDefinition Height="48" />
                         </Grid.RowDefinitions>
                         <Button Content="Imprimer les listes de recettes sélectionnées" Grid.Row="1" Visibility="Collapsed" Width="427" Loaded="PrintReceipeList_Loaded"/>
-                        <Button Content="Sélectionner plusieurs listes de recettes" Grid.Row="0" RenderTransformOrigin="-1.004,0.078"  Click="SelectReceipeLIst_Click" Width="427"/>
+                        <Button Content="Sélectionner plusieurs listes de recettes" Grid.Row="0" RenderTransformOrigin="-1.004,0.078"  Click="SelectReceipeList_Click" Width="427"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Listes de recettes sélectionnées">
+            <HubSection  x:Name="receipeListHubSection" Header="Listes de recettes sélectionnées" Visibility="Collapsed">
                 <DataTemplate>
                     <GridView x:Name="ResultatFound" 
                               SelectionMode="None" 
