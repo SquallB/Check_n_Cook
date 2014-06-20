@@ -104,14 +104,18 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Page Include="AboutCrew.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="AddReceipe.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Main.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanningReceipe.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -122,10 +126,6 @@
     <Page Include="ReceipePrintPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PlanningReceipe.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="ReceipeDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -160,11 +160,16 @@
     <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
     <Compile Include="Events\GoToReceipeEvent.cs" />
     <Compile Include="Events\GoToReceipeListEvent.cs" />
+    <Compile Include="Events\ModifyReceipeListPrint.cs" />
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\NewReceipe.cs" />
+    <Compile Include="Model\PrintReceipe.cs" />
     <Compile Include="Model\UnityAvailable.cs" />
+    <Compile Include="PlanningReceipe.xaml.cs">
+      <DependentUpon>PlanningReceipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShoppingListPrintPage.xaml.cs">
       <DependentUpon>ShoppingListPrintPage.xaml</DependentUpon>
     </Compile>
@@ -176,9 +181,6 @@
     <Compile Include="Model\ReceipeTimeOfDay.cs" />
     <Compile Include="Events\RemovedReceipeListEvent.cs" />
     <Compile Include="Model\Time.cs" />
-    <Compile Include="PlanningReceipe.xaml.cs">
-      <DependentUpon>PlanningReceipe.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -252,6 +254,7 @@
     <Content Include="Assets\hugo_CheckNCook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\mehdi_CheckNCook.PNG" />
     <Content Include="Assets\receipeMore.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -275,20 +278,23 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="Bing.Maps.Xaml, Version=1.313.0825.0">
       <Name>Bing Maps for C#, C++, or Visual Basic</Name>
     </SDKReference>
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
