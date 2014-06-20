@@ -76,37 +76,24 @@ namespace Check_n_Cook
                 this.model = evnt.AppModel;
                 this.time = evnt.Time;
 
-                if (this.model.ReceipeList.ContainsKey(time.Date))
+                this.ingredients = new Dictionary<string, Ingredient>();
+
+                foreach (Ingredient ingredient in this.model.ShoppingList)
                 {
-                    ReceipeDate receipeDate = this.model.ReceipeList[time.Date];
-
-                    this.ingredients = new Dictionary<string, Ingredient>();
-
-                    foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                    if (ingredients.ContainsKey(ingredient.name))
                     {
-                        foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
+                        if (ingredient.quantity != String.Empty && ingredient.quantity != null)
                         {
-                            foreach (Ingredient ingredient in receipe.ingredients)
-                            {
-                                if (ingredients.ContainsKey(ingredient.name))
-                                {
-                                    if (ingredient.quantity != String.Empty && ingredient.quantity != null)
-                                    {
-                                        // int previousQuantityInt = HandleQuantity(ingredients[ingredient.name].quantity);
-                                        //  int newQuantitty = previousQuantityInt + HandleQuantity(ingredient.quantity);
-                                        ingredients[ingredient.name].quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    ingredients[ingredient.name] = ingredient.ToClone();
-                                }
-                            }
+                            ingredients[ingredient.name].quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
                         }
                     }
-
-                    this.ingredientsViewSource.Source = ingredients.Values;
+                    else
+                    {
+                        ingredients[ingredient.name] = ingredient.ToClone();
+                    }
                 }
+
+                this.ingredientsViewSource.Source = ingredients.Values;
             }
 
             this.RegisterForPrinting();
