@@ -121,6 +121,29 @@ namespace Check_n_Cook
                 }
             }
 
+            if (this.Model.ShoppingList.Count == 0)
+            {
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                try
+                {
+                    StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
+                    String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("Ingredients");
+
+                    foreach (var jsonIngredient in jsonArray)
+                    {
+                        JsonObject ingredientJson = JsonObject.Parse(jsonIngredient.Stringify());
+                        Ingredient ingredient = new Ingredient(ingredientJson);
+                        this.Model.AddIngredientToShoppingList(ingredient);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
 
         #region Inscription de NavigationHelper
