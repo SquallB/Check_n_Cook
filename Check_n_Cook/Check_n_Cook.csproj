@@ -107,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddReceipe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ShoppingListPrintPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -148,10 +152,16 @@
     <Compile Include="AboutCrew.xaml.cs">
       <DependentUpon>AboutCrew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddReceipe.xaml.cs">
+      <DependentUpon>AddReceipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BasePrintPage.cs" />
     <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
     <Compile Include="Events\GoToReceipeEvent.cs" />
     <Compile Include="Events\GoToReceipeListEvent.cs" />
+    <Compile Include="Events\ModifyIngredients.cs" />
+    <Compile Include="Model\NewReceipe.cs" />
+    <Compile Include="Model\UnityAvailable.cs" />
     <Compile Include="ShoppingListPrintPage.xaml.cs">
       <DependentUpon>ShoppingListPrintPage.xaml</DependentUpon>
     </Compile>
@@ -245,12 +255,8 @@
     <Content Include="Assets\ingredient1.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\MapStopPushPin.png" />
     <Content Include="Assets\shopPushPin.png" />
-    <Content Include="Assets\SmallLogo.scale-100.png" />
-    <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Common\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
