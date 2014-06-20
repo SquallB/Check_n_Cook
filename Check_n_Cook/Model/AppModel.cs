@@ -122,11 +122,13 @@ namespace Check_n_Cook.Model
         public void AddIngredientToShoppingList(Ingredient ingredient)
         {
             this.ShoppingList.Add(ingredient);
+            this.RefreshViews(new AddedIngredientEvent(this, ingredient));
         }
 
-        public void RemoveIngredientToShoppingList(Ingredient ingredient)
+        public void RemoveIngredientFromShoppingList(Ingredient ingredient)
         {
             this.ShoppingList.Remove(ingredient);
+            this.RefreshViews(new RemovedIngredientEvent(this, ingredient));
         }
 
         public String StringifyFavouriteReceipes()

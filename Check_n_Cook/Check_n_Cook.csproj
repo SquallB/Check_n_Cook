@@ -156,10 +156,13 @@
       <DependentUpon>AddReceipe.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasePrintPage.cs" />
+    <Compile Include="Events\AddedIngredientEvent.cs" />
+    <Compile Include="Events\IngredientEvent.cs" />
     <Compile Include="Events\ModifyIngredients.cs" />
     <Compile Include="Events\GoToModifyReceipeListEvent.cs" />
     <Compile Include="Events\GoToReceipeEvent.cs" />
     <Compile Include="Events\GoToReceipeListEvent.cs" />
+    <Compile Include="Events\RemovedIngredientEvent.cs" />
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
