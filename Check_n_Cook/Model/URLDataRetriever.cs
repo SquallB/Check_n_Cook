@@ -281,7 +281,7 @@ namespace Check_n_Cook.Model
 
         public bool checkOptions(Receipe receipe)
         {
-            return ((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == true)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true));
+            return ((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == false)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true));
         }
         public bool checkType(Receipe receipe)
         {

@@ -126,8 +126,8 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <CheckBox x:Name="chkVegetarian" Content="Végétarien" HorizontalAlignment="Left" Height="33" Margin="7,67,0,0" Width="126" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked" IsChecked="True" />
-                                            <CheckBox x:Name="chkAlcohol" Content="Alcool" HorizontalAlignment="Left" Margin="2,161,0,0" VerticalAlignment="Top" Width="131" Grid.Column="1" Height="33" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked" IsChecked="True"/>
+                                            <CheckBox x:Name="chkVegetarian" Content="Végétarien" HorizontalAlignment="Left" Height="33" Margin="7,67,0,0" Width="126" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked" IsChecked="False" />
+                                            <CheckBox x:Name="chkAlcohol" Content="Sans alcool" HorizontalAlignment="Left" Margin="2,67,0,0" VerticalAlignment="Top" Width="131" Grid.Column="1" Height="33" Checked="chkDishType1_Checked" Unchecked="chkDishType3_Unchecked" IsChecked="False"/>
 
                                         </Grid>
 

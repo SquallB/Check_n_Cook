@@ -209,20 +209,35 @@ namespace Check_n_Cook
 
         #endregion
 
-        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
 
-            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
+        public async void searchConfirmation(){
+            
+            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") ||txtIngredientSearch==null ||txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
             {
+                
                 this.search(this.textBoxSearch.Text);
-                txtIngredientSearch.Text = "Entrez une liste ex : citron-riz-poulet";
+                if (txtIngredientSearch != null)
+                {
+                    txtIngredientSearch.Text = "Entrez une liste ex : citron-riz-poulet";
+                }
+                
             }
             else
             {
-                ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', '\n', '/');
-                await this.searchIngredients(ingredientSearch);
-                textBoxSearch.Text = "Entrer une recette...";
+                if (txtIngredientSearch != null)
+                {
+                    ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', '\n', '/');
+                    await this.searchIngredients(ingredientSearch);
+                    textBoxSearch.Text = "Entrer une recette...";
+
+                }
+                
             }
+        }
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+             searchConfirmation();
 
         }
 
@@ -324,14 +339,11 @@ namespace Check_n_Cook
 
         }
 
-        private async void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
+        private void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
         {
             Button delete = sender as Button;
-            ingredientSearch = txtIngredientSearch.Text.Split('-', ',', '_', '\n', '/');
-            textBoxSearch.Text = "Entrer une recette...";
             advanced.Flyout.Hide();
-            await this.searchIngredients(ingredientSearch);
-
+            searchConfirmation();
 
         }
 
@@ -368,9 +380,9 @@ namespace Check_n_Cook
                 this.retriever.AdvancedVegetarian = true;
             }
 
-            if (((string)control.Content).Equals("Alcool"))
+            if (((string)control.Content).Equals("Sans alcool"))
             {
-                this.retriever.AdvancedAlcool = true;
+                this.retriever.AdvancedAlcool = false;
             }
 
         }
@@ -403,9 +415,9 @@ namespace Check_n_Cook
                 this.retriever.AdvancedVegetarian = false;
             }
 
-            if (((string)control.Content).Equals("Alcool"))
+            if (((string)control.Content).Equals("Sans alcool"))
             {
-                this.retriever.AdvancedAlcool = false;
+                this.retriever.AdvancedAlcool = true;
             }
 
 
