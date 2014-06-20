@@ -2,6 +2,7 @@
 using Check_n_Cook.Events;
 using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
+using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,11 +26,15 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class PlanningReceipe : Page
+    public sealed partial class PlanningReceipe : Page, View
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        public AppModel Model { get; set; }
+        private AppModel Model;
+        private List<CheckBox> checkBoxs;
+        private Button printReceipeList;
+        private PrintReceipe printReceipe;
+        private List<SampleDataGroup> newPrintReceipeList;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -53,6 +58,10 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.checkBoxs = new List<CheckBox>();
+            this.printReceipe = new PrintReceipe();
+            this.newPrintReceipeList = new List<SampleDataGroup>();
+            this.printReceipe.AddView(this);
         }
 
 
@@ -194,6 +203,70 @@ namespace Check_n_Cook
                 ReceipeDate receipeDate = this.Model.ReceipeList[date];
 
                 this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, time, receipeDate));
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                CheckBox cb = (CheckBox)sender;
+                SampleDataGroup data = (SampleDataGroup)cb.DataContext;
+                printReceipe.AddReceipeList(data);
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                CheckBox cb = (CheckBox)sender;
+                SampleDataGroup data = (SampleDataGroup)cb.DataContext;
+                printReceipe.RemoveReceipeList(data);
+            }
+        }
+
+        private void CheckBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                checkBoxs.Add((CheckBox)sender);
+            }
+        }
+
+        private void SelectReceipeLIst_Click(object sender, RoutedEventArgs e)
+        {
+            printReceipeList.Visibility = Visibility.Visible;
+
+            foreach (CheckBox ch in checkBoxs)
+            {
+                ch.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void PrintReceipeList_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                printReceipeList = (Button)sender;
+            }
+        }
+
+        public void Refresh(Event e)
+        {
+            if (e is ModifyReceipeListPrint)
+            {
+                ModifyReceipeListPrint srcEvnt = (ModifyReceipeListPrint)e;
+                PrintReceipe modelEvnt = (PrintReceipe)srcEvnt.Model;
+                this.newPrintReceipeList.Clear();
+                this.newPrintReceipeList = new List<SampleDataGroup>();
+
+                foreach (SampleDataGroup ing in modelEvnt.GetReceipePrintList())
+                {
+                    newPrintReceipeList.Add(ing);
+                }
+
+                this.receipeListViewSource.Source = newPrintReceipeList;
             }
         }
 
