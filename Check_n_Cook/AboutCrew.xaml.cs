@@ -91,9 +91,10 @@ namespace Check_n_Cook
             // TODO: affectez un groupe pouvant être lié à Me.DefaultViewModel("Group")
             // TODO: affectez une collection d'éléments pouvant être liés à Me.DefaultViewModel("Items")
             List<ItemAbout> favorites = new List<ItemAbout>();
+            string descriptionHugo = "Développeur web depuis 2006, Hugo a eu l’occasion d'acquérir des compétences managériales et organisationnelles\nau cours de projets qui l’ont confronté avec le monde professionnelle tout en conciliant sa vie étudiante dans une école d’ingénieur lilloise (ISEN).\n\nSoucieux de l’accessibilité et de la simplicité de ses produits et projets pour leurs utilisateurs, Hugo a tendance a placé le mot easy sur tous ses projets.\nAfin de partager avec d’autres cette volonté de simplifier la vie des utilisateurs de ses projets, il a tout naturellement décidé de rejoindre l’équipe easyLifer.\nAvec cette équipe, il a modernisé le jeu que tout le monde connait sous le nom Casse brique pour en faire un Casse Tuile; reprenant ainsi le thème de Windows 8.\n\nSuite à cela, l’équipe a eu l’idée de développer une application pour Windows 8 permettant de stocker ses recettes de cuisine, d’ajouter les ingrédients\ndans une liste de course et trouver le magasin le plus proche de sa position.\n\nLes compétences managériales aquises ces dernières années lui ont values d’être promu chef de projet pour ces deux derniers projets.\n\nHugo est joignable par mail : hdufossez@gmail.com ";
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Sylvain BARDIN", "Responsable technique", "Blablablalblablab"));
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Mehdi BOUCHAGOUR", "Responsable marketing", "Blablablalblablab"));
-            favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Hugo DUFOSSEZ", "Chef de projet", "Blablablalblablab"));
+            favorites.Add(new ItemAbout("Assets/hugo_CheckNCook.png", "Hugo DUFOSSEZ", "Chef de projet", descriptionHugo));
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Stéphane EINTRAZI", "Responsable design", "Blablablalblablab"));
 
             itemsViewSource.Source = favorites;
