@@ -49,33 +49,41 @@
             </Hub.Header>
             <HubSection x:Name="instructionsHub" Width="700" Header="Instructions">
                 <DataTemplate>
-                   
 
-                        <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
+
+                    <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
 
                 </DataTemplate>
             </HubSection>
             <HubSection x:Name="ingredientsHub" Width="520" Header="Ingredients">
                 <DataTemplate>
-                    <GridView x:Name="ResultatFound" SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="False">
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="10" />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
-                                        <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <GridView Grid.Row="0" x:Name="ResultatFound" SelectionMode="None" 
+                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="True">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                        <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
+                                            <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                        <CheckBox Visibility="Collapsed" DataContext="{Binding}" Loaded="CheckBox_Loaded" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
                                     </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <Button x:Name="button_validateIngredients" Grid.Row="1" Visibility="Collapsed" Content="Valider le choix des ingrédients" Click="ValidateIngredients_Click" Loaded="button_validateIngredients_Loaded" />
+                    </Grid>
                 </DataTemplate>
             </HubSection>
 
@@ -89,13 +97,18 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="60"/>
-                                <RowDefinition Height="60"/>
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="57"/>
+                                <RowDefinition Height="49.582"/>
+                                <RowDefinition Height="75*" />
+                                <RowDefinition Height="38*"/>
+                                <RowDefinition Height="28*"/>
                             </Grid.RowDefinitions>
-                            <Button Content="Ajouter cette recette à votre liste de course" Width="406" Click="AddReceipeList_Click"/>
-                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="2" Margin="0,66,-3,88" Width="403" Click="AddReceipeFavorite_Click"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="118,28,0,0" Grid.Row="1" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" />
-                            <ComboBox HorizontalAlignment="Left" Margin="3,28,0,0" Grid.Row="1" VerticalAlignment="Top" Width="102" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged"/>
+                            <Button Content="Ajouter cette recette à votre planning" Width="406" Click="AddReceipeList_Click" Margin="0,16,-6,7" Height="34" Grid.Row="1"/>
+                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="3" Margin="0,47.418,-3,31.582" Width="403" Click="AddReceipeFavorite_Click" Height="34" Grid.RowSpan="2"/>
+                            <DatePicker HorizontalAlignment="Left" Margin="118,8,0,0" Grid.Row="2" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" Height="32" Width="280" />
+                            <ComboBox HorizontalAlignment="Left" Margin="3,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="102" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged" Height="32"/>
+                            <Button Content="Imprimer la recette" Grid.Row="4" Margin="0,7.418,-3,24.582" Width="403" Height="34" Click="PrintReceipe_Click" Grid.RowSpan="2"/>
+                            <Button Content="Ajouter des ingrédients à la liste de course" HorizontalAlignment="Left" Margin="0,20,-3,0" VerticalAlignment="Top" Width="403" Height="33" Click="SelectIngredients_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

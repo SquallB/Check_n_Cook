@@ -258,7 +258,7 @@
     <Content Include="Assets\imageHeader.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\ingredient1.PNG">
+    <Content Include="Assets\ingredient1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\MapStopPushPin.png" />

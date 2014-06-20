@@ -35,7 +35,8 @@ namespace Check_n_Cook
         private string Date;
         private string TimeOfDay;
         private Receipe receipe;
-        private List<ItemReceipe> ingredients;
+        private List<Ingredient> ingredients;
+        private List<Ingredient> currentShoppingList;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -59,15 +60,9 @@ namespace Check_n_Cook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.Date = DateTime.Today.ToString("d");
-            this.ingredients = new List<ItemReceipe>();
-        }
-        public ReceipeDetail(Receipe receipe, AppModel model)
-        {
-            this.InitializeComponent();
-            this.receipe = receipe;
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.ingredients = new List<ItemReceipe>();
+            this.ingredients = new List<Ingredient>();
+            this.checkboxes = new List<CheckBox>();
+            this.currentShoppingList = new List<Ingredient>();
         }
 
 
@@ -102,7 +97,7 @@ namespace Check_n_Cook
 
                 foreach (var ing in receipe.ingredients)
                 {
-                    ingredients.Add(new ItemReceipe("http://vivelesfemmes.com/wp-content/uploads/2012/04/Pomme.jpg", ing.name, ing.quantity.ToString()+" "+ing.unity));
+                    ingredients.Add(ing);
 
                 }
 
@@ -200,6 +195,76 @@ namespace Check_n_Cook
         protected override void PreparePrintContent()
         {
             this.PagesToPrint.Add(new ReceipePrintPage(this.receipe));
+        }
+
+        private async void PrintReceipe_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
+        }
+
+        private void SelectIngredients_Click(object sender, RoutedEventArgs e)
+        {
+            this.button_validateIngredients.Visibility = Visibility.Visible;
+            foreach (CheckBox checkbox in this.checkboxes)
+            {
+                checkbox.Visibility = Visibility.Visible;
+                checkbox.IsChecked = true;
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox)
+            {
+                CheckBox checkbox = (CheckBox)sender;
+                if (checkbox.DataContext is Ingredient)
+                {
+                    Ingredient ingredient = (Ingredient)checkbox.DataContext;
+                    this.currentShoppingList.Add(ingredient);
+                }
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox) {
+                CheckBox checkbox = (CheckBox)sender;
+                if (checkbox.DataContext is Ingredient)
+                {
+                    Ingredient ingredient = (Ingredient)checkbox.DataContext;
+                    this.currentShoppingList.Remove(ingredient);
+                }
+            }
+        }
+
+        private async void ValidateIngredients_Click(object sender, RoutedEventArgs e)
+        {
+            this.button_validateIngredients.Visibility = Visibility.Collapsed;
+            foreach (CheckBox checkbox in this.checkboxes)
+            {
+                checkbox.Visibility = Visibility.Collapsed;
+            }
+
+            foreach (Ingredient ingredient in this.currentShoppingList)
+            {
+                this.Model.AddIngredientToShoppingList(ingredient);
+            }
+            
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+            StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.Model.StringifyShoppingList());
+        }
+
+        private Button button_validateIngredients;
+        private void button_validateIngredients_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.button_validateIngredients = (Button)sender;
+        }
+
+        private List<CheckBox> checkboxes;
+        private void CheckBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            checkboxes.Add((CheckBox)sender);
         }
     }
 }
