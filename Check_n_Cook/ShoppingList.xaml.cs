@@ -200,5 +200,10 @@ namespace Check_n_Cook
         {
             this.PagesToPrint.Add(new ShoppingListPrintPage(this.ingredients));
         }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
+        }
     }
 }

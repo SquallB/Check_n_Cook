@@ -84,7 +84,7 @@
                                 <RowDefinition Height="38*"/>
                                 <RowDefinition Height="258"/>
                             </Grid.RowDefinitions>
-                            <Button HorizontalAlignment="Left" Width="386" Content="Imprimer la liste de course"/>
+                            <Button HorizontalAlignment="Left" Width="386" Content="Imprimer la liste de course" Click="Button_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
