@@ -49,5 +49,22 @@ namespace Check_n_Cook.Model
         {
             return new Ingredient(this.name, this.quantity, this.unity);
         }
+
+        public override bool Equals(object obj)
+        {
+            bool result = false;
+
+            if (obj is Ingredient)
+            {
+                Ingredient other = (Ingredient)obj;
+
+                if (this.name == other.name)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
     }
 }

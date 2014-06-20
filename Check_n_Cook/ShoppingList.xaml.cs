@@ -1,12 +1,14 @@
 ﻿using Check_n_Cook.Common;
 using Check_n_Cook.Events;
 using Check_n_Cook.Model;
+using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,13 +24,15 @@ namespace Check_n_Cook
     /// <summary>
     /// Page affichant une collection groupée d'éléments.
     /// </summary>
-    public sealed partial class ShoppingList : BasePrintPage
+    public sealed partial class ShoppingList : BasePrintPage, View
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
         private Time time;
         private Dictionary<string, Ingredient> ingredients;
+        private Dictionary<string, Ingredient> tempIngredients;
+        private bool isModifyingList;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -53,8 +57,32 @@ namespace Check_n_Cook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            this.deleteButtons = new List<Button>();
+            this.isModifyingList = false;
+            this.ingredients = new Dictionary<string, Ingredient>();
+            this.tempIngredients = new Dictionary<string, Ingredient>();
         }
 
+        private void addIngredient(Ingredient ingredient)
+        {
+            if (ingredients.ContainsKey(ingredient.name))
+            {
+                if (ingredient.quantity != String.Empty && ingredient.quantity != null)
+                {
+                    String quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
+                    tempIngredients[ingredient.name].quantity = quantity;
+                }
+            }
+            else
+            {
+                tempIngredients[ingredient.name] = ingredient.ToClone();
+            }
+        }
+
+        private void removeIngredient(Ingredient ingredient)
+        {
+            tempIngredients.Remove(ingredient.name);
+        }
 
         /// <summary>
         /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
@@ -74,23 +102,17 @@ namespace Check_n_Cook
             if (evnt != null)
             {
                 this.model = evnt.AppModel;
+                this.model.AddView(this);
                 this.time = evnt.Time;
-
-                this.ingredients = new Dictionary<string, Ingredient>();
 
                 foreach (Ingredient ingredient in this.model.ShoppingList)
                 {
-                    if (ingredients.ContainsKey(ingredient.name))
-                    {
-                        if (ingredient.quantity != String.Empty && ingredient.quantity != null)
-                        {
-                            ingredients[ingredient.name].quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
-                        }
-                    }
-                    else
-                    {
-                        ingredients[ingredient.name] = ingredient.ToClone();
-                    }
+                    this.addIngredient(ingredient);
+                }
+
+                foreach (String key in this.tempIngredients.Keys)
+                {
+                    this.ingredients[key] = this.tempIngredients[key];
                 }
 
                 this.ingredientsViewSource.Source = ingredients.Values;
@@ -191,6 +213,160 @@ namespace Check_n_Cook
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
+        }
+
+        private void ModifyList_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.isModifyingList)
+            {
+                this.modifyListButton.Content = "Modifier la liste de course";
+
+                foreach (Button button in this.deleteButtons)
+                {
+                    button.Visibility = Visibility.Collapsed;
+                }
+
+                this.nameIngredient.Visibility = Visibility.Collapsed;
+                this.quantityIngredient.Visibility = Visibility.Collapsed;
+                this.unityIngredient.Visibility = Visibility.Collapsed;
+                this.addItemButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.modifyListButton.Content = "Arrêter les modifications sur la liste de course";
+
+                foreach (Button button in this.deleteButtons)
+                {
+                    button.Visibility = Visibility.Visible;
+                }
+
+                this.nameIngredient.Text = "";
+                this.nameIngredient.Visibility = Visibility.Visible;
+
+                this.quantityIngredient.Text = "";
+                this.quantityIngredient.Visibility = Visibility.Visible;
+
+                this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
+                this.unityIngredient.Visibility = Visibility.Visible;
+
+                this.addItemButton.Visibility = Visibility.Visible;
+            }
+
+            this.isModifyingList = !isModifyingList;
+        }
+
+        private List<Button> deleteButtons;
+        private void Button_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.deleteButtons.Add((Button)sender);
+
+            if (this.isModifyingList)
+            {
+                ((Button)sender).Visibility = Visibility.Visible;
+            }
+        }
+
+        private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button) {
+                Button button = (Button)sender;
+
+                if(button.DataContext is Ingredient) {
+                    Ingredient ingredient = (Ingredient)button.DataContext;
+                    this.model.RemoveIngredientFromShoppingList(ingredient);
+                }
+
+                this.deleteButtons.Remove(button);
+
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+                await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+            }
+        }
+
+        public void Refresh(Event e)
+        {
+            if (e is IngredientEvent)
+            {
+                IngredientEvent ingredientE = (IngredientEvent)e;
+                Ingredient ingredient = ingredientE.Ingredient;
+
+                if (ingredientE is AddedIngredientEvent)
+                {
+                    this.addIngredient(ingredient);
+                }
+                else if (ingredientE is RemovedIngredientEvent)
+                {
+                    this.removeIngredient(ingredient);
+                }
+
+                this.ingredients.Clear();
+                this.ingredients = new Dictionary<string, Ingredient>();
+
+                foreach(String key in this.tempIngredients.Keys)
+                {
+                    this.ingredients[key] = this.tempIngredients[key];
+                }
+                
+                this.ingredientsViewSource.Source = ingredients.Values;
+            }
+        }
+
+        private Button modifyListButton;
+        private void ModifyList_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.modifyListButton = (Button)sender;
+        }
+
+        private TextBox nameIngredient;
+        private void TextBoxNameIngredient_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                this.nameIngredient = (TextBox)sender;
+            }
+        }
+
+        private TextBox quantityIngredient;
+        private void TextBoxQuantity_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                this.quantityIngredient = (TextBox)sender;
+            }
+        }
+
+        private ComboBox unityIngredient;
+        private void ComboBoxUnity_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                this.unityIngredient = (ComboBox)sender;
+                foreach (string unity in UnityAvailable.GetUnity())
+                {
+                    this.unityIngredient.Items.Add(unity);
+                }
+                this.unityIngredient.SelectedIndex = 0;
+            }
+        }
+
+        private async void AddIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            String name = this.nameIngredient.Text;
+            String quantity = this.quantityIngredient.Text;
+            String unity = this.unityIngredient.SelectedItem.ToString();
+            Ingredient ingredient = new Ingredient(name, quantity, unity);
+            this.model.AddIngredientToShoppingList(ingredient);
+
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+            StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+        }
+
+        private Button addItemButton;
+        private void AddIngredientButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.addItemButton = (Button)sender;
         }
     }
 }
