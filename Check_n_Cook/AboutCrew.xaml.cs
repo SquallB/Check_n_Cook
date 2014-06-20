@@ -54,7 +54,6 @@ namespace Check_n_Cook
             // Configurer l'assistant de navigation
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.navigationHelper.SaveState += navigationHelper_SaveState;
 
             // Configurer les composants de navigation de page logique qui permettent
             // la page pour afficher un seul volet à la fois.
@@ -88,12 +87,11 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: affectez un groupe pouvant être lié à Me.DefaultViewModel("Group")
-            // TODO: affectez une collection d'éléments pouvant être liés à Me.DefaultViewModel("Items")
             List<ItemAbout> favorites = new List<ItemAbout>();
             string descriptionHugo = "Développeur web depuis 2006, Hugo a eu l’occasion d'acquérir des compétences managériales et organisationnelles\nau cours de projets qui l’ont confronté avec le monde professionnelle tout en conciliant sa vie étudiante dans une école d’ingénieur lilloise (ISEN).\n\nSoucieux de l’accessibilité et de la simplicité de ses produits et projets pour leurs utilisateurs, Hugo a tendance a placé le mot easy sur tous ses projets.\nAfin de partager avec d’autres cette volonté de simplifier la vie des utilisateurs de ses projets, il a tout naturellement décidé de rejoindre l’équipe easyLifer.\nAvec cette équipe, il a modernisé le jeu que tout le monde connait sous le nom Casse brique pour en faire un Casse Tuile; reprenant ainsi le thème de Windows 8.\n\nSuite à cela, l’équipe a eu l’idée de développer une application pour Windows 8 permettant de stocker ses recettes de cuisine, d’ajouter les ingrédients\ndans une liste de course et trouver le magasin le plus proche de sa position.\n\nLes compétences managériales aquises ces dernières années lui ont values d’être promu chef de projet pour ces deux derniers projets.\n\nHugo est joignable par mail : hdufossez@gmail.com ";
+            string descriptionMehdi = "Mehdi est actuellement étudiant de 20 ans, il suit ses études à Lille, dans une école d’ingénieur généraliste \nnommée ISEN (Institut Supérieur de l’Électronique et du Numérique). Il fait partie de l’équipe EasyLifer, en tant que responsable commercial, car il \ncherche avant tout à faciliter la vie quotidienne d’autrui. Pour cela il s’efforce de sélectionner des éléments qui lui semblent gênant dans sa propre vie et les superpose aux attentes du marché.\n\n C’est ainsi, dans un souci de confort et de compréhension, que l’équipe développe ses applications, car chaque membre sait que les utilisateurs n’ont pas forcément envie de faire l’effort de prendre en main un outil compliqué, mais au contraire, souhaitent se focaliser sur le contenu mis à disposition.\n\nVous pouvez le contacter par mail à l’adresse suivante : mehdi.bouchagour@laposte.net \n\nOu bien par téléphone au : 06.20.12.29.86";
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Sylvain BARDIN", "Responsable technique", "Blablablalblablab"));
-            favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Mehdi BOUCHAGOUR", "Responsable marketing", "Blablablalblablab"));
+            favorites.Add(new ItemAbout("Assets/mehdi_CheckNCook.png", "Mehdi BOUCHAGOUR", "Responsable marketing", descriptionMehdi));
             favorites.Add(new ItemAbout("Assets/hugo_CheckNCook.png", "Hugo DUFOSSEZ", "Chef de projet", descriptionHugo));
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Stéphane EINTRAZI", "Responsable design", "Blablablalblablab"));
 
@@ -128,15 +126,6 @@ namespace Check_n_Cook
         /// <param name="sender">La source de l'événement ; en général <see cref="NavigationHelper"/></param>
         /// <param name="e">Données d'événement qui fournissent un dictionnaire vide à remplir à l'aide de
         /// état sérialisable.</param>
-        private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
-        {
-            if (this.itemsViewSource.View != null)
-            {
-                // TODO: dérivez un paramètre de navigation sérialisable et assignez-le à la valeur
-                //       la valeur de pageState("SelectedItem")
-
-            }
-        }
 
         #region Navigation entre pages logiques
 

@@ -5,18 +5,25 @@ using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Windows.Data.Json;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
+// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
     /// <summary>
-    /// A page that displays a grouped collection of items.
+    /// Page affichant une collection groupée d'éléments.
     /// </summary>
     public sealed partial class PlanningReceipe : Page
     {
@@ -25,20 +32,20 @@ namespace Check_n_Cook
         public AppModel Model { get; set; }
 
         /// <summary>
-        /// NavigationHelper is used on each page to aid in navigation and 
-        /// process lifetime management
-        /// </summary>
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
-
-        /// <summary>
-        /// This can be changed to a strongly typed view model.
+        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
+        }
+
+        /// <summary>
+        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
+        /// gestion de la durée de vie des processus
+        /// </summary>
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
         }
 
         public PlanningReceipe()
@@ -46,42 +53,20 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.SizeChanged += GroupedItemsPage_SizeChanged;
         }
 
-        /// <summary>
-        /// If the page is resized to less than 500 pixels, use the layout for narrow widths. 
-        /// Otherwise, use the default layout.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event
-        /// </param>
-        /// <param name="e">
-        /// Event data related to the SizeChanged event.
-        /// </param>
-        void GroupedItemsPage_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Width < 500)
-            {
-                VisualStateManager.GoToState(this, "MinimalLayout", true);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, "DefaultLayout", true);
-            }
-        }
 
         /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
+        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
+        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
         /// </summary>
         /// <param name="sender">
-        /// The source of the event; typically <see cref="NavigationHelper"/>
+        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
         /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
+        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
+        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
+        /// un dictionnaire d'état conservé par cette page durant une session
+        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (this.Model == null)
@@ -116,9 +101,7 @@ namespace Check_n_Cook
                     }
 
                     sampleDataGroups.Add(sampleDataGroup);
-
                 }
-
             }
             catch (FileNotFoundException ex)
             {
@@ -149,22 +132,16 @@ namespace Check_n_Cook
             this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
-        /// <summary>
-        /// Invoked when a group header is clicked.
-        /// </summary>
-        /// <param name="sender">The Button used as a group header for the selected group.</param>
-        /// <param name="e">Event data that describes how the click was initiated.</param>
+        #region Inscription de NavigationHelper
 
-        #region NavigationHelper registration
-
-        /// The methods provided in this section are simply used to allow
-        /// NavigationHelper to respond to the page's navigation methods.
+        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
+        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
         /// 
-        /// Page specific logic should be placed in event handlers for the  
+        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
         /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// and <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// The navigation parameter is available in the LoadState method 
-        /// in addition to page state preserved during an earlier session.
+        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
+        /// Le paramètre de navigation est disponible dans la méthode LoadState 
+        /// en plus de l'état de page conservé durant une session antérieure.
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
