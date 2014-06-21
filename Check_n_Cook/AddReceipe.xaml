@@ -80,31 +80,44 @@
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Width="520" Header="Ingrédients">
+            <HubSection Width="auto" Header="Ingrédients">
                 <DataTemplate>
-                    <Grid>
+                    <Grid Width="auto">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="34" />
+                            <RowDefinition Height="48" />
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <TextBox HorizontalAlignment="Left" Margin="211,0,0,0" TextWrapping="Wrap" Text="Quantité" VerticalAlignment="Top" Width="85" Height="32" Loaded="TextBoxQuantity_Loaded"/>
-                        <TextBox HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Nom de l'ingrédient" VerticalAlignment="Top" Width="197" Height="32" Loaded="TextBoxNameIngredient_Loaded"/>
-                        <ComboBox HorizontalAlignment="Left" Margin="310,0,0,0" VerticalAlignment="Top" Width="86" Height="32" Loaded="ComboBoxUnity_Loaded"/>
-                        <Button  Margin="405,0,-19,2" DataContext="{Binding}" Click="AddIngredient_Click" Height="32" Width="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox HorizontalAlignment="Left" Margin="266,0,0,0" TextWrapping="Wrap" Text="Quantité..." VerticalAlignment="Top" Width="90" Height="32" Loaded="TextBoxQuantity_Loaded" LostFocus="QuanityLostFocus" GotFocus="QuantityGotFocus"/>
+                        <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nom de l'ingrédient..." VerticalAlignment="Top" Width="243" Height="32" Loaded="TextBoxNameIngredient_Loaded" LostFocus="NameINgredientLostFocus" GotFocus="NameIngredientGotFocus"/>
+                        <ComboBox HorizontalAlignment="Left" Margin="380,0,0,0" VerticalAlignment="Top" Width="86" Height="32" Loaded="ComboBoxUnity_Loaded"/>
+                        <Button  Margin="485,0,0,16" DataContext="{Binding}" Click="AddIngredient_Click" Height="32" Width="35" RenderTransformOrigin="0.514,0.062">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Image Source="/Assets/ajouter.png"/>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <ListView x:Name="FavoritReceipe" Grid.Row="1" SelectionMode="None" ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}">
-                            <ListView.ItemTemplate>
+                        <GridView Grid.Row="1" x:Name="AddIngredients" SelectionMode="None"
+                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  
+                                  IsHitTestVisible="True">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding quantity}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding unity}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button  Margin="2,0,0,0" DataContext="{Binding}" Click="DeleteIngredient_Click">
+                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                        <StackPanel Orientation="Vertical"  Width="150">
+                                            <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding quantity}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding unity}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                        <Button Height="32" Width="32" Margin="2,0,0,0" DataContext="{Binding}" Click="DeleteIngredient_Click">
                                             <Button.Template>
                                                 <ControlTemplate>
                                                     <Image Source="/Assets/supprimer.png"/>
@@ -113,8 +126,8 @@
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -130,7 +143,7 @@
                                 <RowDefinition Height="400"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="ReceipeContent_TB" TextWrapping="Wrap" Text="Vos instructions..." TextChanged="ReceipeContent_Changed" Margin="0,0,-89,-134" Grid.RowSpan="2"/>
+                            <TextBox x:Name="ReceipeContent_TB" TextWrapping="Wrap" Text="Vos instructions..." TextChanged="ReceipeContent_Changed" LostFocus="InstructionLostFocus" GotFocus="InstructionFocus" Margin="0,0,-89,-134" Loaded="InstructionLoaded" Grid.RowSpan="2"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

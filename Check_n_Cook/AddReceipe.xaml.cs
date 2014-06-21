@@ -44,8 +44,8 @@ namespace Check_n_Cook
         private int costLevelIndex;
         private string toDoInstructions;
         private string urlForImage;
+        private TextBox instruction;
 
-        
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Check_n_Cook
             mealTypeIndex = 0;
             cookingTime = "";
             difficultyLevelIndex = 0;
-            costLevelIndex = 0 ;
+            costLevelIndex = 0;
             toDoInstructions = "";
             urlForImage = "";
 
@@ -230,7 +230,7 @@ namespace Check_n_Cook
 
                 }
 
-                    difficultyLevel.SelectedIndex = 0;
+                difficultyLevel.SelectedIndex = 0;
             }
 
         }
@@ -256,7 +256,7 @@ namespace Check_n_Cook
 
         private void ReceipeTitle_Changed(object sender, TextChangedEventArgs e)
         {
-            var tb = (TextBox) sender;
+            var tb = (TextBox)sender;
             if (tb.Text != "" && tb.Text.Length > 0)
             {
                 this.receipeName = tb.Text;
@@ -341,10 +341,11 @@ namespace Check_n_Cook
         {
             try
             {
-                StorageFile sfile =  await sf.GetFileAsync(fileName);
+                StorageFile sfile = await sf.GetFileAsync(fileName);
                 return true;
-            } 
-            catch {
+            }
+            catch
+            {
                 return false;
             }
         }
@@ -353,16 +354,21 @@ namespace Check_n_Cook
             if (this.receipeName != "")
             {
                 DishType dt = null;
-                if(mealTypeIndex == 0) {
+                if (mealTypeIndex == 0)
+                {
                     dt = DishType.GetInstance("Entrée");
-                } else if(mealTypeIndex == 1){
+                }
+                else if (mealTypeIndex == 1)
+                {
                     dt = DishType.GetInstance("Plat");
 
 
-                } else if(mealTypeIndex == 2) {
+                }
+                else if (mealTypeIndex == 2)
+                {
 
-                                  
-                     dt = DishType.GetInstance("Dessert");
+
+                    dt = DishType.GetInstance("Dessert");
 
                 }
 
@@ -370,7 +376,8 @@ namespace Check_n_Cook
                 rec.Id = -1;
                 rec.Image = this.urlForImage;
                 rec.ToDoInstructions = this.toDoInstructions;
-                foreach(Ingredient ing in this.ingredientsNews.Values) {
+                foreach (Ingredient ing in this.ingredientsNews.Values)
+                {
                     rec.ingredients.Add(ing);
                 }
 
@@ -406,18 +413,97 @@ namespace Check_n_Cook
                     await Windows.Storage.FileIO.WriteTextAsync(receipeFile, jsonObject.Stringify());
 
                 }
-                
-                
-
-                
-
-
-
             }
-
 
         }
 
+        private void NameIngredientGotFocus(object sender, RoutedEventArgs e)
+        {
+           
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals("Nom de l'ingrédient..."))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void NameINgredientLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "Nom de l'ingrédient...";
+                }
+            }
+
+        }
+
+        private void QuantityGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals("Quantité..."))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void QuanityLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "Quantité...";
+                }
+            }
+        }
+
+        private void InstructionLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                this.instruction = (TextBox)sender;
+            }
+        }
+
+        private void InstructionFocus(object sender, RoutedEventArgs e)
+        {
+         
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+                if (textbox.Text.Equals("Vos instructions..."))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void InstructionLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "Vos instruction...";
+                }
+            }
+        }
     }
 
 }
