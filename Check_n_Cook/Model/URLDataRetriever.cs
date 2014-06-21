@@ -155,9 +155,14 @@ namespace Check_n_Cook.Model
                     {
                         addReceipe(localToAdd,model);
                     }
-                    
-
                 }
+            }catch(Exception ex){
+
+            }
+            
+            try
+            {
+                
                 HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord, nbItemsPerPage, startIndex));
                 string jsonString = await response.Content.ReadAsStringAsync();
 

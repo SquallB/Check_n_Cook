@@ -399,6 +399,7 @@ namespace Check_n_Cook
                     sliderSearch.IsEnabled = false;
 
                 }
+                
 
             }
 
