@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.IO;
 using Windows.Data.Json;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
@@ -23,11 +25,13 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private AppModel Model;
-        private List<CheckBox> checkBoxs;
+        private AppModel appModel;
+        private Dictionary<string, CheckBox> checkBoxs;
         private Button printReceipeList;
-        private PrintReceipe printReceipe;
+        private ReceipeListSelected receipeListSelectedModel;
         private List<SampleDataGroup> newPrintReceipeList;
+        private Button delteReceipeList;
+        private Button selectionMode;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -51,10 +55,11 @@ namespace Check_n_Cook
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.checkBoxs = new List<CheckBox>();
-            this.printReceipe = new PrintReceipe();
+            this.checkBoxs = new Dictionary<string, CheckBox>();
+            this.receipeListSelectedModel = new ReceipeListSelected();
             this.newPrintReceipeList = new List<SampleDataGroup>();
-            this.printReceipe.AddView(this);
+            this.receipeListSelectedModel.AddView(this);
+            //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
 
@@ -71,9 +76,10 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (this.Model == null)
+            if (this.appModel == null)
             {
-                this.Model = e.NavigationParameter as AppModel;
+                this.appModel = e.NavigationParameter as AppModel;
+                this.appModel.AddView(this);
             }
             StorageFolder folder = KnownFolders.PicturesLibrary;
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
@@ -107,9 +113,15 @@ namespace Check_n_Cook
             }
             catch (FileNotFoundException ex)
             {
-
+                var messageDialog = new Windows.UI.Popups.MessageDialog("Error: " + ex.Message + " \nLocation: PlanningReceipe class.");
             }
 
+            BubbleSort(sampleDataGroups);
+            this.DefaultViewModel["Groups"] = sampleDataGroups;
+        }
+
+        public void BubbleSort(List<SampleDataGroup> sampleDataGroups)
+        {
             int n = sampleDataGroups.Count;
             bool swapped = true;
             while (swapped)
@@ -130,8 +142,6 @@ namespace Check_n_Cook
                     n--;
                 }
             }
-
-            this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
         #region Inscription de NavigationHelper
@@ -159,44 +169,29 @@ namespace Check_n_Cook
 
         public void GoToReceipeList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (this.Frame != null)
+            if (e.ClickedItem is ViewReceipeTimeOfDay)
             {
-                this.Frame.Navigate(typeof(ModifyReceipeList));
-            }
-        }
-
-        public void GoToReceipeList_CLick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            if (this.Frame != null && button != null)
-            {
-                Time time = (Time)button.DataContext;
-
-                ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
-                if (receipeDate != null)
+                ViewReceipeTimeOfDay viewReceipeTimeOfDay = (ViewReceipeTimeOfDay)e.ClickedItem;
+                Time time = viewReceipeTimeOfDay.Time;
+                if (this.appModel.ReceipeList.ContainsKey(time.Date) && this.appModel.ReceipeList[time.Date].ReceipeTimeOfDay.ContainsKey(time.TimeOfDay))
                 {
-                    ReceipeTimeOfDay receipeTimeOfDay = receipeDate.ReceipeTimeOfDay[time.TimeOfDay];
-                    if (receipeTimeOfDay != null)
-                    {
-                        receipeTimeOfDay.Time.Date = receipeDate.Time.Date;
-                        this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, time, receipeTimeOfDay));
-                    }
+                    ReceipeTimeOfDay receipeTImeOfDay = this.appModel.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay];
+                    this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.appModel, time, receipeTImeOfDay));
                 }
+
             }
         }
-
         private void GoToReceipeListAll_CLick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            if (this.Frame != null && button != null)
-            {
-                string date = (string)button.DataContext;
-                Time time = new Time();
-                time.Date = date;
-                ReceipeDate receipeDate = this.Model.ReceipeList[date];
+            var group = (sender as FrameworkElement).DataContext;
+            SampleDataGroup data = (SampleDataGroup)group;
+            string date = (string)data.Title;
+            Time time = new Time();
+            time.Date = date;
+            ReceipeDate receipeDate = this.appModel.ReceipeList[date];
 
-                this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, time, receipeDate));
-            }
+            this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.appModel, time, receipeDate));
+
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -205,7 +200,7 @@ namespace Check_n_Cook
             {
                 CheckBox cb = (CheckBox)sender;
                 SampleDataGroup data = (SampleDataGroup)cb.DataContext;
-                printReceipe.AddReceipeList(data);
+                receipeListSelectedModel.AddReceipeList(data);
             }
         }
 
@@ -215,7 +210,7 @@ namespace Check_n_Cook
             {
                 CheckBox cb = (CheckBox)sender;
                 SampleDataGroup data = (SampleDataGroup)cb.DataContext;
-                printReceipe.RemoveReceipeList(data);
+                receipeListSelectedModel.RemoveReceipeList(data);
             }
         }
 
@@ -223,39 +218,53 @@ namespace Check_n_Cook
         {
             if (sender is CheckBox)
             {
-                checkBoxs.Add((CheckBox)sender);
+                CheckBox cb = (CheckBox)sender;
+                SampleDataGroup data = (SampleDataGroup)cb.DataContext;
+                if (!checkBoxs.ContainsKey(data.Title))
+                {
+                    checkBoxs.Add(data.Title, cb);
+                }
+                else
+                {
+                    //Checkbox has already loaded
+                    cb.Visibility = Visibility.Visible;
+                }
             }
         }
 
-        private void SelectReceipeList_Click(object sender, RoutedEventArgs e)
+        private void SelectionMode_Click(object sender, RoutedEventArgs e)
         {
-            Button but = (Button) sender;
+            Button but = (Button)sender;
             if (printReceipeList.Visibility == Visibility.Collapsed)
             {
                 printReceipeList.Visibility = Visibility.Visible;
-                but.Content = "Déselectionner toutes les listes de recettes";
+                but.Content = "Sélection: ON";
 
-                foreach (CheckBox ch in checkBoxs)
+                foreach (CheckBox ch in checkBoxs.Values)
                 {
                     ch.Visibility = Visibility.Visible;
                 }
 
                 this.receipeListHubSection.Visibility = Visibility.Visible;
+                this.delteReceipeList.Visibility = Visibility.Visible;
+                this.selectionMode.Visibility = Visibility.Visible;
             }
-            else if(printReceipeList.Visibility == Visibility.Visible)
+            else if (printReceipeList.Visibility == Visibility.Visible)
             {
                 printReceipeList.Visibility = Visibility.Collapsed;
-                but.Content = "Sélectionner plusieurs listes de recettes";
+                but.Content = "Sélection: OFF";
 
-                 foreach (CheckBox ch in checkBoxs)
-                 {
-                     ch.IsChecked = false;
-                     ch.Visibility = Visibility.Collapsed;
-                 }
-                 this.receipeListHubSection.Visibility = Visibility.Collapsed;
+                foreach (CheckBox ch in checkBoxs.Values)
+                {
+                    ch.IsChecked = false;
+                    ch.Visibility = Visibility.Collapsed;
+                }
+                this.receipeListHubSection.Visibility = Visibility.Collapsed;
+                this.delteReceipeList.Visibility = Visibility.Collapsed;
+                this.selectionMode.Visibility = Visibility.Collapsed;
             }
 
-          
+
         }
 
         private void PrintReceipeList_Loaded(object sender, RoutedEventArgs e)
@@ -271,16 +280,108 @@ namespace Check_n_Cook
             if (e is ModifyReceipeListPrint)
             {
                 ModifyReceipeListPrint srcEvnt = (ModifyReceipeListPrint)e;
-                PrintReceipe modelEvnt = (PrintReceipe)srcEvnt.Model;
+                ReceipeListSelected modelEvnt = (ReceipeListSelected)srcEvnt.Model;
                 this.newPrintReceipeList.Clear();
                 this.newPrintReceipeList = new List<SampleDataGroup>();
 
-                foreach (SampleDataGroup ing in modelEvnt.GetReceipePrintList())
+                foreach (SampleDataGroup ing in modelEvnt.GetReceipeListSelected())
                 {
                     newPrintReceipeList.Add(ing);
                 }
 
                 this.receipeListViewSource.Source = newPrintReceipeList;
+            }
+            else if (e is RemovedReceipeDateEvent)
+            {
+                RemovedReceipeDateEvent srcEvnt = (RemovedReceipeDateEvent)e;
+                AppModel modelEvnt = (AppModel)srcEvnt.Model;
+                List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
+
+                foreach (ReceipeDate receipeDate in modelEvnt.ReceipeList.Values)
+                {
+                    SampleDataGroup sampleDataGroup = new SampleDataGroup(receipeDate.Time.Date);
+
+                    foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                    {
+                        List<string> imgs = new List<string>();
+
+                        foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
+                        {
+                            imgs.Add(receipe.Image);
+                        }
+
+                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
+                    }
+
+                    sampleDataGroups.Add(sampleDataGroup);
+                }
+
+                foreach (CheckBox cb in checkBoxs.Values)
+                {
+                    cb.Visibility = Visibility.Visible;
+                }
+
+                BubbleSort(sampleDataGroups);
+                this.DefaultViewModel["Groups"] = sampleDataGroups;
+
+
+            }
+        }
+
+        private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void DeleteReceipeList_Click(object sender, RoutedEventArgs e)
+        {
+            List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
+
+            foreach (SampleDataGroup data in this.receipeListSelectedModel.GetReceipeListSelected())
+            {
+                sampleDataGroups.Add(data);
+            }
+
+            foreach (SampleDataGroup dataGroup in sampleDataGroups)
+            {
+                Time time = null;
+                if (dataGroup.Items.Count >= 1)
+                {
+                    time = dataGroup.Items[0].Time;
+                }
+
+                //update the AppModel model
+                this.appModel.RemoveReceipeDate(time);
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                StorageFile receipeFile = await folder.CreateFileAsync("receipes.json", CreationCollisionOption.ReplaceExisting);
+                await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.appModel.StringifyReceipesList());
+
+                //update the eceipeListSelected model
+                this.receipeListSelectedModel.RemoveReceipeList(dataGroup);
+            }
+        }
+
+        private void DeleteReceipeList_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                this.delteReceipeList = (Button)sender;
+            }
+        }
+
+        private void UnselectReceipeList_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (CheckBox cb in checkBoxs.Values)
+            {
+                cb.IsChecked = false;
+            }
+        }
+
+        private void SelectionMode_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                this.selectionMode = (Button)sender;
             }
         }
 

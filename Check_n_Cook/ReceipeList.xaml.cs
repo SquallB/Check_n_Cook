@@ -89,7 +89,6 @@ namespace Check_n_Cook
                 }
 
                 HandleTitle(receipeTimeOfDay);
-                this.time = receipeTimeOfDay.Time;
             }
             else if (evnt.ReceipeTime is ReceipeDate)
             {
@@ -102,7 +101,6 @@ namespace Check_n_Cook
                     }
                 }
                 HandleTitle(receipeDate);
-                this.time = receipeDate.Time;
             }
 
             listReceipeViewSource.Source = receipes;

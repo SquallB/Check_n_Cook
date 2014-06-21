@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Events
 {
-    public class ModifyReceipeListPrint : Event
+    public class RemovedReceipeDateEvent : Event
     {
-        public ModifyReceipeListPrint()
+        public RemovedReceipeDateEvent()
         {
                 
         }
-        public ModifyReceipeListPrint(ReceipeListSelected model) : base(model)
+
+        public RemovedReceipeDateEvent(AppModel model) 
+            : base(model)
         {
                 
         }

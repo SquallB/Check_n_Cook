@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model
 {
-    public class PrintReceipe : AbstractModel
+    public class ReceipeListSelected : AbstractModel
     {
         private List<SampleDataGroup> receipeListSelected;
 
-        public PrintReceipe()
+        public ReceipeListSelected()
         {
             receipeListSelected = new List<SampleDataGroup>();
         }
 
-        public List<SampleDataGroup> GetReceipePrintList()
+        public List<SampleDataGroup> GetReceipeListSelected()
         {
             return this.receipeListSelected;
         }

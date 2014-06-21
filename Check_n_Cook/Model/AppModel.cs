@@ -67,6 +67,29 @@ namespace Check_n_Cook.Model
             receipeDate.ReceipeTimeOfDay[timeOfDay].AddReceipe(receipe);
         }
 
+        public void RemoveReceipeDate(Time time)
+        {
+            if (this.ReceipeList.ContainsKey(time.Date))
+            {
+                ReceipeDate receipeDate = this.ReceipeList[time.Date];
+                this.ReceipeList.Remove(time.Date);
+                /*
+                foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
+                {
+                    Time time2 = receipeTimeOfDay.Time;
+                    time2.Date = time.Date;
+
+                    foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
+                    {
+                       
+                        this.ReceipeList[time2.Date].ReceipeTimeOfDay[time2.TimeOfDay].RemoveReceipe(receipe);
+                    }
+                }
+                */
+                this.RefreshViews(new RemovedReceipeDateEvent(this));
+            }
+        }
+
         public void RemoveReceipeList(Receipe receipe, string timeOfDay, string date)
         {
             if (this.ReceipeList.Count != 0 && this.ReceipeList[date] != null && this.ReceipeList[date].ReceipeTimeOfDay[timeOfDay] != null)
