@@ -31,7 +31,7 @@ namespace Check_n_Cook
         private AppModel model;
         private Time time;
         private Dictionary<string, Ingredient> ingredients;
-        private Dictionary<string, Ingredient> tempIngredients;
+        private Dictionary<string, Dictionary<string, Ingredient>> tempIngredients;
         private bool isModifyingList;
 
         /// <summary>
@@ -60,28 +60,28 @@ namespace Check_n_Cook
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
             this.ingredients = new Dictionary<string, Ingredient>();
-            this.tempIngredients = new Dictionary<string, Ingredient>();
+            this.tempIngredients = new Dictionary<string, Dictionary<string, Ingredient>>();
         }
 
-        private void addIngredient(Ingredient ingredient)
+        private void addIngredient(Ingredient ingredient, Dictionary<string, Ingredient> groupDictionnary)
         {
-            if (ingredients.ContainsKey(ingredient.name))
+            if (groupDictionnary.ContainsKey(ingredient.name))
             {
                 if (ingredient.quantity != String.Empty && ingredient.quantity != null)
                 {
-                    String quantity = HandleQuantity(ingredients[ingredient.name].quantity, ingredient.quantity).ToString();
-                    tempIngredients[ingredient.name].quantity = quantity;
+                    String quantity = HandleQuantity(groupDictionnary[ingredient.name].quantity, ingredient.quantity).ToString();
+                    groupDictionnary[ingredient.name].quantity = quantity;
                 }
             }
             else
             {
-                tempIngredients[ingredient.name] = ingredient.ToClone();
+                groupDictionnary[ingredient.name] = ingredient.ToClone();
             }
         }
 
-        private void removeIngredient(Ingredient ingredient)
+        private void removeIngredient(Ingredient ingredient, Dictionary<string, Ingredient> groupDictionnary)
         {
-            tempIngredients.Remove(ingredient.name);
+            groupDictionnary.Remove(ingredient.name);
         }
 
         /// <summary>
@@ -105,14 +105,17 @@ namespace Check_n_Cook
                 this.model.AddView(this);
                 this.time = evnt.Time;
 
-                foreach (Ingredient ingredient in this.model.ShoppingList)
+                foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
                 {
-                    this.addIngredient(ingredient);
-                }
+                    Dictionary<string, Ingredient> groupDictionnary = new Dictionary<string, Ingredient>();
 
-                foreach (String key in this.tempIngredients.Keys)
-                {
-                    this.ingredients[key] = this.tempIngredients[key];
+                    foreach (Ingredient ingredient in group.Ingredients)
+                    {
+                        this.addIngredient(ingredient, groupDictionnary);
+                        this.addIngredient(ingredient, this.ingredients);
+                    }
+
+                    this.tempIngredients[group.Name] = groupDictionnary;
                 }
 
                 this.ingredientsViewSource.Source = ingredients.Values;
@@ -207,7 +210,7 @@ namespace Check_n_Cook
         /// </summary>
         protected override void PreparePrintContent()
         {
-            this.PagesToPrint.Add(new ShoppingListPrintPage(this.ingredients));
+            this.PagesToPrint.Add(new ShoppingListPrintPage(this.tempIngredients));
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -276,7 +279,7 @@ namespace Check_n_Cook
 
                 if(button.DataContext is Ingredient) {
                     Ingredient ingredient = (Ingredient)button.DataContext;
-                    this.model.RemoveIngredientFromShoppingList(ingredient);
+                    //this.model.RemoveIngredientFromShoppingList(ingredient);
                 }
 
                 this.deleteButtons.Remove(button);
@@ -293,22 +296,26 @@ namespace Check_n_Cook
             {
                 IngredientEvent ingredientE = (IngredientEvent)e;
                 Ingredient ingredient = ingredientE.Ingredient;
+                String groupName = ingredientE.GroupName;
 
                 if (ingredientE is AddedIngredientEvent)
                 {
-                    this.addIngredient(ingredient);
+                    this.addIngredient(ingredient, this.tempIngredients[groupName]);
                 }
                 else if (ingredientE is RemovedIngredientEvent)
                 {
-                    this.removeIngredient(ingredient);
+                    this.removeIngredient(ingredient, this.tempIngredients[groupName]);
                 }
 
                 this.ingredients.Clear();
                 this.ingredients = new Dictionary<string, Ingredient>();
 
-                foreach(String key in this.tempIngredients.Keys)
+                foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
                 {
-                    this.ingredients[key] = this.tempIngredients[key];
+                    foreach (Ingredient groupIngredient in group.Values)
+                    {
+                        this.ingredients.Add(groupIngredient.name, groupIngredient);
+                    }
                 }
                 
                 this.ingredientsViewSource.Source = ingredients.Values;
@@ -359,7 +366,8 @@ namespace Check_n_Cook
             String quantity = this.quantityIngredient.Text;
             String unity = this.unityIngredient.SelectedItem.ToString();
             Ingredient ingredient = new Ingredient(name, quantity, unity);
-            this.model.AddIngredientToShoppingList(ingredient);
+            String groupName = this.groupIngredient.SelectedItem.ToString();
+            this.model.AddIngredientToShoppingList(ingredient, groupName);
 
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
@@ -376,6 +384,22 @@ namespace Check_n_Cook
         private void NewIngredientText_Loaded(object sender, RoutedEventArgs e)
         {
             this.newIngredientText = (TextBlock)sender;
+        }
+
+        private ComboBox groupIngredient;
+        private void ComboBoxGroup_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                this.groupIngredient = (ComboBox)sender;
+
+                foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
+                {
+                    this.groupIngredient.Items.Add(group.Name);
+                }
+
+                this.unityIngredient.SelectedIndex = 0;
+            }
         }
     }
 }

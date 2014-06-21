@@ -12,19 +12,23 @@ namespace Check_n_Cook.Model
     /// </summary>
     public sealed partial class ShoppingListPrintPage : Page
     {
-        public ShoppingListPrintPage() : this(new Dictionary<string, Ingredient>()) { }
+        public ShoppingListPrintPage() : this(new Dictionary<string, Dictionary<string, Ingredient>>()) { }
 
-        public ShoppingListPrintPage(Dictionary<string, Ingredient> ingredients)
+        public ShoppingListPrintPage(Dictionary<string, Dictionary<string, Ingredient>> ingredients)
         {
             InitializeComponent();
 
             Paragraph paragraph = new Paragraph();
 
-            foreach (Ingredient ingredient in ingredients.Values)
+            foreach (Dictionary<string, Ingredient> group in ingredients.Values)
             {
-                String ingredientText = String.Format("- {0} {1} {2}", ingredient.quantity, ingredient.unity, ingredient.name);
-                paragraph.Inlines.Add(new Run { Text = ingredientText });
-                paragraph.Inlines.Add(new LineBreak());
+
+                foreach (Ingredient ingredient in group.Values)
+                {
+                    String ingredientText = String.Format("- {0} {1} {2}", ingredient.quantity, ingredient.unity, ingredient.name);
+                    paragraph.Inlines.Add(new Run { Text = ingredientText });
+                    paragraph.Inlines.Add(new LineBreak());
+                }
             }
 
             this.ingredientsBlock.Blocks.Add(paragraph);

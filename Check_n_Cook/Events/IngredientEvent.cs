@@ -11,11 +11,14 @@ namespace Check_n_Cook.Events
     {
         public Ingredient Ingredient { get; set; }
 
-        public IngredientEvent() : this(null, null) { }
+        public String GroupName { get; set; }
 
-        public IngredientEvent(AbstractModel model, Ingredient ingredient) : base(model)
+        public IngredientEvent() : this(null, null, "") { }
+
+        public IngredientEvent(AbstractModel model, Ingredient ingredient, String groupName) : base(model)
         {
             this.Ingredient = ingredient;
+            this.GroupName = groupName;
         }
     }
 }

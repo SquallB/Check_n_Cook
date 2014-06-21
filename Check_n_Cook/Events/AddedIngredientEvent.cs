@@ -9,8 +9,8 @@ namespace Check_n_Cook.Events
 {
     public class AddedIngredientEvent : IngredientEvent
     {
-        public AddedIngredientEvent() : this(null, null) { }
+        public AddedIngredientEvent() : this(null, null, "") { }
 
-        public AddedIngredientEvent(AbstractModel model, Ingredient ingredient) : base(model, ingredient) { }
+        public AddedIngredientEvent(AbstractModel model, Ingredient ingredient, String groupName) : base(model, ingredient, groupName) { }
     }
 }

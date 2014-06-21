@@ -21,7 +21,7 @@ namespace Check_n_Cook.Model
 
         public Dictionary<string, ReceipeDate> ReceipeList { get; set; }
 
-        public List<Ingredient> ShoppingList { get; set; }
+        public Dictionary<string, ShoppingListGroup> ShoppingList { get; set; }
 
         public AppModel()
         {
@@ -31,7 +31,7 @@ namespace Check_n_Cook.Model
             this.FavouriteReceipes = new Dictionary<string, Receipe>();
             this.ReceipeList = new Dictionary<string, ReceipeDate>();
             this.SelectedReceipe = null;
-            this.ShoppingList = new List<Ingredient>();
+            this.ShoppingList = new Dictionary<string, ShoppingListGroup>();
         }
 
         public void AddReceipe(Receipe receipe)
@@ -144,16 +144,28 @@ namespace Check_n_Cook.Model
             this.RefreshViews(new RemovedShopEvent(this, shop));
         }
 
-        public void AddIngredientToShoppingList(Ingredient ingredient)
+        public void AddShoppingListGroup(String groupName)
         {
-            this.ShoppingList.Add(ingredient);
-            this.RefreshViews(new AddedIngredientEvent(this, ingredient));
+            this.ShoppingList.Add(groupName, new ShoppingListGroup(groupName));
+            this.RefreshViews(new AddedShoppingListGroupEvent(this, groupName));
         }
 
-        public void RemoveIngredientFromShoppingList(Ingredient ingredient)
+        public void RemoveShoppingListGroup(String groupName)
         {
-            this.ShoppingList.Remove(ingredient);
-            this.RefreshViews(new RemovedIngredientEvent(this, ingredient));
+            this.ShoppingList.Remove(groupName);
+            this.RefreshViews(new RemovedShoppingListGroupEvent(this, groupName));
+        }
+
+        public void AddIngredientToShoppingList(Ingredient ingredient, String groupName)
+        {
+            this.ShoppingList[groupName].Ingredients.Add(ingredient);
+            this.RefreshViews(new AddedIngredientEvent(this, ingredient, groupName));
+        }
+
+        public void RemoveIngredientFromShoppingList(Ingredient ingredient, String groupName)
+        {
+            this.ShoppingList[groupName].Ingredients.Remove(ingredient);
+            this.RefreshViews(new RemovedIngredientEvent(this, ingredient, groupName));
         }
 
         public JsonArray LocalReceipes{get; set;}
@@ -212,12 +224,23 @@ namespace Check_n_Cook.Model
             JsonObject jsonObject = new JsonObject();
             JsonArray jsonArray = new JsonArray();
 
-            foreach (Ingredient ingredient in this.ShoppingList)
+            foreach (ShoppingListGroup group in this.ShoppingList.Values)
             {
-                jsonArray.Add(ingredient.ToJsonObject());
+                JsonObject groupObject = new JsonObject();
+                JsonArray ingredientArray = new JsonArray();
+
+                foreach (Ingredient ingredient in group.Ingredients)
+                {
+                    ingredientArray.Add(ingredient.ToJsonObject());
+                }
+
+                groupObject["Name"] = JsonValue.CreateStringValue(group.Name);
+                groupObject["Ingredients"] = ingredientArray;
+
+                jsonArray.Add(groupObject);
             }
 
-            jsonObject["Ingredients"] = jsonArray;
+            jsonObject["ShoppingList"] = jsonArray;
 
             return jsonObject.Stringify();
         }
