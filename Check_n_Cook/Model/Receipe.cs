@@ -122,8 +122,20 @@ namespace Check_n_Cook.Model
             this.Cost = new Cost(jsonObject.GetNamedObject("Cost").Stringify());
             this.Vegetarian = jsonObject.GetNamedBoolean("Vegetarian");
             this.HtmlReceipe = jsonObject.GetNamedString("HtmlReceipe");
-            //this.ToDoInstructions = jsonObject.GetNamedString("ToDoInstructions");
-           // this.IngredientsHTML = jsonObject.GetNamedString("IngredientsHTML");
+            try
+            {
+                if (jsonObject.GetNamedString("ToDoInstructions") != null)
+                {
+                    this.ToDoInstructions = jsonObject.GetNamedString("ToDoInstructions");
+
+                }
+
+            }
+            catch
+            {
+
+            }
+            // this.IngredientsHTML = jsonObject.GetNamedString("IngredientsHTML");
             this.WithAlcohol = jsonObject.GetNamedBoolean("WithAlcohol");
             this.Image = jsonObject.GetNamedString("Image");
             this.Description = jsonObject.GetNamedString("Description");
@@ -152,8 +164,13 @@ namespace Check_n_Cook.Model
             jsonObject.SetNamedValue("Cost", this.Cost.ToJsonObject());
             jsonObject.SetNamedValue("Vegetarian", JsonValue.CreateBooleanValue(this.Vegetarian));
             jsonObject.SetNamedValue("HtmlReceipe", JsonValue.CreateStringValue("HtmlReceipe"));
+            if (this.ToDoInstructions != null && this.ToDoInstructions != "")
+            {
+                jsonObject.SetNamedValue("ToDoInstructions", JsonValue.CreateStringValue(this.ToDoInstructions));
+
+            }
             //jsonObject.SetNamedValue("ToDoInstructions", JsonValue.CreateStringValue(this.ToDoInstructions));
-           // jsonObject.SetNamedValue("IngredientsHTML", JsonValue.CreateStringValue(this.IngredientsHTML));
+            // jsonObject.SetNamedValue("IngredientsHTML", JsonValue.CreateStringValue(this.IngredientsHTML));
             jsonObject.SetNamedValue("WithAlcohol", JsonValue.CreateBooleanValue(this.WithAlcohol));
             jsonObject.SetNamedValue("Image", JsonValue.CreateStringValue(this.Image));
             jsonObject.SetNamedValue("Description", JsonValue.CreateStringValue("Description"));

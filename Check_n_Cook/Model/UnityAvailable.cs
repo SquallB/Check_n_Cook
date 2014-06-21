@@ -15,6 +15,8 @@ namespace Check_n_Cook.Model
             if (unitys == null)
             {
                 unitys = new List<string>();
+                unitys.Add(" ");
+
                 unitys.Add("kg");
                 unitys.Add("tasse");
                 unitys.Add("bol");
@@ -23,7 +25,6 @@ namespace Check_n_Cook.Model
                 unitys.Add("g");
                 unitys.Add("l");
                 unitys.Add("cl");
-                unitys.Add("kg");
 
             }
             return unitys;

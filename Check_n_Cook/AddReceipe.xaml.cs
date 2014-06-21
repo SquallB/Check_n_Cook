@@ -6,8 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,6 +36,16 @@ namespace Check_n_Cook
         private TextBox nameIngredient;
         private TextBox quantityIngredient;
         private ComboBox untityIngredient;
+        private string receipeName;
+        private string authorName;
+        private int mealTypeIndex;
+        private string cookingTime;
+        private int difficultyLevelIndex;
+        private int costLevelIndex;
+        private string toDoInstructions;
+        private string urlForImage;
+
+        
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -57,6 +71,15 @@ namespace Check_n_Cook
             this.newReceipe = new NewReceipe();
             this.newReceipe.AddView(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            receipeName = "";
+            authorName = "";
+            mealTypeIndex = 0;
+            cookingTime = "";
+            difficultyLevelIndex = 0;
+            costLevelIndex = 0 ;
+            toDoInstructions = "";
+            urlForImage = "";
+
         }
 
 
@@ -115,7 +138,16 @@ namespace Check_n_Cook
 
         private void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
-            this.newReceipe.AddIngredient(nameIngredient.Text, quantityIngredient.Text, untityIngredient.Items[untityIngredient.SelectedIndex].ToString());
+            if (nameIngredient.Text != null && nameIngredient.Text != "" && nameIngredient.Text != "Nom de l'ingrédient")
+            {
+                this.newReceipe.AddIngredient(nameIngredient.Text, quantityIngredient.Text, untityIngredient.Items[untityIngredient.SelectedIndex].ToString());
+                nameIngredient.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Gray);
+                nameIngredient.Text = "";
+            }
+            else
+            {
+                nameIngredient.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            }
         }
 
         private void TextBoxNameIngredient_Loaded(object sender, RoutedEventArgs e)
@@ -132,6 +164,10 @@ namespace Check_n_Cook
             {
                 this.quantityIngredient = (TextBox)sender;
             }
+        }
+        private void TextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void ComboBoxUnity_Loaded(object sender, RoutedEventArgs e)
@@ -165,6 +201,223 @@ namespace Check_n_Cook
                 this.ingredientsViewSource.Source = ingredientsNews.Values;
             }
         }
+
+        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                var mealType = (ComboBox)sender;
+
+                mealType.Items.Add("Entrée");
+                mealType.Items.Add("Plat");
+                mealType.Items.Add("Dessert");
+
+                mealType.SelectedIndex = 0;
+            }
+
+        }
+
+        private void ComboBox_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                var difficultyLevel = (ComboBox)sender;
+                difficultyLevel.Items.Add(" ");
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    difficultyLevel.Items.Add(i);
+
+                }
+
+                    difficultyLevel.SelectedIndex = 0;
+            }
+
+        }
+
+        private void CostLevelCombo_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox)
+            {
+                var costlevel = (ComboBox)sender;
+                costlevel.Items.Add(" ");
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    costlevel.Items.Add(i);
+
+                }
+
+                costlevel.SelectedIndex = 0;
+            }
+
+
+        }
+
+        private void ReceipeTitle_Changed(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox) sender;
+            if (tb.Text != "" && tb.Text.Length > 0)
+            {
+                this.receipeName = tb.Text;
+            }
+
+        }
+
+        private void authorName_Changed(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (tb.Text != "" && tb.Text.Length > 0)
+            {
+                this.authorName = tb.Text;
+            }
+
+        }
+
+        private void MealType_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            var tb = (ComboBox)sender;
+            if (tb.SelectedIndex != null)
+            {
+                this.mealTypeIndex = tb.SelectedIndex;
+            }
+
+
+        }
+
+        private void CookingTime_Changed(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (tb.Text != "" && tb.Text.Length > 0)
+            {
+                this.cookingTime = tb.Text;
+            }
+
+        }
+
+        private void DifficultyLevel_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            var tb = (ComboBox)sender;
+            if (tb.SelectedIndex != null)
+            {
+                this.difficultyLevelIndex = tb.SelectedIndex;
+            }
+
+
+        }
+
+        private void CostLevel_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            var tb = (ComboBox)sender;
+            if (tb.SelectedIndex != null)
+            {
+                this.costLevelIndex = tb.SelectedIndex;
+            }
+
+
+        }
+
+        private void ReceipeContent_Changed(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (tb.Text != "" && tb.Text.Length > 0)
+            {
+                this.toDoInstructions = tb.Text;
+            }
+
+        }
+
+        private void ImageLink_Changed(object sender, TextChangedEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (tb.Text != "" && tb.Text.Length > 0)
+            {
+                this.urlForImage = tb.Text;
+            }
+
+
+        }
+        private async Task<Boolean> fileExists(StorageFolder sf, string fileName)
+        {
+            try
+            {
+                StorageFile sfile =  await sf.GetFileAsync(fileName);
+                return true;
+            } 
+            catch {
+                return false;
+            }
+        }
+        private async void AddReceipe_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (this.receipeName != "")
+            {
+                DishType dt = null;
+                if(mealTypeIndex == 0) {
+                    dt = DishType.GetInstance("Entrée");
+                } else if(mealTypeIndex == 1){
+                    dt = DishType.GetInstance("Plat");
+
+
+                } else if(mealTypeIndex == 2) {
+
+                                  
+                     dt = DishType.GetInstance("Dessert");
+
+                }
+
+                Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex + 1, this.costLevelIndex + 1, false, false);
+                rec.Id = -1;
+                rec.Image = this.urlForImage;
+                rec.ToDoInstructions = this.toDoInstructions;
+                foreach(Ingredient ing in this.ingredientsNews.Values) {
+                    rec.ingredients.Add(ing);
+                }
+
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                if (await fileExists(folder, "personalReceipes.json") == false)
+                {
+                    StorageFile receipeFile = await folder.CreateFileAsync("personalReceipes.json", CreationCollisionOption.ReplaceExisting);
+                    JsonObject jsonObject = new JsonObject();
+                    JsonArray jsonArray = new JsonArray();
+
+                    jsonArray.Add(rec.ToJsonObject());
+
+
+                    jsonObject["Receipes"] = jsonArray;
+
+                    jsonObject.Stringify();
+                    await Windows.Storage.FileIO.WriteTextAsync(receipeFile, jsonObject.Stringify());
+
+
+                }
+                else
+                {
+                    StorageFile receipeFile = await folder.GetFileAsync("personalReceipes.json");
+                    String jsonString = await FileIO.ReadTextAsync(receipeFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+                    jsonArray.Add(rec.ToJsonObject());
+
+
+                    jsonObject["Receipes"] = jsonArray;
+
+                    jsonObject.Stringify();
+                    await Windows.Storage.FileIO.WriteTextAsync(receipeFile, jsonObject.Stringify());
+
+                }
+                
+                
+
+                
+
+
+
+            }
+
+
+        }
+
     }
 
 }
