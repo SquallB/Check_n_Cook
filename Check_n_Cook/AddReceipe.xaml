@@ -150,18 +150,18 @@
             </HubSection>
             <HubSection Header="Image (Optionnel)" Width="520">
                 <DataTemplate>
-                    <Grid Height="291" Margin="0,0,-146,0">
+                    <Grid Height="291">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="8*"/>
-                            <RowDefinition Height="23*"/>
+                            <RowDefinition Height="15*"/>
+                            <RowDefinition Height="82*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="112*"/>
-                            <ColumnDefinition Width="237*"/>
+                            <ColumnDefinition Width="129*"/>
+                            <ColumnDefinition Width="209*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock HorizontalAlignment="Left" FontSize="15" TextWrapping="Wrap" Text="Lien de l'image" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Width="102" Margin="0,27,0,11" Height="18"/>
-                        <TextBox x:Name="imageLink_TB" FontSize="15" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" GotFocus="ImageFocus" LostFocus="ImageLostFocus" Text="URL de l'image..." VerticalAlignment="Center" Width="236" TextChanged="ImageLink_Changed" Margin="0,30,0,13" Height="32"/>
-                        <Image Grid.Column="1" Width="216" Height="216"  Grid.Row="1" VerticalAlignment="Top" Loaded="ImageLoaded"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="15" TextWrapping="Wrap" Text="Lien de l'image" Grid.Row="0" Grid.Column="0" Width="102" Height="18" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                        <TextBox x:Name="imageLink_TB" FontSize="15" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" GotFocus="ImageFocus" LostFocus="ImageLostFocus" Text="URL de l'image..." VerticalAlignment="Top" Width="236" TextChanged="ImageLink_Changed" Height="32"/>
+                        <Image Grid.Column="1" Height="216" Width="216" Grid.Row="1" VerticalAlignment="Top" Loaded="ImageLoaded" Margin="0,0,10,0" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
