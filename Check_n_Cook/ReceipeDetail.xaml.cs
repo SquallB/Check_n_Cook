@@ -84,8 +84,10 @@ namespace Check_n_Cook
             this.pageTitle.Text = receipe.Title;
             ReceipeRetriever rr = new ReceipeRetriever();
             var task = rr.extractReceipeFromMarmiton(receipe);
-            
+
             List<ItemReceipe> receipeView = new List<ItemReceipe>();
+            List<ReceipeDescription> receipeDescription = new List<ReceipeDescription>();
+            receipeDescription.Add(new ReceipeDescription(receipe));
 
 			if ((await task) == true)
             {
@@ -104,6 +106,7 @@ namespace Check_n_Cook
             }
 
             this.ingredientsViewSource.Source = ingredients;
+            this.descriptionViewSource.Source = receipeDescription;
             this.RegisterForPrinting();
         }
 

@@ -31,6 +31,15 @@ namespace Check_n_Cook.Model.Grade
             this.Value = value;
         }
 
+        public int GetMax()
+        {
+            return max;
+        }
+
+        public int GetGrade()
+        {
+            return grade;
+        }
         public Grade(String jsonString)
         {
             JsonObject jsonObject = JsonObject.Parse(jsonString);

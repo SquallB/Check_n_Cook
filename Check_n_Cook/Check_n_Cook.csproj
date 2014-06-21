@@ -168,6 +168,8 @@
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Data\ItemReceipeListSelected.cs" />
+    <Compile Include="Model\Data\ReceipeDescription.cs" />
     <Compile Include="Model\NewReceipe.cs" />
     <Compile Include="Model\ReceipeListSelected.cs" />
     <Compile Include="Model\UnityAvailable.cs" />

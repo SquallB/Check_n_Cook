@@ -11,5 +11,10 @@ namespace Check_n_Cook.Model.Grade
         public Difficulty(int value = 1) : base(1, 4, value) { }
 
         public Difficulty(String jsonString) : base(jsonString) { }
+
+        public override string ToString()
+        {
+            return "Difficulté : " + GetGrade().ToString() + "/" + GetMax().ToString();
+        }
     }
 }

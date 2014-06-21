@@ -17,6 +17,7 @@
         <x:String x:Key="AppName">Mon application</x:String>
         <CollectionViewSource x:Name="ingredientsViewSource" />
         <CollectionViewSource x:Name="receipeViewSource" />
+        <CollectionViewSource x:Name="descriptionViewSource" />
     </Page.Resources>
 
     <!--
@@ -47,12 +48,40 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
                 </Grid>
             </Hub.Header>
+            <HubSection Header="Descirption">
+                <DataTemplate>
+                    <GridView HorizontalAlignment="Left" 
+                              VerticalAlignment="Top" 
+                              ItemsSource="{Binding Source={StaticResource descriptionViewSource}}"
+                              SelectionMode="None"
+                              IsHitTestVisible="False"
+                              Width="auto">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Width="200" Height="200" Margin="0, -80, 0, 0"/>
+                                    <StackPanel Orientation="Vertical" Margin="10, 0, 0, 0">
+                                        <TextBlock Text="{Binding Author}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding DishType}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding PublicationDate}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Rating}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Cost}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Difficulty}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Margin="-360, 170, 0, 0">
+                                        <TextBlock Text="{Binding AlcoolVege}" FontSize="14.667" FontFamily="Segoe UI"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="14.667" FontFamily="Segoe UI"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </DataTemplate>
+            </HubSection>
             <HubSection x:Name="instructionsHub" Width="700" Header="Instructions">
                 <DataTemplate>
-
-
                     <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
-
                 </DataTemplate>
             </HubSection>
             <HubSection x:Name="ingredientsHub" Width="520" Header="Ingredients">
@@ -91,28 +120,29 @@
                 <DataTemplate>
                     <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
-                        <Grid Height="308" Width="408">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="400"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="60"/>
-                                <RowDefinition Height="57"/>
-                                <RowDefinition Height="49.582"/>
-                                <RowDefinition Height="75*" />
-                                <RowDefinition Height="38*"/>
-                                <RowDefinition Height="28*"/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="48"/>
                             </Grid.RowDefinitions>
-                            <Button Content="Ajouter cette recette à votre planning" Width="406" Click="AddReceipeList_Click" Margin="0,16,-6,7" Height="34" Grid.Row="1"/>
-                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="3" Margin="0,47.418,-3,31.582" Width="403" Click="AddReceipeFavorite_Click" Height="34" Grid.RowSpan="2"/>
-                            <DatePicker HorizontalAlignment="Left" Margin="118,8,0,0" Grid.Row="2" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" Height="32" Width="280" />
-                            <ComboBox HorizontalAlignment="Left" Margin="3,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="102" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged" Height="32"/>
-                            <Button Content="Imprimer la recette" Grid.Row="4" Margin="0,7.418,-3,24.582" Width="403" Height="34" Click="PrintReceipe_Click" Grid.RowSpan="2"/>
-                            <Button Content="Ajouter des ingrédients à la liste de course" HorizontalAlignment="Left" Margin="0,20,-3,0" VerticalAlignment="Top" Width="403" Height="33" Click="SelectIngredients_Click"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Ajouter cette recette à votre planning" Width="437" Click="AddReceipeList_Click" Grid.Row="1"/>
+                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="3"  Width="437" Click="AddReceipeFavorite_Click"/>
+                            <DatePicker HorizontalAlignment="Left" Margin="118,10,0,0" Grid.Row="2" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" Width="auto" />
+                            <ComboBox HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="auto" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged"/>
+                            <Button Content="Imprimer la recette" Grid.Row="4" Width="437" Click="PrintReceipe_Click" />
+                            <Button Content="Ajouter des ingrédients à la liste de course" Grid.Row="0" HorizontalAlignment="Left" Width="437" Click="SelectIngredients_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
+
         </Hub>
 
     </Grid>
