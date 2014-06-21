@@ -60,7 +60,7 @@ namespace Check_n_Cook
             this.Model.AddView(this);
             this.retriever = new URLDataRetriever();
             this.retriever.AdvancedSearch = this.dishTypeSearch;
-
+            this.retriever.AdvancedDifficulty = 0;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 

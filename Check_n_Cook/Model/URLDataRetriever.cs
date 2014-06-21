@@ -153,7 +153,7 @@ namespace Check_n_Cook.Model
                     Receipe localToAdd = new Receipe(jsonItem.Stringify());
                     if (localToAdd.ToDoInstructions.ToUpper().Contains(keyWord.ToUpper()) || localToAdd.Title.ToUpper().Contains(keyWord.ToUpper()))
                     {
-                        model.AddReceipe(localToAdd);
+                        addReceipe(localToAdd,model);
                     }
                     
 

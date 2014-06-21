@@ -109,7 +109,7 @@
                                                 <ColumnDefinition Width="133"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <CheckBox x:Name="chkDifficulty" Content="Toutes" HorizontalAlignment="Left" Height="43" Margin="7,41,0,-34" Width="126" Checked="chkDishType1_Checked" IsChecked="True" Unchecked="chkDishType3_Unchecked" />
+                                            <CheckBox x:Name="chkDifficulty" Content="Toutes" HorizontalAlignment="Left" Height="43" Margin="7,41,0,-34" Width="126" Checked="chkDishType1_Checked" IsChecked="False" Unchecked="chkDishType3_Unchecked" />
                                             <Slider Margin="0,36,0,-34" Grid.Column="1" Maximum="5" Minimum="1" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Right" Width="262" Foreground="Black" IsEnabled="False" Loaded="Slider_Loaded" />
                                         </Grid>
 
