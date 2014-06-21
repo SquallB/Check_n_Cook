@@ -226,6 +226,7 @@ namespace Check_n_Cook
                     button.Visibility = Visibility.Collapsed;
                 }
 
+                this.newIngredientText.Visibility = Visibility.Collapsed;
                 this.nameIngredient.Visibility = Visibility.Collapsed;
                 this.quantityIngredient.Visibility = Visibility.Collapsed;
                 this.unityIngredient.Visibility = Visibility.Collapsed;
@@ -239,6 +240,8 @@ namespace Check_n_Cook
                 {
                     button.Visibility = Visibility.Visible;
                 }
+
+                this.newIngredientText.Visibility = Visibility.Visible;
 
                 this.nameIngredient.Text = "";
                 this.nameIngredient.Visibility = Visibility.Visible;
@@ -367,6 +370,12 @@ namespace Check_n_Cook
         private void AddIngredientButton_Loaded(object sender, RoutedEventArgs e)
         {
             this.addItemButton = (Button)sender;
+        }
+
+        private TextBlock newIngredientText;
+        private void NewIngredientText_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.newIngredientText = (TextBlock)sender;
         }
     }
 }
