@@ -29,7 +29,7 @@ namespace Check_n_Cook
         private Dictionary<string, CheckBox> checkBoxs;
         private Button printReceipeList;
         private ReceipeListSelected receipeListSelectedModel;
-        private List<SampleDataGroup> newPrintReceipeList;
+        private List<ItemReceipeListSelected> listReceipeListSelected;
         private Button delteReceipeList;
         private Button selectionMode;
 
@@ -57,7 +57,7 @@ namespace Check_n_Cook
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.checkBoxs = new Dictionary<string, CheckBox>();
             this.receipeListSelectedModel = new ReceipeListSelected();
-            this.newPrintReceipeList = new List<SampleDataGroup>();
+            this.listReceipeListSelected = new List<ItemReceipeListSelected>();
             this.receipeListSelectedModel.AddView(this);
             //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
@@ -188,10 +188,12 @@ namespace Check_n_Cook
             string date = (string)data.Title;
             Time time = new Time();
             time.Date = date;
-            ReceipeDate receipeDate = this.appModel.ReceipeList[date];
 
-            this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.appModel, time, receipeDate));
-
+            if (this.appModel.ReceipeList.ContainsKey(date))
+            {
+                ReceipeDate receipeDate = this.appModel.ReceipeList[date];
+                this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.appModel, time, receipeDate));
+            }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -281,15 +283,30 @@ namespace Check_n_Cook
             {
                 ModifyReceipeListPrint srcEvnt = (ModifyReceipeListPrint)e;
                 ReceipeListSelected modelEvnt = (ReceipeListSelected)srcEvnt.Model;
-                this.newPrintReceipeList.Clear();
-                this.newPrintReceipeList = new List<SampleDataGroup>();
+                this.listReceipeListSelected.Clear();
+                this.listReceipeListSelected = new List<ItemReceipeListSelected>();
 
                 foreach (SampleDataGroup ing in modelEvnt.GetReceipeListSelected())
                 {
-                    newPrintReceipeList.Add(ing);
+                    List<string> imgs = new List<string>();
+                    int nbImgFound = 0;
+                    int i = 0;
+                    int j = 0;
+                    while (i < ing.Items.Count && nbImgFound < 4)
+                    {
+                        j = 0;
+                        while (nbImgFound < 4 && j < ing.Items[i].ImagePaths.Count)
+                        {
+                            imgs.Add(ing.Items[i].ImagePaths[j]);
+                            nbImgFound++;
+                            j++;
+                        }
+                        i++;
+                    }
+                    listReceipeListSelected.Add(new ItemReceipeListSelected(ing.Title, imgs));
                 }
 
-                this.receipeListViewSource.Source = newPrintReceipeList;
+                this.receipeListViewSource.Source = listReceipeListSelected;
             }
             else if (e is RemovedReceipeDateEvent)
             {
@@ -323,8 +340,6 @@ namespace Check_n_Cook
 
                 BubbleSort(sampleDataGroups);
                 this.DefaultViewModel["Groups"] = sampleDataGroups;
-
-
             }
         }
 
@@ -382,6 +397,22 @@ namespace Check_n_Cook
             if (sender is Button)
             {
                 this.selectionMode = (Button)sender;
+            }
+        }
+
+        private void ItemReceipeListSelected_Click(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is ItemReceipeListSelected)
+            {
+                ItemReceipeListSelected item = (ItemReceipeListSelected)e.ClickedItem;
+                Time time = new Time();
+                time.Date = item.Title;
+
+                if (this.appModel.ReceipeList.ContainsKey(time.Date))
+                {
+                    ReceipeDate receipeDate = this.appModel.ReceipeList[time.Date];
+                    this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.appModel, time, receipeDate));
+                }
             }
         }
 

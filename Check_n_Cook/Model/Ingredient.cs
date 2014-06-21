@@ -16,7 +16,7 @@ namespace Check_n_Cook.Model
         public string Image { get; set; }
         public Ingredient()
         {
-
+            this.Image = "/Assets/ingredient1.png";
         }
         public Ingredient(string name, string qty, string unity)
         {

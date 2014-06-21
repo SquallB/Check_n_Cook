@@ -11,5 +11,10 @@ namespace Check_n_Cook.Model.Grade
         public Rating(int value = 1) : base(1, 5, value) { }
 
         public Rating(String jsonString) : base(jsonString) { }
+
+        public override string ToString()
+        {
+            return "Évaluation : " + GetGrade().ToString() + "/" + GetMax().ToString();
+        }
     }
 }
