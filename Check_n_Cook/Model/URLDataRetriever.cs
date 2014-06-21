@@ -201,17 +201,17 @@ namespace Check_n_Cook.Model
                     keyWords[i] = keyWords[i].ToUpper();
                     
                 }
-
+                foreach (var jsonItem in model.LocalReceipes)
+                {
+                    model.AddReceipe(new Receipe(jsonItem.Stringify()));
+                }
                 foreach (var keyWord in keyWords)
                 {
                     
                    await this.GetData(keyWord, nbItemsPerPage, startIndex, model);
                    
                 }
-                foreach (var jsonItem in model.LocalReceipes)
-                {
-                    model.AddReceipe(new Receipe(jsonItem.Stringify()));
-                }
+                
                 int bestResults = 0;
                 
                 foreach (var receipe in model.Receipes)
@@ -240,7 +240,7 @@ namespace Check_n_Cook.Model
 
                                     foreach (var ingredient in receipe.ingredients)
                                     {
-                                        if (ingredient.name.ToUpper().IndexOf(keyWord) >= 0 || ingredient.unity.ToUpper().IndexOf(keyWord) >= 0)
+                                        if (ingredient.name.ToUpper().Contains(keyWord.ToUpper()) || ingredient.unity.ToUpper().Contains(keyWord.ToUpper()))
                                         {
                                             containsKey = true;
 
@@ -248,7 +248,7 @@ namespace Check_n_Cook.Model
 
                                     }
 
-                                    if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().IndexOf(keyWord) >= 0))
+                                    if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().Contains(keyWord.ToUpper())))
                                     {
 
                                         count++;
@@ -297,7 +297,7 @@ namespace Check_n_Cook.Model
         
         public bool checkDifficulty(Receipe receipe)
         {
-            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
+            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value) || receipe.Id == -1;
         }
 
         public bool checkOptions(Receipe receipe)
