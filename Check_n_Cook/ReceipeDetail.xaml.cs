@@ -82,29 +82,28 @@ namespace Check_n_Cook
             this.Model = (AppModel)e.NavigationParameter;
             this.receipe = this.Model.SelectedReceipe;
             this.pageTitle.Text = receipe.Title;
-            ReceipeRetriever rr = new ReceipeRetriever();
-            var task = rr.extractReceipeFromMarmiton(receipe);
-
             List<ItemReceipe> receipeView = new List<ItemReceipe>();
             List<ReceipeDescription> receipeDescription = new List<ReceipeDescription>();
             receipeDescription.Add(new ReceipeDescription(receipe));
-
-			if ((await task) == true)
+            if (receipe.Id != -1)
             {
-                var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
-                rr.handleIngredients(rr.ingredientPart, receipe);
+                ReceipeRetriever rr = new ReceipeRetriever();
+                var task = rr.extractReceipeFromMarmiton(receipe);
 
-                wb.NavigateToString(receipe.ToDoInstructions);
-                this.receipeViewSource.Source = receipeView;
-
-                foreach (var ing in receipe.ingredients)
+                if ((await task) == true)
                 {
-                    ingredients.Add(ing);
+                    var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                    rr.handleIngredients(rr.ingredientPart, receipe);
 
+                    wb.NavigateToString(receipe.ToDoInstructions);
                 }
+            }
+            this.receipeViewSource.Source = receipeView;
+            foreach (var ing in receipe.ingredients)
+            {
+                ingredients.Add(ing);
 
             }
-
             this.ingredientsViewSource.Source = ingredients;
             this.descriptionViewSource.Source = receipeDescription;
             this.RegisterForPrinting();
@@ -190,6 +189,10 @@ namespace Check_n_Cook
         {
             WebView wb = sender as WebView;
             this.wb = wb;
+            if (receipe.Id == -1)
+            {
+                wb.NavigateToString(receipe.ToDoInstructions);
+            }
         }
 
         /// <summary>
@@ -272,5 +275,6 @@ namespace Check_n_Cook
         {
             checkboxes.Add((CheckBox)sender);
         }
+
     }
 }
