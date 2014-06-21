@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
@@ -45,6 +46,7 @@ namespace Check_n_Cook
         private string toDoInstructions;
         private string urlForImage;
         private TextBox instruction;
+        private Image image;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -332,7 +334,17 @@ namespace Check_n_Cook
             var tb = (TextBox)sender;
             if (tb.Text != "" && tb.Text.Length > 0)
             {
-                this.urlForImage = tb.Text;
+                this.urlForImage = tb.Text; 
+                var bitmapImage = new BitmapImage();
+                try{
+                    
+                    bitmapImage.UriSource = new Uri(tb.Text);
+                    image.Source = bitmapImage;
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
 
 
@@ -501,6 +513,40 @@ namespace Check_n_Cook
                 if (textbox.Text.Equals(""))
                 {
                     textbox.Text = "Vos instruction...";
+                }
+            }
+        }
+
+        private void ImageLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Image)
+            {
+                this.image = (Image)sender;
+            }
+        }
+
+        private void ImageFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals("URL de l'image..."))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void ImageLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "URL de l'image...";
                 }
             }
         }
