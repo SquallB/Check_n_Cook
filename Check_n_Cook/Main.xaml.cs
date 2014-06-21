@@ -122,7 +122,7 @@ namespace Check_n_Cook
                 }
             }
 
-            if (this.Model.ShoppingList.Count == 0)
+            /*if (this.Model.ShoppingList.Count == 0)
             {
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 try
@@ -144,7 +144,7 @@ namespace Check_n_Cook
                 {
 
                 }
-            }
+            }*/
         }
 
         #region Inscription de NavigationHelper

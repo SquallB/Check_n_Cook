@@ -250,7 +250,9 @@ namespace Check_n_Cook
 
             foreach (Ingredient ingredient in this.currentShoppingList)
             {
-                this.Model.AddIngredientToShoppingList(ingredient);
+                String groupName = this.receipe.Title;
+                this.Model.AddShoppingListGroup(groupName);
+                this.Model.AddIngredientToShoppingList(ingredient, groupName);
             }
             
             StorageFolder folder = KnownFolders.PicturesLibrary;
