@@ -235,6 +235,9 @@ namespace Check_n_Cook
 
 
         public async void searchConfirmation(){
+
+            await Model.ExtractPersonnalReceipes();
+             
             
             if (!this.textBoxSearch.Text.Equals("Entrer une recette...") ||txtIngredientSearch==null ||txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
             {
@@ -459,7 +462,7 @@ namespace Check_n_Cook
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
-                this.search(this.textBoxSearch.Text);
+                searchConfirmation();
             }
         }
 

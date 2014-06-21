@@ -148,18 +148,31 @@ namespace Check_n_Cook.Model
 
             try
             {
+                foreach (var jsonItem in model.LocalReceipes)
+                {
+                    Receipe localToAdd = new Receipe(jsonItem.Stringify());
+                    if (localToAdd.ToDoInstructions.ToUpper().Contains(keyWord.ToUpper()) || localToAdd.Title.ToUpper().Contains(keyWord.ToUpper()))
+                    {
+                        model.AddReceipe(localToAdd);
+                    }
+                    
 
+                }
                 HttpResponseMessage response = await http.GetAsync(String.Format(this.URL, keyWord, nbItemsPerPage, startIndex));
                 string jsonString = await response.Content.ReadAsStringAsync();
 
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
                 JsonArray jsonArray = getItemsArrayFromJSONObject(jsonObject);
+
+                
+                
                 foreach (var item in jsonArray)
                 {
                     Receipe receipe = getReceipeFromJSONItem(item.GetObject());
                     addReceipe(receipe, model);
                     
                 }
+                
                 
             }
             catch (Exception ex)
@@ -190,6 +203,10 @@ namespace Check_n_Cook.Model
                    await this.GetData(keyWord, nbItemsPerPage, startIndex, model);
                    
                 }
+                foreach (var jsonItem in model.LocalReceipes)
+                {
+                    model.AddReceipe(new Receipe(jsonItem.Stringify()));
+                }
                 int bestResults = 0;
                 
                 foreach (var receipe in model.Receipes)
@@ -209,10 +226,6 @@ namespace Check_n_Cook.Model
                                 {
                                     var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
                                     rr.handleIngredients(rr.ingredientPart, receipe);
-
-
-
-
                                 }
 
                                 foreach (var keyWord in keyWords)
@@ -258,6 +271,9 @@ namespace Check_n_Cook.Model
                 }
                 
                 model.ClearReceipes();
+
+                
+
                 foreach (var receipe in results[bestResults])
                 {
 
