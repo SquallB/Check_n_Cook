@@ -43,38 +43,40 @@
             </Hub.Header>
             <HubSection Width="500" Header="Champs obligatoires">
                 <DataTemplate>
-                    <Grid Height="503" Width="418">
+                    <Grid Height="auto" Width="418">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="87*"/>
-                            <ColumnDefinition Width="332*"/>
+                            <ColumnDefinition Width="129*"/>
+                            <ColumnDefinition Width="289*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="32" />
-                            <RowDefinition Height="32" />
-                            <RowDefinition Height="37.333" />
-                            <RowDefinition Height="57"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="38"/>
-                            <RowDefinition Height="36"/>
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48"/>
                             <RowDefinition Height="41.334"/>
-                            <RowDefinition Height="40.333"/>
-                            <RowDefinition Height="152.666"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="85"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,-63,27.333" Grid.ColumnSpan="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="Auteur" Grid.Row="1"/>
-                        <TextBox x:Name="author_TBOX" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="" TextChanged="authorName_Changed"/>
-                        <TextBlock TextWrapping="Wrap" Text="Titre"/>
-                        <TextBox x:Name="ReceipeTitle_TB" Grid.Column="1" TextWrapping="Wrap" Text="" TextChanged="ReceipeTitle_Changed"/>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Champs optionnels" VerticalAlignment="Top" Margin="0,9.667,0,0" Grid.Row="3" Grid.ColumnSpan="2" Width="292" Height="37" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <TextBlock Grid.Row="3" TextWrapping="Wrap" Text="Type de plat" Margin="0,56.667,0,0.333" Grid.RowSpan="2" Loaded="TextBlock_Loaded"/>
-                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,56.667,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120" Grid.RowSpan="2" Loaded="ComboBox_Loaded" SelectionChanged="MealType_Changed"/>
-                        <TextBlock Grid.Row="4" TextWrapping="Wrap" Text="Temps de cuisson" Margin="0,31.667,0,0.333" Grid.RowSpan="2"/>
-                        <TextBox x:Name="CookinkTime_TB" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" Text="" Margin="0,31.667,0,0.333" Grid.RowSpan="2" TextChanged="CookingTime_Changed"/>
-                        <TextBlock Grid.Row="5" TextWrapping="Wrap" Text="Difficulté" Margin="0,37.667,0,0.333" Grid.RowSpan="2"/>
-                        <ComboBox x:Name="DifficultyLevel" Grid.Column="1" Grid.Row="5" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37.667,0,0" Grid.RowSpan="2" Loaded="ComboBox_Loaded_1" SelectionChanged="DifficultyLevel_Changed"/>
-                        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Coût" Margin="0,35.667,0,0.667" Grid.RowSpan="2"/>
-                        <ComboBox x:Name="Costlevel_CB" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0.667,0,0" Grid.Row="7" VerticalAlignment="Top" Width="120" Loaded="CostLevelCombo_Loaded" SelectionChanged="CostLevel_Changed"/>
-                        <Button x:Name="AddReceipe_BTN" Content="Ajouter la recette" Grid.Row="8" Grid.ColumnSpan="2" Margin="0,3.333,0,3" Width="411" Click="AddReceipe_Clicked"/>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Grid.Row="2" Margin="0,10,-63,27" Grid.ColumnSpan="2"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="15"  Text="Auteur" Grid.Row="1" Height="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="48" Margin="0,15"/>
+                        <TextBox x:Name="author_TBOX" Grid.Column="1" FontSize="15" Grid.Row="1" TextWrapping="Wrap" Text="" TextChanged="authorName_Changed" Margin="0,8"/>
+                        <TextBlock TextWrapping="Wrap" Text="Titre" FontSize="15" HorizontalAlignment="Left" Height="18" Width="32" VerticalAlignment="Center" Margin="0,15"/>
+                        <TextBox x:Name="ReceipeTitle_TB" FontSize="15" Grid.Column="1" TextWrapping="Wrap" Text="" TextChanged="ReceipeTitle_Changed" Margin="0,8"/>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Champs optionnels" VerticalAlignment="Top" Margin="0,10,0,0" Grid.Row="3" Grid.ColumnSpan="2" Width="292" Height="37" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                        <TextBlock Grid.Row="4" FontSize="15" TextWrapping="Wrap" Text="Type de plat"  Loaded="TextBlock_Loaded" VerticalAlignment="Center" HorizontalAlignment="Left" Width="84" Height="18" Margin="0,15"/>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120"  Loaded="ComboBox_Loaded" SelectionChanged="MealType_Changed" Height="32" Margin="0,8"/>
+                        <TextBlock Grid.Row="5"  FontSize="15" TextWrapping="Wrap" Text="Temps de cuisson"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="18" Width="119" Margin="0,15"/>
+                        <TextBox x:Name="CookinkTime_TB" Grid.Column="1" Grid.Row="5" TextWrapping="Wrap" Text="" TextChanged="CookingTime_Changed" Margin="0,8"/>
+                        <TextBlock Grid.Row="6" FontSize="15" TextWrapping="Wrap" Text="Difficulté" HorizontalAlignment="Left" VerticalAlignment="Center" Height="18" Width="64" Margin="0,15"/>
+                        <ComboBox x:Name="DifficultyLevel" Grid.Column="1" Grid.Row="6" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Loaded="ComboBox_Loaded_1" SelectionChanged="DifficultyLevel_Changed" Height="32" Margin="0,8"/>
+                        <TextBlock FontSize="15" Grid.Row="7" TextWrapping="Wrap" Text="Coût" HorizontalAlignment="Left" VerticalAlignment="Center" Height="18" Width="32" Margin="0,12,0,11.334"/>
+                        <ComboBox x:Name="Costlevel_CB" Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,4.334" Grid.Row="7" VerticalAlignment="Center" Width="120" Loaded="CostLevelCombo_Loaded" SelectionChanged="CostLevel_Changed" Height="32"/>
+                        <Button x:Name="AddReceipe_BTN" Content="Ajouter la recette" Grid.Row="9" Grid.ColumnSpan="2" Width="411" Click="AddReceipe_Clicked" Height="34" Margin="0,6.666,0,7.334" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -117,19 +119,18 @@
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Instructions">
+            <HubSection Width="653" Header="Instructions">
                 <DataTemplate>
-                    <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="400"/>
+                                <ColumnDefinition Width="500"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="400"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="ReceipeContent_TB" TextWrapping="Wrap" Text="Vos instructions..." TextChanged="ReceipeContent_Changed"/>
+                            <TextBox x:Name="ReceipeContent_TB" TextWrapping="Wrap" Text="Vos instructions..." TextChanged="ReceipeContent_Changed" Margin="0,0,-89,-134" Grid.RowSpan="2"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
@@ -141,8 +142,8 @@
                             <ColumnDefinition Width="112*"/>
                             <ColumnDefinition Width="237*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock HorizontalAlignment="Left" Margin="23,25,0,0" TextWrapping="Wrap" Text="Lien de l'image" VerticalAlignment="Top" Height="13" Width="73"/>
-                        <TextBox x:Name="imageLink_TB" Grid.Column="1" HorizontalAlignment="Left" Margin="4,10,0,0" TextWrapping="Wrap" Text="URL" VerticalAlignment="Top" Height="32" Width="223" TextChanged="ImageLink_Changed"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="15" TextWrapping="Wrap" Text="Lien de l'image" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Width="102"/>
+                        <TextBox x:Name="imageLink_TB" FontSize="15" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="URL" VerticalAlignment="Center" Width="223" TextChanged="ImageLink_Changed"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
