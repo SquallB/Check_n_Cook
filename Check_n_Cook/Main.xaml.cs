@@ -122,7 +122,7 @@ namespace Check_n_Cook
                 }
             }
 
-            /*if (this.Model.ShoppingList.Count == 0)
+            if (this.Model.ShoppingList.Count == 0)
             {
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 try
@@ -130,21 +130,27 @@ namespace Check_n_Cook
                     StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
                     String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
                     JsonObject jsonObject = JsonObject.Parse(jsonString);
-                    JsonArray jsonArray = jsonObject.GetNamedArray("Ingredients");
+                    JsonArray jsonArray = jsonObject.GetNamedArray("ShoppingList");
 
-                    foreach (var jsonIngredient in jsonArray)
+                    foreach (var jsonShoppingListGroup in jsonArray)
                     {
-                        JsonObject ingredientJson = JsonObject.Parse(jsonIngredient.Stringify());
-                        Ingredient ingredient = new Ingredient(ingredientJson);
-                        this.Model.AddIngredientToShoppingList(ingredient);
-                    }
+                        JsonObject groupObject = JsonObject.Parse(jsonShoppingListGroup.Stringify());
+                        String groupName = groupObject.GetNamedString("Name");
+                        this.Model.AddShoppingListGroup(groupName);
+                        JsonArray ingredientsArray = groupObject.GetNamedArray("Ingredients");
 
+                        foreach (var ingredientJson in ingredientsArray)
+                        {
+                            Ingredient ingredient = new Ingredient(ingredientJson.GetObject());
+                            this.Model.AddIngredientToShoppingList(ingredient, groupName);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
 
                 }
-            }*/
+            }
         }
 
         #region Inscription de NavigationHelper
