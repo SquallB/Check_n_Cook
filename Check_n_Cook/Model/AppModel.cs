@@ -1,6 +1,7 @@
 ﻿using Check_n_Cook.Events;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Storage;
 
@@ -154,25 +155,27 @@ namespace Check_n_Cook.Model
             this.ShoppingList.Remove(ingredient);
             this.RefreshViews(new RemovedIngredientEvent(this, ingredient));
         }
-        public async void ExtractPersonnalReceipes()
+
+        public JsonArray LocalReceipes{get; set;}
+        public async Task<bool> ExtractPersonnalReceipes()
         {
             StorageFolder folder = KnownFolders.PicturesLibrary;
+            bool error = false;
             try
             {
                 StorageFile receipesFile = await folder.GetFileAsync("personalReceipes.json");
                 String jsonString = await FileIO.ReadTextAsync(receipesFile);
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
                 JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
-                foreach (var jsonReceipe in jsonArray)
-                {
-                    this.AddReceipe(new Receipe(jsonReceipe.Stringify()));
-                }
+                this.LocalReceipes = jsonArray;
+                
+                
             }
             catch
             {
-
+                error = true;
             }
-
+            return error;
         }
         public String StringifyFavouriteReceipes()
         {
