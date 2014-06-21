@@ -248,10 +248,11 @@ namespace Check_n_Cook
                 checkbox.Visibility = Visibility.Collapsed;
             }
 
+            String groupName = this.receipe.Title;
+            this.Model.AddShoppingListGroup(groupName);
+
             foreach (Ingredient ingredient in this.currentShoppingList)
             {
-                String groupName = this.receipe.Title;
-                this.Model.AddShoppingListGroup(groupName);
                 this.Model.AddIngredientToShoppingList(ingredient, groupName);
             }
             
