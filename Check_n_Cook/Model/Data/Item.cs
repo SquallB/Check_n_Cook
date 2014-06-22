@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model.Data
 {
-    public class ItemResult
+    public abstract class Item
     {
         private string name;
 
@@ -31,10 +31,6 @@ namespace Check_n_Cook.Model.Data
             get { return image; }
             set { image = value; }
         }
-
-        public Receipe Receipe { get; set; }
-
-        public string Author { get { if (Receipe.Author == String.Empty || Receipe.Author == null) { return "-"; } else { return Receipe.Author; } } }
 
     }
 }

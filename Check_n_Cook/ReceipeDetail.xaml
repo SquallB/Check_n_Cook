@@ -12,17 +12,11 @@
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
-
-        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
-        <x:String x:Key="AppName">Mon application</x:String>
         <CollectionViewSource x:Name="ingredientsViewSource" />
         <CollectionViewSource x:Name="receipeViewSource" />
         <CollectionViewSource x:Name="descriptionViewSource" />
     </Page.Resources>
 
-    <!--
-        Cette grille sert de panneau racine à la page.
-    -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -32,11 +26,12 @@
 
         <Hub x:Name="mainHub">
             <Hub.Header>
-                <!-- Bouton Précédent et titre de la page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Button  x:Name="backButton" Margin="-1,-1,40,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
@@ -46,9 +41,11 @@
                         AutomationProperties.ItemType="Navigation Button" HorizontalAlignment="Stretch"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap"/>
+                    <ProgressBar x:Name="progressBar" Width="300"  Height="28" IsIndeterminate="True" Foreground="Black" Grid.Column="2" Visibility="Collapsed" Margin="20, 0, 0, 0"/>
+                    <Image x:Name="imageEasyLifer" Source="/Assets/easyLiferLogo.png" Grid.Column="3" Width="150" Height="40" Margin="0, 0, 0, 0" />
                 </Grid>
             </Hub.Header>
-            <HubSection Header="Descirption">
+            <HubSection x:Name="descriptionHub" Header="Description" Visibility="Collapsed" >
                 <DataTemplate>
                     <GridView HorizontalAlignment="Left" 
                               VerticalAlignment="Top" 
@@ -79,19 +76,20 @@
                     </GridView>
                 </DataTemplate>
             </HubSection>
-            <HubSection x:Name="instructionsHub" Width="700" Header="Instructions">
+            <HubSection x:Name="instructionsHub" Width="700" Header="">
                 <DataTemplate>
                     <WebView x:Name="description" Height="475"  Width="568" Loaded="description_Loaded" VerticalAlignment="Center" Margin="0,0,20,20"/>
                 </DataTemplate>
             </HubSection>
-            <HubSection x:Name="ingredientsHub" Width="520" Header="Ingredients">
+            <HubSection x:Name="ingredientsHub" Width="auto" Header="Ingredients" Visibility="Collapsed">
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
-                        <GridView Grid.Row="0" x:Name="ResultatFound" SelectionMode="None" 
+                        <GridView Grid.Row="0" x:Name="ingredients" 
+                                  SelectionMode="None" 
                               ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="True">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -100,11 +98,11 @@
                             </GridView.ItemsPanel>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding Image}" Width="80" Height="60"/>
+                                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Ingredient.name}">
+                                        <Image Source="{Binding Ingredient.Image}" Width="80" Height="60"/>
                                         <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
-                                            <TextBlock Text="{Binding name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                            <TextBlock Text="{Binding Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding Ingredient.Description}" FontSize="12" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                         </StackPanel>
                                         <CheckBox Visibility="Collapsed" DataContext="{Binding}" Loaded="CheckBox_Loaded" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
                                     </StackPanel>
@@ -116,15 +114,14 @@
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Outil de gestion">
+            <HubSection x:Name="gestionHub" Header="Outil de gestion" Visibility="Collapsed">
                 <DataTemplate>
-                    <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="48"/>
-                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="75"/>
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="48"/>

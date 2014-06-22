@@ -35,7 +35,7 @@ namespace Check_n_Cook
         private string Date;
         private string TimeOfDay;
         private Receipe receipe;
-        private List<Ingredient> ingredients;
+        private List<ItemIngredient> ingredients;
         private List<Ingredient> currentShoppingList;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -60,7 +60,7 @@ namespace Check_n_Cook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.Date = DateTime.Today.ToString("d");
-            this.ingredients = new List<Ingredient>();
+            this.ingredients = new List<ItemIngredient>();
             this.checkboxes = new List<CheckBox>();
             this.currentShoppingList = new List<Ingredient>();
         }
@@ -79,6 +79,7 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            this.progressBar.Visibility = Visibility.Visible;
             this.Model = (AppModel)e.NavigationParameter;
             this.receipe = this.Model.SelectedReceipe;
             this.pageTitle.Text = receipe.Title;
@@ -101,12 +102,19 @@ namespace Check_n_Cook
             this.receipeViewSource.Source = receipeView;
             foreach (var ing in receipe.ingredients)
             {
-                ingredients.Add(ing);
+                ingredients.Add(ToolItem.CreateItemIngredient(ing));
 
             }
             this.ingredientsViewSource.Source = ingredients;
             this.descriptionViewSource.Source = receipeDescription;
             this.RegisterForPrinting();
+
+            this.descriptionHub.Visibility = Visibility.Visible;
+            this.instructionsHub.Header = "Instructions";
+            this.imageEasyLifer.Visibility = Visibility.Collapsed;
+            this.ingredientsHub.Visibility = Visibility.Visible;
+            this.gestionHub.Visibility = Visibility.Visible;
+            this.progressBar.Visibility = Visibility.Collapsed;
         }
 
         #region Inscription de NavigationHelper
@@ -275,6 +283,7 @@ namespace Check_n_Cook
         {
             checkboxes.Add((CheckBox)sender);
         }
+
 
     }
 }

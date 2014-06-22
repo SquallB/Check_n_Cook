@@ -1,20 +1,12 @@
 ﻿using Check_n_Cook.Common;
 using Check_n_Cook.Events;
 using Check_n_Cook.Model;
+using Check_n_Cook.Model.Data;
 using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Check_n_Cook
@@ -81,15 +73,34 @@ namespace Check_n_Cook
                 Time time = evnt.Time;
 
                 this.pageTitle.Text = "Liste de recette du " + time.Date;
+
                 if (this.Model.ReceipeList.ContainsKey(time.Date))
                 {
                     ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
                     this.date = receipeDate.Time.Date;
-                    morningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Matin"].Receipes.Values;
-                    noonReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Midi"].Receipes.Values;
-                    evenningReceipeViewSource.Source = receipeDate.ReceipeTimeOfDay["Soir"].Receipes.Values;
+
+                    List<ItemReceipe> itemsMorning = new List<ItemReceipe>();
+                    foreach (Receipe receipe in receipeDate.ReceipeTimeOfDay["Matin"].Receipes.Values)
+                    {
+                        itemsMorning.Add(ToolItem.CreateItemReceipe(receipe));
+                    }
+                    morningReceipeViewSource.Source = itemsMorning;
+
+                    List<ItemReceipe> itemsNoon = new List<ItemReceipe>();
+                    foreach (Receipe receipe in receipeDate.ReceipeTimeOfDay["Midi"].Receipes.Values)
+                    {
+                        itemsNoon.Add(ToolItem.CreateItemReceipe(receipe));
+                    }
+                    noonReceipeViewSource.Source = itemsNoon;
+
+                    List<ItemReceipe> itemsEvenning = new List<ItemReceipe>();
+                    foreach (Receipe receipe in receipeDate.ReceipeTimeOfDay["Soir"].Receipes.Values)
+                    {
+                        itemsEvenning.Add(ToolItem.CreateItemReceipe(receipe));
+                    }
+                    evenningReceipeViewSource.Source = itemsEvenning;
                 }
-                
+
             }
 
         }
@@ -123,46 +134,53 @@ namespace Check_n_Cook
             {
                 RemovedReceipeListEvent srcEvnt = (RemovedReceipeListEvent)e;
                 Time time = srcEvnt.Time;
-                Dictionary<string, Receipe> newList = new Dictionary<string, Receipe>();
+                List<ItemReceipe> newList = new List<ItemReceipe>();
 
                 if (this.Model.ReceipeList.ContainsKey(time.Date))
                 {
                     Dictionary<string, Receipe> previousList = this.Model.ReceipeList[time.Date].ReceipeTimeOfDay[time.TimeOfDay].Receipes;
                     foreach (Receipe receipe in previousList.Values)
                     {
-                        newList[receipe.Title] = receipe;
+                        newList.Add(ToolItem.CreateItemReceipe(receipe));
                     }
                 }
 
                 if (time.TimeOfDay.Equals("Matin"))
                 {
-
-                    morningReceipeViewSource.Source = newList.Values;
+                    morningReceipeViewSource.Source = newList;
                 }
+
                 else if (time.TimeOfDay.Equals("Midi"))
                 {
 
-                    noonReceipeViewSource.Source = newList.Values;
+                    noonReceipeViewSource.Source = newList;
                 }
                 else if (time.TimeOfDay.Equals("Soir"))
                 {
 
-                    evenningReceipeViewSource.Source = newList.Values;
+                    evenningReceipeViewSource.Source = newList;
                 }
             }
         }
 
         private void GoToDetailReceipe_Click(object sender, ItemClickEventArgs e)
         {
-
+            if (e.ClickedItem is ItemReceipe)
+            {
+                ItemReceipe item = (ItemReceipe)e.ClickedItem;
+                Receipe receipe = item.Receipe;
+                this.Model.SelectReceipe(receipe);
+                this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
+            }
         }
 
         public async void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Button button = sender as Button;
-            if (this.Frame != null && button != null && button.DataContext is Receipe)
+            if (this.Frame != null && button != null && button.DataContext is ItemReceipe)
             {
-                Receipe re = (Receipe)button.DataContext;
+                ItemReceipe item = (ItemReceipe)button.DataContext;
+                Receipe re = item.Receipe;
                 this.Model.RemoveReceipeList(re, (string)button.Tag, this.date);
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 StorageFile receipeFile = await folder.CreateFileAsync("receipes.json", CreationCollisionOption.ReplaceExisting);

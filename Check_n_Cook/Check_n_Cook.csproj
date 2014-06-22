@@ -171,8 +171,11 @@
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Data\Item.cs" />
+    <Compile Include="Model\Data\ItemIngredient.cs" />
     <Compile Include="Model\Data\ItemReceipeListSelected.cs" />
     <Compile Include="Model\Data\ReceipeDescription.cs" />
+    <Compile Include="Model\Data\ToolItem.cs" />
     <Compile Include="Model\NewReceipe.cs" />
     <Compile Include="Model\ReceipeListSelected.cs" />
     <Compile Include="Model\ShoppingListGroup.cs" />
@@ -211,9 +214,7 @@
     <Compile Include="Model\AbstractModel.cs" />
     <Compile Include="Model\AppModel.cs" />
     <Compile Include="Model\Data\ItemAbout.cs" />
-    <Compile Include="Model\Data\ItemFavorite.cs" />
     <Compile Include="Model\Data\ItemReceipe.cs" />
-    <Compile Include="Model\Data\ItemResult.cs" />
     <Compile Include="Model\Data\SampleDataGroup.cs" />
     <Compile Include="Model\Data\ViewReceipeTieOfDay.cs" />
     <Compile Include="Model\DishType.cs" />
@@ -261,6 +262,9 @@
     <Content Include="Assets\Check n Cook.png" />
     <Content Include="Assets\ChecknCookSmall.png" />
     <Content Include="Assets\ChecknCookStore.png" />
+    <Content Include="Assets\easyLiferLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\hugo_CheckNCook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

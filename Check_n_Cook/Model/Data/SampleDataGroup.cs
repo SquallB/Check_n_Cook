@@ -9,12 +9,12 @@ namespace Check_n_Cook.Model.Data
     public class SampleDataGroup
     {
         public string Title { get; private set; }
-        public List<ViewReceipeTimeOfDay> Items { get; private set; }
+        public List<ItemReceipeTimeOfDay> Items { get; private set; }
 
         public SampleDataGroup(String title)
         {
             this.Title = title;
-            this.Items = new List<ViewReceipeTimeOfDay>();
+            this.Items = new List<ItemReceipeTimeOfDay>();
         }
 
         public override string ToString()

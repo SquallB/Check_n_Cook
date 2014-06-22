@@ -105,7 +105,7 @@ namespace Check_n_Cook
                             imgs.Add(receipe.Image);
                         }
 
-                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
+                        sampleDataGroup.Items.Add(new ItemReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
                     }
 
                     sampleDataGroups.Add(sampleDataGroup);
@@ -169,9 +169,9 @@ namespace Check_n_Cook
 
         public void GoToReceipeList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (e.ClickedItem is ViewReceipeTimeOfDay)
+            if (e.ClickedItem is ItemReceipeTimeOfDay)
             {
-                ViewReceipeTimeOfDay viewReceipeTimeOfDay = (ViewReceipeTimeOfDay)e.ClickedItem;
+                ItemReceipeTimeOfDay viewReceipeTimeOfDay = (ItemReceipeTimeOfDay)e.ClickedItem;
                 Time time = viewReceipeTimeOfDay.Time;
                 if (this.appModel.ReceipeList.ContainsKey(time.Date) && this.appModel.ReceipeList[time.Date].ReceipeTimeOfDay.ContainsKey(time.TimeOfDay))
                 {
@@ -327,7 +327,7 @@ namespace Check_n_Cook
                             imgs.Add(receipe.Image);
                         }
 
-                        sampleDataGroup.Items.Add(new ViewReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
+                        sampleDataGroup.Items.Add(new ItemReceipeTimeOfDay(receipeDate.Time.Date, imgs, receipeTimeOfDay.Time.TimeOfDay));
                     }
 
                     sampleDataGroups.Add(sampleDataGroup);

@@ -18,10 +18,6 @@
         <x:String x:Key="AppName">Mon application</x:String>
 
     </Page.Resources>
-
-    <!--
-        Cette grille sert de panneau racine à la page.
-    -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -62,10 +58,12 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Width="168">
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                <StackPanel Orientation="Horizontal"  ToolTipService.ToolTip="{Binding Receipe.Title}" >
+                                    <Image Source="{Binding Receipe.Image}" Width="80" Height="60"/>
+                                    <StackPanel Orientation="Vertical"  Width="168">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Receipe.DishType.Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
                                     <Button Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" Tag="Matin">
                                         <Button.Template>
@@ -95,10 +93,12 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Width="168">
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Receipe.Title}" >
+                                    <Image Source="{Binding Receipe.Image}" Width="80" Height="60"/>
+                                    <StackPanel Orientation="Vertical"  Width="168">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Receipe.DishType.Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
                                     <Button  Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" DataContext="{Binding}" Tag="Midi">
                                         <Button.Template>
@@ -129,10 +129,12 @@
                         </GridView.ItemsPanel>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical"  Width="168">
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                <StackPanel Orientation="Horizontal"  ToolTipService.ToolTip="{Binding Receipe.Title}" >
+                                    <Image Source="{Binding Receipe.Image}" Width="80" Height="60"/>
+                                    <StackPanel Orientation="Vertical"   Width="168">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Author}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Receipe.DishType.Name}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
                                     <Button  Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" Tag="Soir">
                                         <Button.Template>

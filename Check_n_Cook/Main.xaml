@@ -12,16 +12,10 @@
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
-
-        <!-- TODO: supprimez cette ligne si la clé AppName est déclarée dans App.xaml -->
-        <x:String x:Key="AppName">Mon application</x:String>
         <CollectionViewSource x:Name="resultsFoundViewSource" />
         <CollectionViewSource x:Name="favoriteViewSource" />
     </Page.Resources>
 
-    <!--
-        Cette grille sert de panneau racine à la page.
-    -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -31,7 +25,6 @@
 
         <Hub x:Name="Check_n_Cook">
             <Hub.Header>
-                <!-- Bouton Précédent et titre de la page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
@@ -157,7 +150,7 @@
                         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Mon espace" Margin="0,20,0,0" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         <Button Grid.Row="6" Width="421" Content="Les magasins les plus proches" Click="GoToShop_Click" Height="34" Margin="0,7,-3,7"/>
                         <Button Content="A propos" Grid.Row="7" Width="421" RequestedTheme="Light" Click="GoToAboutCrew" Height="34" Margin="0,7,-3,7"/>
-                        <ProgressBar x:Name="progress" Height="28" IsIndeterminate="True" Loaded="progress_Loaded"  Foreground="Black" Grid.Row="8" Visibility="Collapsed" Margin="0,11,0,9"/>
+                        <ProgressBar x:Name="progressBar" Height="28" IsIndeterminate="True" Loaded="progress_Loaded"  Foreground="Black" Grid.Row="8" Visibility="Collapsed" Margin="150,-830,0,9"/>
                         <Button Content="OK" Margin="361,-3,0,-3" Height="38" Click="Button_Click" HorizontalAlignment="Stretch"/>
                         <Button Grid.Row="5" Width="421" Click="GoToPlanningReceipe_Click" Content="Mon planning" Height="34" Margin="0,7,-3,7"/>
                         <Button Content="Accéder à ma liste de course" Grid.Row="3" Width="421" Click="GoToShoppingList_Click" Margin="0,7,-3,-0.746"/>

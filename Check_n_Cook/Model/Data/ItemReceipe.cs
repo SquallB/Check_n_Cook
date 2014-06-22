@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model.Data
 {
-    public class ItemReceipe
+    public class ItemReceipe : Item
     {
-        public string Name { get; set; }
+        public Receipe Receipe { get; set; }
 
-        public string Image { get; set; }
+        public string Author { get { if (Receipe.Author == String.Empty || Receipe.Author == null) { return "-"; } else { return Receipe.Author; } } }
 
-        public string Description { get; set; }
-
-        public ItemReceipe(string image, string name, string description)
+        public ItemReceipe()
         {
-            this.Image = image;
-            this.Name = name;
-            this.Description = description;
+                
         }
+
+        public ItemReceipe(Receipe receipe)
+        {
+            this.Receipe = receipe;
+        }
+
     }
 }

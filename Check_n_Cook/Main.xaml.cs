@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
@@ -26,14 +25,14 @@ namespace Check_n_Cook
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private List<ItemResult> ItemsResult { get; set; }
+        private List<ItemReceipe> ItemsReceipe { get; set; }
         List<string> dishTypeSearch = new List<string>();
         public string[] ingredientSearch;
         public TextBox txtIngredientSearch;
         private URLDataRetriever retriever;
         public AppModel Model { get; set; }
         public Slider sliderSearch;
-        public ProgressBar progress;
+        public ProgressBar progressBar;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -169,29 +168,6 @@ namespace Check_n_Cook
             navigationHelper.OnNavigatedTo(e);
         }
 
-        private ItemResult CreateItemResult(Receipe receipe)
-        {
-            ItemResult item = new ItemResult { Receipe = receipe };
-            item.Name = receipe.Title;
-            TextBlock toto = new TextBlock();
-
-            toto.Text = item.Name;
-            toto.Measure(new Size(1200, 1200));
-            if (toto.DesiredSize.Width > 90)
-            {
-                while (toto.DesiredSize.Width > 90)
-                {
-                    item.Name = item.Name.Remove(item.Name.Length - 1, 1);
-                    toto.Text = item.Name;
-                    toto.Measure(new Size(1200, 1200));
-
-                }
-                item.Name = item.Name.PadRight(item.Name.Length + 3, '.');
-            }
-
-            return item;
-        }
-
         public void Refresh(Event e)
         {
             if (e is ReceipeEvent)
@@ -201,33 +177,33 @@ namespace Check_n_Cook
 
                 if (receipeE is AddedReceipeEvent)
                 {
-                    this.ItemsResult.Add(this.CreateItemResult(receipe));
+                    this.ItemsReceipe.Add(ToolItem.CreateItemReceipe(receipe));
                 }
                 else if (receipeE is RemovedReceipeEvent)
                 {
-                    foreach (ItemResult item in this.ItemsResult)
+                    foreach (ItemReceipe item in this.ItemsReceipe)
                     {
                         if (item.Receipe == receipe)
                         {
-                            this.ItemsResult.Remove(item);
+                            this.ItemsReceipe.Remove(item);
                         }
                     }
                 }
                 else if (receipeE is ClearedReceipeEvent)
                 {
-                    this.ItemsResult = new List<ItemResult>();
+                    this.ItemsReceipe = new List<ItemReceipe>();
                 }
             }
         }
 
         public async void search(string keyWord)
         {
-            progress.Visibility = Visibility.Visible;
+            progressBar.Visibility = Visibility.Visible;
             this.Model.ClearReceipes();
 
             bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
-            this.resultsFoundViewSource.Source = this.ItemsResult;
-            progress.Visibility = Visibility.Collapsed;
+            this.resultsFoundViewSource.Source = this.ItemsReceipe;
+            progressBar.Visibility = Visibility.Collapsed;
 
             Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
 
@@ -280,14 +256,14 @@ namespace Check_n_Cook
             try
             {
 
-                progress.Visibility = Visibility.Visible;
+                progressBar.Visibility = Visibility.Visible;
 
                 this.Model.ClearReceipes();
                 error = await this.retriever.GetDataByIngredients(keyWords, 100, 1, Model);
-                this.resultsFoundViewSource.Source = this.ItemsResult;
+                this.resultsFoundViewSource.Source = this.ItemsReceipe;
 
 
-                progress.Visibility = Visibility.Collapsed;
+                progressBar.Visibility = Visibility.Collapsed;
 
                 Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
 
@@ -351,7 +327,7 @@ namespace Check_n_Cook
 
         public void ItemResult_Click(object sender, ItemClickEventArgs e)
         {
-            ItemResult item = ((ItemResult)e.ClickedItem);
+            ItemReceipe item = ((ItemReceipe)e.ClickedItem);
             this.Model.SelectReceipe(item.Receipe);
             this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
         }
@@ -480,7 +456,7 @@ namespace Check_n_Cook
 
         private void progress_Loaded(object sender, RoutedEventArgs e)
         {
-            this.progress = sender as ProgressBar;
+            this.progressBar = sender as ProgressBar;
         }
 
         private void GoToShop_Click(object sender, RoutedEventArgs e)

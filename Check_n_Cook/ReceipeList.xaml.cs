@@ -4,20 +4,10 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Graphics.Printing;
-using Windows.UI.Xaml.Printing;
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
@@ -78,14 +68,14 @@ namespace Check_n_Cook
             GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
             this.Model = evnt.AppModel;
             this.time = evnt.Time;
-            List<Receipe> receipes = new List<Receipe>();
+            List<ItemReceipe> receipes = new List<ItemReceipe>();
 
             if (evnt.ReceipeTime is ReceipeTimeOfDay)
             {
                 ReceipeTimeOfDay receipeTimeOfDay = (ReceipeTimeOfDay)evnt.ReceipeTime;
                 foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                 {
-                    receipes.Add(receipe);
+                    receipes.Add(ToolItem.CreateItemReceipe(receipe));
                 }
 
                 HandleTitle(receipeTimeOfDay);
@@ -97,7 +87,7 @@ namespace Check_n_Cook
                 {
                     foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
                     {
-                        receipes.Add(receipe);
+                        receipes.Add(ToolItem.CreateItemReceipe(receipe));
                     }
                 }
                 HandleTitle(receipeDate);
@@ -137,6 +127,8 @@ namespace Check_n_Cook
 
         }
 
+
+
         #region Inscription de NavigationHelper
 
         /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
@@ -164,11 +156,19 @@ namespace Check_n_Cook
         {
             Button b = sender as Button;
 
-            if (b != null && b.DataContext is Receipe)
+            if (b != null && b.DataContext is ItemReceipe)
             {
-                Receipe receipe = (Receipe)b.DataContext;
+                ItemReceipe item = (ItemReceipe)b.DataContext;
+                Receipe receipe = item.Receipe;
 
-                this.listIngredientsViewSource.Source = receipe.ingredients;
+                List<ItemIngredient> itemsIng = new List<ItemIngredient>();
+
+                foreach (Ingredient ing in receipe.ingredients)
+                {
+                    itemsIng.Add(ToolItem.CreateItemIngredient(ing));
+                }
+
+                this.listIngredientsViewSource.Source = itemsIng;
 
                 if (this.IngredientTextBlock != null)
                 {
@@ -234,10 +234,10 @@ namespace Check_n_Cook
 
         private void ReceipeClick_Click(object sender, ItemClickEventArgs e)
         {
-            this.pageTitle.Text = "Clique !";
-            if (e.ClickedItem is Receipe)
+            if (e.ClickedItem is ItemReceipe)
             {
-                Receipe re = ((Receipe)e.ClickedItem);
+                ItemReceipe item = (ItemReceipe)e.ClickedItem;
+                Receipe re = item.Receipe;
                 this.Model.SelectReceipe(re);
                 this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
             }
