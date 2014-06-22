@@ -47,7 +47,7 @@ namespace Check_n_Cook.Model
 
 
 
-        public Receipe() : this("", null, DateTime.Now, null, 0, 0, 0, false, false) { }
+        public Receipe() : this("", "-", DateTime.Now, null, 0, 0, 0, false, false) { }
 
         public Receipe(String title, String author, DateTime publicationDate, DishType dishType, int rating, int difficulty, int cost, bool vegetarian, bool withAlcohol)
         {

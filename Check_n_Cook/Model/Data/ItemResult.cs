@@ -34,5 +34,7 @@ namespace Check_n_Cook.Model.Data
 
         public Receipe Receipe { get; set; }
 
+        public string Author { get { if (Receipe.Author == String.Empty || Receipe.Author == null) { return "-"; } else { return Receipe.Author; } } }
+
     }
 }

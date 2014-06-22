@@ -95,7 +95,7 @@ namespace Check_n_Cook
                 }
                 catch (FileNotFoundException ex) { }
 
-                this.favoriteViewSource.Source = this.Model.FavouriteReceipes;
+                this.favoriteViewSource.Source = this.Model.FavouriteReceipes.Values;
             }
 
             if (this.Model.ReceipeList.Count == 0)
@@ -349,7 +349,7 @@ namespace Check_n_Cook
             }
         }
 
-        public void ItemView_ItemClick(object sender, ItemClickEventArgs e)
+        public void ItemResult_Click(object sender, ItemClickEventArgs e)
         {
             ItemResult item = ((ItemResult)e.ClickedItem);
             this.Model.SelectReceipe(item.Receipe);
@@ -496,16 +496,9 @@ namespace Check_n_Cook
             txtIngredientSearch = sender as TextBox;
         }
 
-        private void GoToReceipeListToday_Click(object sender, RoutedEventArgs e)
+        private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame != null)
-            {
-                string date = DateTime.Today.Date.ToString("d");
-                if (this.Model.ReceipeList.ContainsKey(date))
-                {
-                    this.Frame.Navigate(typeof(ReceipeList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date]));
-                }
-            }
+               // this.Frame.Navigate(typeof(ShoppingList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date]));
         }
 
         private void GoToAddReceipe_Click(object sender, RoutedEventArgs e)
@@ -514,6 +507,13 @@ namespace Check_n_Cook
             {
                 this.Frame.Navigate(typeof(AddReceipe));
             }
+        }
+
+        private void ItemFavorite_Click(object sender, ItemClickEventArgs e)
+        {
+            Receipe item = ((Receipe)e.ClickedItem);
+            this.Model.SelectReceipe(item);
+            this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
         }
     }
 }
