@@ -44,7 +44,7 @@
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
                     <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Modification de la liste de recettes"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" />
                 </Grid>
             </Hub.Header>
             <HubSection Width="500" Header="Matin">
@@ -64,10 +64,16 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                        <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" Tag="Matin"/>
+                                    <StackPanel Orientation="Vertical" Width="168">
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
+                                    <Button Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" Tag="Matin">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="/Assets/supprimer.png"/>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -91,10 +97,16 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                        <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" DataContext="{Binding}" Tag="Midi"/>
+                                    <StackPanel Orientation="Vertical" Width="168">
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
+                                    <Button  Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" DataContext="{Binding}" Tag="Midi">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="/Assets/supprimer.png"/>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -119,10 +131,16 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Image}" Width="80" Height="60"/>
-                                    <StackPanel Orientation="Vertical" Background="LightGray" Width="168">
-                                        <TextBlock Text="{Binding Title}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
-                                        <Button Margin="5,0,0,0" Content="Supprimer" Click="RemoveReceipe_Click" Tag="Soir"/>
+                                    <StackPanel Orientation="Vertical"  Width="168">
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
                                     </StackPanel>
+                                    <Button  Height="32" Width="32" Margin="5,0,0,0" Click="RemoveReceipe_Click" Tag="Soir">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="/Assets/supprimer.png"/>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridView.ItemTemplate>

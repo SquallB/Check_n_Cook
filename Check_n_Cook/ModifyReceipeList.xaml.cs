@@ -17,8 +17,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
-
 namespace Check_n_Cook
 {
     /// <summary>
@@ -82,6 +80,7 @@ namespace Check_n_Cook
                 }
                 Time time = evnt.Time;
 
+                this.pageTitle.Text = "Liste de recette du " + time.Date;
                 if (this.Model.ReceipeList.ContainsKey(time.Date))
                 {
                     ReceipeDate receipeDate = this.Model.ReceipeList[time.Date];
@@ -138,17 +137,17 @@ namespace Check_n_Cook
                 if (time.TimeOfDay.Equals("Matin"))
                 {
 
-                    morningReceipeViewSource.Source = newList;
+                    morningReceipeViewSource.Source = newList.Values;
                 }
                 else if (time.TimeOfDay.Equals("Midi"))
                 {
 
-                    noonReceipeViewSource.Source = newList;
+                    noonReceipeViewSource.Source = newList.Values;
                 }
                 else if (time.TimeOfDay.Equals("Soir"))
                 {
 
-                    evenningReceipeViewSource.Source = newList;
+                    evenningReceipeViewSource.Source = newList.Values;
                 }
             }
         }
