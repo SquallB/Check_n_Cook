@@ -8,6 +8,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -90,6 +91,7 @@ namespace Check_n_Cook
             {
                 ReceipeRetriever rr = new ReceipeRetriever();
                 var task = rr.extractReceipeFromMarmiton(receipe);
+                var error = false;
                 try
                 {
                     if ((await task) == true)
@@ -102,7 +104,13 @@ namespace Check_n_Cook
                 }
                 catch
                 {
-
+                    error = true;
+                    
+                }
+                if (error)
+                {
+                    var messageDialog = new MessageDialog("Une erreur est survenue ! Vous n'êtes pas connecté à Internet ou le serveur est indisponible.");
+                    await messageDialog.ShowAsync();
                 }
             }
             this.receipeViewSource.Source = receipeView;
