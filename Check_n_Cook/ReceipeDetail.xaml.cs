@@ -90,13 +90,19 @@ namespace Check_n_Cook
             {
                 ReceipeRetriever rr = new ReceipeRetriever();
                 var task = rr.extractReceipeFromMarmiton(receipe);
-
-                if ((await task) == true)
+                try
                 {
-                    var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
-                    rr.handleIngredients(rr.ingredientPart, receipe);
+                    if ((await task) == true)
+                    {
+                        var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                        rr.handleIngredients(rr.ingredientPart, receipe);
 
-                    wb.NavigateToString(receipe.ToDoInstructions);
+                        wb.NavigateToString(receipe.ToDoInstructions);
+                    }
+                }
+                catch
+                {
+
                 }
             }
             this.receipeViewSource.Source = receipeView;
