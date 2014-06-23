@@ -474,7 +474,7 @@ namespace Check_n_Cook
 
         private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
         {
-               // this.Frame.Navigate(typeof(ShoppingList), new GoToReceipeListEvent(this.Model, new Time(date, "Midi"), this.Model.ReceipeList[date]));
+            this.Frame.Navigate(typeof(ShoppingList), this.Model);
         }
 
         private void GoToAddReceipe_Click(object sender, RoutedEventArgs e)
