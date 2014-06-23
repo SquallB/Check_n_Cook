@@ -98,6 +98,8 @@ namespace Check_n_Cook.Model
                     Boolean hasQty = false;
                     Boolean needMoreDetailUnity = false;
                     int indiceUnity = 0;
+                    int indiceQty = 0;
+
                     foreach (var currentArg in listofArgs)
                     {
                         Boolean hasDigit = false;
@@ -118,10 +120,10 @@ namespace Check_n_Cook.Model
                         if (counterOfWord == 1 && hasDigit)
                         {
                             currentIng.quantity = arg;
-
+                            indiceQty = counterOfWord;
                             hasQty = true;
                         }
-                        else if (arg.ToUpper() == "kg".ToUpper() || arg.ToUpper() == "tasse".ToUpper() ||  arg.ToUpper() == "bol".ToUpper() || arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL")
+                        else if ((arg.ToUpper() == "kg".ToUpper() || arg.ToUpper() == "tasse".ToUpper() ||  arg.ToUpper() == "bol".ToUpper() || arg.ToUpper() == "cuillère".ToUpper() || arg.ToUpper() == "cuillères".ToUpper() || arg.ToUpper() == "G" || arg.ToUpper() == "L" || arg.ToUpper() == "CL") && counterOfWord == indiceQty + 1)
                         {
                             if (hasQty)
                             {
@@ -165,7 +167,7 @@ namespace Check_n_Cook.Model
                             }
                             if (arg != "" && arg != " ")
                             {
-                                arg = arg.Replace(",", " et ");
+                                //arg = arg.Replace(",", " et ");
                                 currentIng.name += arg + " ";
 
                             }
