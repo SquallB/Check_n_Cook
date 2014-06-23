@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ShoppingList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ShoppingListPrintPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,10 +140,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ReceipeList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ShoppingList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +171,7 @@
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AppModel.cs" />
     <Compile Include="Model\Data\Item.cs" />
     <Compile Include="Model\Data\ItemIngredient.cs" />
     <Compile Include="Model\Data\ItemReceipeListSelected.cs" />
@@ -180,6 +181,9 @@
     <Compile Include="Model\ReceipeListSelected.cs" />
     <Compile Include="Model\ShoppingListGroup.cs" />
     <Compile Include="Model\UnityAvailable.cs" />
+    <Compile Include="ShoppingList.xaml.cs">
+      <DependentUpon>ShoppingList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShoppingListPrintPage.xaml.cs">
       <DependentUpon>ShoppingListPrintPage.xaml</DependentUpon>
     </Compile>
@@ -212,7 +216,6 @@
     <Compile Include="Events\SelectedReceipeEvent.cs" />
     <Compile Include="Events\ShopEvent.cs" />
     <Compile Include="Model\AbstractModel.cs" />
-    <Compile Include="Model\AppModel.cs" />
     <Compile Include="Model\Data\ItemAbout.cs" />
     <Compile Include="Model\Data\ItemReceipe.cs" />
     <Compile Include="Model\Data\SampleDataGroup.cs" />
@@ -240,9 +243,6 @@
     </Compile>
     <Compile Include="ReceipeList.xaml.cs">
       <DependentUpon>ReceipeList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ShoppingList.xaml.cs">
-      <DependentUpon>ShoppingList.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShopsList.xaml.cs">
       <DependentUpon>ShopsList.xaml</DependentUpon>
