@@ -309,6 +309,21 @@ namespace Check_n_Cook
 
                 this.model.RemoveShoppingListGroup(data.Name);
 
+                object searchedItem = null;
+                int i = 0;
+                while (i < this.groupIngredient.Items.Count && searchedItem == null)
+                {
+                    object item = this.groupIngredient.Items[i];
+                    if (item.ToString() == data.Name)
+                    {
+                        searchedItem = item;
+                    }
+
+                    i++;
+                }
+
+                this.groupIngredient.Items.Remove(searchedItem);
+
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
