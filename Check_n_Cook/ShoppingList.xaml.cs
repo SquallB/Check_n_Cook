@@ -23,6 +23,10 @@ namespace Check_n_Cook
         private AppModel model;
         private List<ShoppingListGroup> shoppingListGroup;
         private bool isModifyingList;
+        private List<Button> buttonIngredient;
+        private ComboBox groupIngredient;
+        private TextBlock newIngredientText;
+        private Button addItemButton;
 
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
@@ -50,6 +54,7 @@ namespace Check_n_Cook
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
             this.shoppingListGroup = new List<ShoppingListGroup>();
+            this.buttonIngredient = new List<Button>();
         }
 
         /// <summary>
@@ -83,63 +88,6 @@ namespace Check_n_Cook
             this.RegisterForPrinting();
         }
 
-        public int HandleQuantity(string quantity, string quantityToAdd)
-        {
-
-            string[] splitFraction1 = quantity.Split(new Char[] { '/' });
-            string[] splitFraction2 = quantityToAdd.Split(new Char[] { '/' });
-            int a = -1, b = -1, c = -1, d = -1;
-
-            if (splitFraction1.Length == 1)
-            {
-                a = Int32.Parse(splitFraction1[0]);
-            }
-            if (splitFraction1.Length == 2)
-            {
-                a = Int32.Parse(splitFraction1[0]);
-                b = Int32.Parse(splitFraction1[1]);
-            }
-            if (splitFraction2.Length == 1)
-            {
-                c = Int32.Parse(splitFraction2[0]);
-            }
-            if (splitFraction2.Length == 2)
-            {
-                c = Int32.Parse(splitFraction2[0]);
-                d = Int32.Parse(splitFraction2[1]);
-            }
-
-            double result = 0;
-
-            if (b != -1 && d != -1)
-            {
-                result = (a * d + c * b) / (b * d);
-            }
-            else if (b != -1 && d == -1)
-            {
-                result = (a + c * b) / b;
-            }
-            else if (b == -1 && d != -1)
-            {
-                result = (a * d + c) / d;
-            }
-            else if (b == -1 && d == -1)
-            {
-                result = a + c;
-            }
-
-            double resultTrun = Math.Truncate(result);
-
-            if (result == resultTrun)
-            {
-                return (int)result;
-            }
-            else
-            {
-
-                return ((int)resultTrun) + 1;
-            }
-        }
         #region Inscription de NavigationHelper
 
         /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
@@ -188,6 +136,11 @@ namespace Check_n_Cook
                     button.Visibility = Visibility.Collapsed;
                 }
 
+                foreach (Button b in this.buttonIngredient)
+                {
+                    b.Visibility = Visibility.Collapsed;
+                }
+
                 this.newIngredientText.Visibility = Visibility.Collapsed;
                 this.nameIngredient.Visibility = Visibility.Collapsed;
                 this.quantityIngredient.Visibility = Visibility.Collapsed;
@@ -204,19 +157,19 @@ namespace Check_n_Cook
                     button.Visibility = Visibility.Visible;
                 }
 
-                this.newIngredientText.Visibility = Visibility.Visible;
+                foreach (Button b in this.buttonIngredient)
+                {
+                    b.Visibility = Visibility.Visible;
+                }
 
+                this.newIngredientText.Visibility = Visibility.Visible;
                 this.nameIngredient.Text = "";
                 this.nameIngredient.Visibility = Visibility.Visible;
-
                 this.quantityIngredient.Text = "";
                 this.quantityIngredient.Visibility = Visibility.Visible;
-
                 this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
                 this.unityIngredient.Visibility = Visibility.Visible;
-
                 this.groupIngredient.Visibility = Visibility.Visible;
-
                 this.addItemButton.Visibility = Visibility.Visible;
             }
 
@@ -224,7 +177,7 @@ namespace Check_n_Cook
         }
 
         private List<Button> deleteButtons;
-        private void Button_Loaded(object sender, RoutedEventArgs e)
+        private void ButtonShoppingList_Loaded(object sender, RoutedEventArgs e)
         {
             this.deleteButtons.Add((Button)sender);
 
@@ -257,6 +210,7 @@ namespace Check_n_Cook
                 {
                     this.shoppingListGroup.Add(listGroup);
                 }
+
 
                 this.DefaultViewModel["Groups"] = this.shoppingListGroup;
 
@@ -307,10 +261,11 @@ namespace Check_n_Cook
             String quantity = this.quantityIngredient.Text;
             String unity = this.unityIngredient.SelectedItem.ToString();
             Ingredient ingredient = new Ingredient(name, quantity, unity);
-            String groupName = this.groupIngredient.SelectedItem.ToString();
 
-            if (name != "" && groupName != "")
+
+            if (name != "" && this.groupIngredient.SelectedItem != null)
             {
+                String groupName = this.groupIngredient.SelectedItem.ToString();
                 this.model.AddIngredientToShoppingList(ingredient, groupName);
 
                 StorageFolder folder = KnownFolders.PicturesLibrary;
@@ -319,19 +274,17 @@ namespace Check_n_Cook
             }
         }
 
-        private Button addItemButton;
         private void AddIngredientButton_Loaded(object sender, RoutedEventArgs e)
         {
             this.addItemButton = (Button)sender;
         }
 
-        private TextBlock newIngredientText;
+
         private void NewIngredientText_Loaded(object sender, RoutedEventArgs e)
         {
             this.newIngredientText = (TextBlock)sender;
         }
 
-        private ComboBox groupIngredient;
         private void ComboBoxGroup_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -361,5 +314,35 @@ namespace Check_n_Cook
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
             }
         }
+
+        private void ButtonIngredient_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button but = (Button)sender;
+                this.buttonIngredient.Add(but);
+
+                if (this.isModifyingList)
+                {
+                    but.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private async void RemoveIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button but = (Button)sender;
+                ItemIngredient item = (ItemIngredient)but.DataContext;
+
+                this.model.RemoveIngredientFromShoppingList(item, item.Group);
+
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+                await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+            }
+        }
+
     }
 }

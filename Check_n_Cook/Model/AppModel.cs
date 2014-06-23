@@ -1,4 +1,5 @@
 ﻿using Check_n_Cook.Events;
+using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -181,14 +182,16 @@ namespace Check_n_Cook.Model
 
         public void AddIngredientToShoppingList(Ingredient ingredient, String groupName)
         {
-            this.ShoppingList[groupName].Items.Add(ingredient);
+            ItemIngredient itemIngredient = ToolItem.CreateItemIngredient(ingredient);
+            itemIngredient.Group = groupName;
+            this.ShoppingList[groupName].Items.Add(itemIngredient);
             this.RefreshViews(new AddedIngredientEvent(this, ingredient, groupName));
         }
 
-        public void RemoveIngredientFromShoppingList(Ingredient ingredient, String groupName)
+        public void RemoveIngredientFromShoppingList(ItemIngredient itemIngredient, String groupName)
         {
-            this.ShoppingList[groupName].Items.Remove(ingredient);
-            this.RefreshViews(new RemovedIngredientEvent(this, ingredient, groupName));
+            this.ShoppingList[groupName].Items.Remove(itemIngredient);
+            this.RefreshViews(new RemovedIngredientEvent(this, itemIngredient.Ingredient, groupName));
         }
 
         public JsonArray LocalReceipes{get; set;}
@@ -203,8 +206,6 @@ namespace Check_n_Cook.Model
                 JsonObject jsonObject = JsonObject.Parse(jsonString);
                 JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
                 this.LocalReceipes = jsonArray;
-                
-                
             }
             catch
             {
@@ -252,9 +253,9 @@ namespace Check_n_Cook.Model
                 JsonObject groupObject = new JsonObject();
                 JsonArray ingredientArray = new JsonArray();
 
-                foreach (Ingredient ingredient in group.Items)
+                foreach (ItemIngredient itemIngredient in group.Items)
                 {
-                    ingredientArray.Add(ingredient.ToJsonObject());
+                    ingredientArray.Add(itemIngredient.Ingredient.ToJsonObject());
                 }
 
                 groupObject["Name"] = JsonValue.CreateStringValue(group.Name);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Check_n_Cook.Model.Data;
+using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
@@ -24,8 +25,9 @@ namespace Check_n_Cook.Model
                 paragraph.Inlines.Add(new LineBreak());
                 paragraph.Inlines.Add(new LineBreak());
 
-                foreach (Ingredient ingredient in group.Items)
+                foreach (ItemIngredient itemIngredient in group.Items)
                 {
+                    Ingredient ingredient = itemIngredient.Ingredient;
                     String ingredientText = String.Format("- {0} {1} {2}", ingredient.quantity, ingredient.unity, ingredient.name);
                     paragraph.Inlines.Add(new Run { Text = ingredientText });
                     paragraph.Inlines.Add(new LineBreak());
