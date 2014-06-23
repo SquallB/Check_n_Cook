@@ -65,7 +65,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}"  Grid.Column="0" Grid.Row="0" FontSize="30" FontFamily="Segoe UI"/>
+                                    <TextBlock Text="{Binding name}"  Grid.Column="0" Grid.Row="0" FontSize="30" FontFamily="Segoe UI"/>
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -82,7 +82,7 @@
                                             <Button Style="{StaticResource TextBlockButtonStyle}"
                                                     Margin="0, 0, 0, 0" >
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
                                                     <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
                                                     <CheckBox Visibility="Collapsed" DataContext="{Binding}"  Margin="10, 0, 0, 0" />
                                                 </StackPanel>

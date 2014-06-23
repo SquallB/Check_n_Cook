@@ -9,7 +9,7 @@ namespace Check_n_Cook.Model
 {
     public class Ingredient
     {
-        public String name { get; set; }
+        public string name { get; set; }
         public string quantity { get; set; }
         public string unity { get; set; }
         public string Description { get { if (unity != null && quantity != null) { return quantity + " " + unity; } else { return ""; } } }

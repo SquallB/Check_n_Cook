@@ -164,13 +164,13 @@ namespace Check_n_Cook.Model
 
         public void AddIngredientToShoppingList(Ingredient ingredient, String groupName)
         {
-            this.ShoppingList[groupName].Ingredients.Add(ingredient);
+            this.ShoppingList[groupName].Items.Add(ingredient);
             this.RefreshViews(new AddedIngredientEvent(this, ingredient, groupName));
         }
 
         public void RemoveIngredientFromShoppingList(Ingredient ingredient, String groupName)
         {
-            this.ShoppingList[groupName].Ingredients.Remove(ingredient);
+            this.ShoppingList[groupName].Items.Remove(ingredient);
             this.RefreshViews(new RemovedIngredientEvent(this, ingredient, groupName));
         }
 
@@ -235,7 +235,7 @@ namespace Check_n_Cook.Model
                 JsonObject groupObject = new JsonObject();
                 JsonArray ingredientArray = new JsonArray();
 
-                foreach (Ingredient ingredient in group.Ingredients)
+                foreach (Ingredient ingredient in group.Items)
                 {
                     ingredientArray.Add(ingredient.ToJsonObject());
                 }

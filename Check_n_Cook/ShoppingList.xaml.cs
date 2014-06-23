@@ -1,6 +1,7 @@
 ﻿using Check_n_Cook.Common;
 using Check_n_Cook.Events;
 using Check_n_Cook.Model;
+using Check_n_Cook.Model.Data;
 using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
-        private List<List<Ingredient>> ingredients;
+        private List<ShoppingListGroup> shoppingListGroup;
         private Dictionary<string, Dictionary<string, Ingredient>> tempIngredients;
         private bool isModifyingList;
 
@@ -49,7 +50,7 @@ namespace Check_n_Cook
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
-            this.ingredients = new List<List<Ingredient>>();
+            this.shoppingListGroup = new List<ShoppingListGroup>();
             this.tempIngredients = new Dictionary<string, Dictionary<string, Ingredient>>();
         }
 
@@ -96,7 +97,7 @@ namespace Check_n_Cook
                 {
                     Dictionary<string, Ingredient> groupDictionnary = new Dictionary<string, Ingredient>();
 
-                    foreach (Ingredient ingredient in group.Ingredients)
+                    foreach (Ingredient ingredient in group.Items)
                     {
                         this.addIngredient(ingredient, groupDictionnary);
                     }
@@ -104,21 +105,14 @@ namespace Check_n_Cook
                     this.tempIngredients[group.Name] = groupDictionnary;
                 }
 
-                foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
+                foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
                 {
-                    List<Ingredient> list = new List<Ingredient>();
-
-                    foreach (Ingredient ingredient in group.Values)
-                    {
-                        list.Add(ingredient);
-                    }
-
-                    this.ingredients.Add(list);
+                    this.shoppingListGroup.Add(group);
                 }
 
-                this.DefaultViewModel["Groups"] = ingredients;
             }
 
+            this.DefaultViewModel["Groups"] = this.shoppingListGroup;
             this.RegisterForPrinting();
         }
 
@@ -275,10 +269,12 @@ namespace Check_n_Cook
 
         private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is Button) {
+            if (sender is Button)
+            {
                 Button button = (Button)sender;
 
-                if(button.DataContext is Ingredient) {
+                if (button.DataContext is Ingredient)
+                {
                     Ingredient ingredient = (Ingredient)button.DataContext;
                     //this.model.RemoveIngredientFromShoppingList(ingredient);
                 }
@@ -308,7 +304,7 @@ namespace Check_n_Cook
                     this.removeIngredient(ingredient, this.tempIngredients[groupName]);
                 }
 
-                this.ingredients.Clear();
+                /*this.shop.Clear();
                 this.ingredients = new List<List<Ingredient>>();
 
                 foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
@@ -323,7 +319,7 @@ namespace Check_n_Cook
                     this.ingredients.Add(list);
                 }
                 
-                this.DefaultViewModel["Groups"] = ingredients;
+                this.DefaultViewModel["Groups"] = ingredients;*/
             }
         }
 
