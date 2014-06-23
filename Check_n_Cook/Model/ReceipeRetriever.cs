@@ -256,19 +256,8 @@ namespace Check_n_Cook.Model
         public async Task<bool> extractReceipeFromMarmiton(Receipe receipe)
         {
             bool isDone = false;
-            string title = receipe.Title.ToLower();
-            title = title.Replace(" ", "-");
-            string accent = "ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÌÍÎÏìíîïÙÚÛÜùúûüÿÑñÇç°";
-            string sansAccent = "AAAAAAaaaaaaOOOOOOooooooEEEEeeeeIIIIiiiiUUUUuuuuyNnCc-";
-
-            char[] tableauAccent = accent.ToCharArray();
-            char[] tableauSansAccent = sansAccent.ToCharArray();
-
-            for (int i = 0; i < accent.Length; i++)
-            {
-                title = title.Replace(tableauAccent[i].ToString(), tableauSansAccent[i].ToString());
-            }
-            this.URL = "http://s533019359.onlinehome.fr/private_projects/misn/api2.php?id=" + receipe.Id;
+ 
+            this.URL = "http://dev.yougoweb.fr/misn/api2.php?id=" + receipe.Id;
             HttpClient http = new System.Net.Http.HttpClient();
 
             HttpResponseMessage response = await http.GetAsync(this.URL);
