@@ -145,7 +145,7 @@ namespace Check_n_Cook.Model
         {
             HttpClient http = new System.Net.Http.HttpClient();
             bool error = false;
-
+            model.ClearReceipes();
             try
             {
                 foreach (var jsonItem in model.LocalReceipes)
@@ -190,6 +190,20 @@ namespace Check_n_Cook.Model
         public async Task<bool> GetDataByIngredients(String[] keyWords, int nbItemsPerPage, int startIndex, AppModel model)
         {
             bool error = false;
+            model.ClearReceipes();
+            try
+            {
+                foreach (var jsonItem in model.LocalReceipes)
+                {
+                    Receipe localToAdd = new Receipe(jsonItem.Stringify());
+                    addReceipe(localToAdd, model);
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
             try
             {
                 
@@ -201,18 +215,15 @@ namespace Check_n_Cook.Model
                     keyWords[i] = keyWords[i].ToUpper();
                     
                 }
-                foreach (var jsonItem in model.LocalReceipes)
-                {
-                    model.AddReceipe(new Receipe(jsonItem.Stringify()));
-                }
+                
                 foreach (var keyWord in keyWords)
                 {
                     
                    await this.GetData(keyWord, nbItemsPerPage, startIndex, model);
                    
                 }
-                
-                int bestResults = 0;
+               
+                int bestResults = 1;
                 
                 foreach (var receipe in model.Receipes)
                 {
@@ -222,16 +233,21 @@ namespace Check_n_Cook.Model
                         {
                             if (checkOptions(receipe))
                             {
+                                
                                 int count = 0;
-                                ReceipeRetriever rr = new ReceipeRetriever();
-                                var task = rr.extractReceipeFromMarmiton(receipe);
-
-
-                                if ((await task) == true)
+                                if (receipe.Id != -1)
                                 {
-                                    var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
-                                    rr.handleIngredients(rr.ingredientPart, receipe);
+                                    ReceipeRetriever rr = new ReceipeRetriever();
+                                    var task = rr.extractReceipeFromMarmiton(receipe);
+
+
+                                    if ((await task) == true)
+                                    {
+                                        var task2 = rr.cleanHtmlEntities(receipe.HtmlReceipe, receipe);
+                                        rr.handleIngredients(rr.ingredientPart, receipe);
+                                    }
                                 }
+                                
 
                                 foreach (var keyWord in keyWords)
                                 {
@@ -240,15 +256,14 @@ namespace Check_n_Cook.Model
 
                                     foreach (var ingredient in receipe.ingredients)
                                     {
-                                        if (ingredient.name.ToUpper().Contains(keyWord.ToUpper()) || ingredient.unity.ToUpper().Contains(keyWord.ToUpper()))
+                                        if (ingredient.name.ToUpper().IndexOf(keyWord.ToUpper()) > 0 || ingredient.unity.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
                                         {
                                             containsKey = true;
 
                                         }
-
                                     }
 
-                                    if (containsKey || (receipe.Description != null) && (receipe.Description.ToUpper().Contains(keyWord.ToUpper())))
+                                    if (containsKey || (receipe.ToDoInstructions != null) && (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper()) > 0) || (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper())>0)|| receipe.Title.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
                                     {
 
                                         count++;
@@ -257,15 +272,14 @@ namespace Check_n_Cook.Model
 
 
                                 }
+                                
+                             
+
+                                results[count].Add(receipe);
                                 if (count > bestResults)
                                 {
                                     bestResults = count;
 
-                                }
-                                if (count >= bestResults)
-                                {
-
-                                    results[bestResults].Add(receipe);
                                 }
 
                             }
@@ -297,7 +311,7 @@ namespace Check_n_Cook.Model
         
         public bool checkDifficulty(Receipe receipe)
         {
-            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value) || receipe.Id == -1;
+            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
         }
 
         public bool checkOptions(Receipe receipe)
@@ -327,7 +341,7 @@ namespace Check_n_Cook.Model
         public URLDataRetriever()
         {
             this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage={1}&StartIndex={2}";
-            
+            AdvancedDifficulty = 0;
         }
     }
 }
