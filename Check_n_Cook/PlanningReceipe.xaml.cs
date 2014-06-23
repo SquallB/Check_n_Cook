@@ -8,13 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using Windows.Data.Json;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
@@ -240,7 +236,7 @@ namespace Check_n_Cook
             if (printReceipeList.Visibility == Visibility.Collapsed)
             {
                 printReceipeList.Visibility = Visibility.Visible;
-                but.Content = "Sélection: ON";
+                but.Content = "Désactiver la sélection";
 
                 foreach (CheckBox ch in checkBoxs.Values)
                 {
@@ -254,13 +250,14 @@ namespace Check_n_Cook
             else if (printReceipeList.Visibility == Visibility.Visible)
             {
                 printReceipeList.Visibility = Visibility.Collapsed;
-                but.Content = "Sélection: OFF";
+                but.Content = "Activer la sélection";
 
                 foreach (CheckBox ch in checkBoxs.Values)
                 {
                     ch.IsChecked = false;
                     ch.Visibility = Visibility.Collapsed;
                 }
+
                 this.receipeListHubSection.Visibility = Visibility.Collapsed;
                 this.delteReceipeList.Visibility = Visibility.Collapsed;
                 this.selectionMode.Visibility = Visibility.Collapsed;
@@ -343,9 +340,13 @@ namespace Check_n_Cook
             }
         }
 
-        private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
+        private void AddAllIngredients_Click(object sender, RoutedEventArgs e)
         {
+            foreach (SampleDataGroup data in this.receipeListSelectedModel.GetReceipeListSelected())
+            {
+                string date = data.Title;
 
+            }
         }
 
         private async void DeleteReceipeList_Click(object sender, RoutedEventArgs e)
