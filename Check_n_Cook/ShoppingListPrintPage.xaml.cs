@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 
-// Pour en savoir plus sur le modèle d'élément Page de base, consultez la page http://go.microsoft.com/fwlink/?LinkId=234237
 
 namespace Check_n_Cook.Model
 {
@@ -12,18 +11,18 @@ namespace Check_n_Cook.Model
     /// </summary>
     public sealed partial class ShoppingListPrintPage : Page
     {
-        public ShoppingListPrintPage() : this(new Dictionary<string, Dictionary<string, Ingredient>>()) { }
+        public ShoppingListPrintPage() : this(new List<ShoppingListGroup>()) { }
 
-        public ShoppingListPrintPage(Dictionary<string, Dictionary<string, Ingredient>> ingredients)
+        public ShoppingListPrintPage(List<ShoppingListGroup> shoppingList)
         {
             InitializeComponent();
 
             Paragraph paragraph = new Paragraph();
 
-            foreach (Dictionary<string, Ingredient> group in ingredients.Values)
+            foreach (ShoppingListGroup group in shoppingList)
             {
 
-                foreach (Ingredient ingredient in group.Values)
+                foreach (Ingredient ingredient in group.Items)
                 {
                     String ingredientText = String.Format("- {0} {1} {2}", ingredient.quantity, ingredient.unity, ingredient.name);
                     paragraph.Inlines.Add(new Run { Text = ingredientText });

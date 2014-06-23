@@ -22,7 +22,7 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
         private List<ShoppingListGroup> shoppingListGroup;
-        private Dictionary<string, Dictionary<string, Ingredient>> tempIngredients;
+        private List<ShoppingListGroup> tmpShoppingListGroup;
         private bool isModifyingList;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Check_n_Cook
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
             this.shoppingListGroup = new List<ShoppingListGroup>();
-            this.tempIngredients = new Dictionary<string, Dictionary<string, Ingredient>>();
+            this.tmpShoppingListGroup = new List<ShoppingListGroup>();
         }
 
         private void addIngredient(Ingredient ingredient, Dictionary<string, Ingredient> groupDictionnary)
@@ -93,18 +93,8 @@ namespace Check_n_Cook
                 this.model = (AppModel)e.NavigationParameter;
                 this.model.AddView(this);
 
-                foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
-                {
-                    Dictionary<string, Ingredient> groupDictionnary = new Dictionary<string, Ingredient>();
-
-                    foreach (Ingredient ingredient in group.Items)
-                    {
-                        this.addIngredient(ingredient, groupDictionnary);
-                    }
-
-                    this.tempIngredients[group.Name] = groupDictionnary;
-                }
-
+                this.shoppingListGroup.Clear();
+                this.shoppingListGroup = new List<ShoppingListGroup>();
                 foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
                 {
                     this.shoppingListGroup.Add(group);
@@ -202,7 +192,7 @@ namespace Check_n_Cook
         /// </summary>
         protected override void PreparePrintContent()
         {
-            this.PagesToPrint.Add(new ShoppingListPrintPage(this.tempIngredients));
+            this.PagesToPrint.Add(new ShoppingListPrintPage(this.shoppingListGroup));
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -266,27 +256,6 @@ namespace Check_n_Cook
                 ((Button)sender).Visibility = Visibility.Visible;
             }
         }
-
-        private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button)
-            {
-                Button button = (Button)sender;
-
-                if (button.DataContext is Ingredient)
-                {
-                    Ingredient ingredient = (Ingredient)button.DataContext;
-                    //this.model.RemoveIngredientFromShoppingList(ingredient);
-                }
-
-                this.deleteButtons.Remove(button);
-
-                StorageFolder folder = KnownFolders.PicturesLibrary;
-                StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
-                await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
-            }
-        }
-
         public void Refresh(Event e)
         {
             if (e is IngredientEvent)
@@ -294,17 +263,17 @@ namespace Check_n_Cook
                 IngredientEvent ingredientE = (IngredientEvent)e;
                 Ingredient ingredient = ingredientE.Ingredient;
                 String groupName = ingredientE.GroupName;
-
+                /*
                 if (ingredientE is AddedIngredientEvent)
                 {
-                    this.addIngredient(ingredient, this.tempIngredients[groupName]);
+                    this.addIngredient(ingredient, this.tmpShoppingListGroup[groupName]);
                 }
                 else if (ingredientE is RemovedIngredientEvent)
                 {
-                    this.removeIngredient(ingredient, this.tempIngredients[groupName]);
+                    this.removeIngredient(ingredient, this.tmpShoppingListGroup[groupName]);
                 }
 
-                /*this.shop.Clear();
+                this.shop.Clear();
                 this.ingredients = new List<List<Ingredient>>();
 
                 foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
@@ -320,6 +289,21 @@ namespace Check_n_Cook
                 }
                 
                 this.DefaultViewModel["Groups"] = ingredients;*/
+            }
+            else if (e is RemovedShoppingListGroupEvent)
+            {
+                RemovedShoppingListGroupEvent srcEvt = (RemovedShoppingListGroupEvent)e;
+                AppModel model = (AppModel)srcEvt.Model;
+
+                this.tmpShoppingListGroup.Clear();
+                this.tmpShoppingListGroup = new List<ShoppingListGroup>();
+                foreach (ShoppingListGroup listGroup in this.model.ShoppingList.Values)
+                {
+                    this.tmpShoppingListGroup.Add(listGroup);
+                }
+
+                this.DefaultViewModel["Groups"] = this.tmpShoppingListGroup;
+
             }
         }
 
@@ -400,6 +384,21 @@ namespace Check_n_Cook
                 }
 
                 this.unityIngredient.SelectedIndex = 0;
+            }
+        }
+
+        private async void RemoveShoppingList_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button but = (Button)sender;
+                ShoppingListGroup data = (ShoppingListGroup)but.DataContext;
+
+                this.model.RemoveShoppingListGroup(data.Name);
+
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+                await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
             }
         }
     }

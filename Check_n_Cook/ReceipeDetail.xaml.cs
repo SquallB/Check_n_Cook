@@ -265,11 +265,12 @@ namespace Check_n_Cook
             if (sender is CheckBox)
             {
                 CheckBox checkbox = (CheckBox)sender;
-                if (checkbox.DataContext is Ingredient)
+                if (checkbox.DataContext is ItemIngredient)
                 {
-                    Ingredient ingredient = (Ingredient)checkbox.DataContext;
+                    Ingredient ingredient = ((ItemIngredient)checkbox.DataContext).Ingredient;
                     this.currentShoppingList.Add(ingredient);
                 }
+
             }
         }
 
@@ -300,6 +301,7 @@ namespace Check_n_Cook
             {
                 this.Model.AddIngredientToShoppingList(ingredient, groupName);
             }
+
             
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
