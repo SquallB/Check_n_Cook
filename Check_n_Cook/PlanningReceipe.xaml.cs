@@ -345,7 +345,22 @@ namespace Check_n_Cook
             foreach (SampleDataGroup data in this.receipeListSelectedModel.GetReceipeListSelected())
             {
                 string date = data.Title;
+                ReceipeDate receipeDate = this.appModel.ReceipeList[date];
 
+                foreach (ReceipeTimeOfDay receipetod in receipeDate.ReceipeTimeOfDay.Values)
+                {
+                    foreach (Receipe rec in receipetod.Receipes.Values)
+                    {
+                        this.appModel.AddShoppingListGroup(rec.Title);
+
+                        foreach (Ingredient ing in rec.ingredients)
+                        {
+                            this.appModel.AddIngredientToShoppingList(ing, rec.Title);
+                        }
+
+                    }
+                }
+                
             }
         }
 
