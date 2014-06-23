@@ -47,9 +47,14 @@ namespace Check_n_Cook.Model
             this.RefreshViews(new AddedReceipeEvent(this, receipe));
         }
 
-        public void AddReceipeFavorite(Receipe receipe)
+        public void AddFavoriteReceipe(Receipe receipe)
         {
             this.FavouriteReceipes[receipe.Title] = receipe;
+        }
+
+        public void RemoveFavoriteReceipe(Receipe receipe)
+        {
+            this.FavouriteReceipes.Remove(receipe.Title);
         }
 
         public void AddReceipeList(Receipe receipe, string timeOfDay, string date)

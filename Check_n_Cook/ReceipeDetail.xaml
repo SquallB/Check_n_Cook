@@ -130,7 +130,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Button Content="Ajouter cette recette à votre planning" Width="437" Click="AddReceipeList_Click" Grid.Row="1"/>
-                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="3"  Width="437" Click="AddReceipeFavorite_Click"/>
+                            <Button Content="Ajouter cette recette à vos favoris" Grid.Row="3"  Width="437" Click="AddReceipeFavorite_Click" Loaded="AddReceipeFavorite_Loaded"/>
                             <DatePicker HorizontalAlignment="Left" Margin="118,10,0,0" Grid.Row="2" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" Width="auto" />
                             <ComboBox HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="auto" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged"/>
                             <Button Content="Imprimer la recette" Grid.Row="4" Width="437" Click="PrintReceipe_Click" />

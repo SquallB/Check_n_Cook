@@ -38,6 +38,7 @@ namespace Check_n_Cook
         private Receipe receipe;
         private List<ItemIngredient> ingredients;
         private List<Ingredient> currentShoppingList;
+        private bool isFavourite;
         /// <summary>
         /// Cela peut être remplacé par un modèle d'affichage fortement typé.
         /// </summary>
@@ -119,6 +120,15 @@ namespace Check_n_Cook
                 ingredients.Add(ToolItem.CreateItemIngredient(ing));
 
             }
+
+            if(this.Model.FavouriteReceipes.ContainsKey(this.receipe.Title)) {
+                this.isFavourite = true;
+            }
+            else
+            {
+                this.isFavourite = false;
+            }
+
             this.ingredientsViewSource.Source = ingredients;
             this.descriptionViewSource.Source = receipeDescription;
             this.RegisterForPrinting();
@@ -157,7 +167,17 @@ namespace Check_n_Cook
 
         private async void AddReceipeFavorite_Click(object sender, RoutedEventArgs e)
         {
-            this.Model.AddReceipeFavorite(this.receipe);
+            if (!isFavourite)
+            {
+                this.Model.AddFavoriteReceipe(this.receipe);
+                this.favouriteButton.Content = "Enlever cette recette de vos favoris";
+            }
+            else
+            {
+                this.Model.RemoveFavoriteReceipe(this.receipe);
+                this.favouriteButton.Content = "Ajouter cette recette à vos favoris";
+            }
+
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile receipeFile = await folder.CreateFileAsync("receipesFavorite.json", CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
@@ -296,6 +316,16 @@ namespace Check_n_Cook
         private void CheckBox_Loaded(object sender, RoutedEventArgs e)
         {
             checkboxes.Add((CheckBox)sender);
+        }
+
+        private Button favouriteButton;
+        private void AddReceipeFavorite_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.isFavourite && sender is Button)
+            {
+                this.favouriteButton = (Button)sender;
+                this.favouriteButton.Content = "Enlever cette recette de vos favoris";
+            }
         }
 
 

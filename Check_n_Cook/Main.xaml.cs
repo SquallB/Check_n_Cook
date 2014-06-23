@@ -89,7 +89,7 @@ namespace Check_n_Cook
                     foreach (var jsonReceipe in jsonArray)
                     {
                         Receipe receipe = new Receipe(jsonReceipe.Stringify());
-                        this.Model.AddReceipeFavorite(receipe);
+                        this.Model.AddFavoriteReceipe(receipe);
                     }
                 }
                 catch (FileNotFoundException ex) { }
