@@ -148,6 +148,18 @@ namespace Check_n_Cook.Model
             this.Shops.Remove(shop);
             this.RefreshViews(new RemovedShopEvent(this, shop));
         }
+        public void CreateShoppingList(Receipe receipe)
+        {
+            if (!this.ShoppingList.ContainsKey(receipe.Title))
+            {
+                this.ShoppingList.Add(receipe.Title, new ShoppingListGroup(receipe.Title));
+
+                foreach (Ingredient ing in receipe.ingredients)
+                {
+                    this.AddIngredientToShoppingList(ing, receipe.Title);
+                }
+            }
+        }
 
         public void AddShoppingListGroup(String groupName)
         {

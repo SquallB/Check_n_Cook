@@ -268,7 +268,7 @@ namespace Check_n_Cook.Model
             {
                 title = title.Replace(tableauAccent[i].ToString(), tableauSansAccent[i].ToString());
             }
-            this.URL = "http://s533019359.onlinehome.fr/private_projects/misn/api2.php?id=" + receipe.Id;
+            this.URL = "http://dev.yougoweb.fr/misn/api2.php?id=" + receipe.Id;
             HttpClient http = new System.Net.Http.HttpClient();
 
             HttpResponseMessage response = await http.GetAsync(this.URL);

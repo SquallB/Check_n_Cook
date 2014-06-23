@@ -351,16 +351,9 @@ namespace Check_n_Cook
                 {
                     foreach (Receipe rec in receipetod.Receipes.Values)
                     {
-                        this.appModel.AddShoppingListGroup(rec.Title);
-
-                        foreach (Ingredient ing in rec.ingredients)
-                        {
-                            this.appModel.AddIngredientToShoppingList(ing, rec.Title);
-                        }
-
+                        this.appModel.CreateShoppingList(rec);
                     }
                 }
-                
             }
         }
 
