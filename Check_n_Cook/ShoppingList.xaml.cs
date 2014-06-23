@@ -20,8 +20,7 @@ namespace Check_n_Cook
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
-        private Time time;
-        private Dictionary<string, Ingredient> ingredients;
+        private List<List<Ingredient>> ingredients;
         private Dictionary<string, Dictionary<string, Ingredient>> tempIngredients;
         private bool isModifyingList;
 
@@ -50,7 +49,7 @@ namespace Check_n_Cook
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
-            this.ingredients = new Dictionary<string, Ingredient>();
+            this.ingredients = new List<List<Ingredient>>();
             this.tempIngredients = new Dictionary<string, Dictionary<string, Ingredient>>();
         }
 
@@ -88,13 +87,10 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            GoToModifyReceipeListEvent evnt = e.NavigationParameter as GoToModifyReceipeListEvent;
-
-            if (evnt != null)
+            if (e.NavigationParameter is AppModel)
             {
-                this.model = evnt.AppModel;
+                this.model = (AppModel)e.NavigationParameter;
                 this.model.AddView(this);
-                this.time = evnt.Time;
 
                 foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
                 {
@@ -103,13 +99,24 @@ namespace Check_n_Cook
                     foreach (Ingredient ingredient in group.Ingredients)
                     {
                         this.addIngredient(ingredient, groupDictionnary);
-                        this.addIngredient(ingredient, this.ingredients);
                     }
 
                     this.tempIngredients[group.Name] = groupDictionnary;
                 }
 
-                this.ingredientsViewSource.Source = ingredients.Values;
+                foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
+                {
+                    List<Ingredient> list = new List<Ingredient>();
+
+                    foreach (Ingredient ingredient in group.Values)
+                    {
+                        list.Add(ingredient);
+                    }
+
+                    this.ingredients.Add(list);
+                }
+
+                this.DefaultViewModel["Groups"] = ingredients;
             }
 
             this.RegisterForPrinting();
@@ -224,6 +231,7 @@ namespace Check_n_Cook
                 this.nameIngredient.Visibility = Visibility.Collapsed;
                 this.quantityIngredient.Visibility = Visibility.Collapsed;
                 this.unityIngredient.Visibility = Visibility.Collapsed;
+                this.groupIngredient.Visibility = Visibility.Collapsed;
                 this.addItemButton.Visibility = Visibility.Collapsed;
             }
             else
@@ -245,6 +253,8 @@ namespace Check_n_Cook
 
                 this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
                 this.unityIngredient.Visibility = Visibility.Visible;
+
+                this.groupIngredient.Visibility = Visibility.Visible;
 
                 this.addItemButton.Visibility = Visibility.Visible;
             }
@@ -299,17 +309,21 @@ namespace Check_n_Cook
                 }
 
                 this.ingredients.Clear();
-                this.ingredients = new Dictionary<string, Ingredient>();
+                this.ingredients = new List<List<Ingredient>>();
 
                 foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
                 {
-                    foreach (Ingredient groupIngredient in group.Values)
+                    List<Ingredient> list = new List<Ingredient>();
+
+                    foreach (Ingredient ing in group.Values)
                     {
-                        this.ingredients.Add(groupIngredient.name, groupIngredient);
+                        list.Add(ing);
                     }
+
+                    this.ingredients.Add(list);
                 }
                 
-                this.ingredientsViewSource.Source = ingredients.Values;
+                this.DefaultViewModel["Groups"] = ingredients;
             }
         }
 
