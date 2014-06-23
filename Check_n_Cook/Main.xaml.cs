@@ -144,39 +144,42 @@ namespace Check_n_Cook
                 }
             }
 
-            msgError = "";
-            error = false;
-            try
+            if (this.Model.ShoppingList.Count == 0)
             {
-                StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
-                String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
-                JsonObject jsonObject = JsonObject.Parse(jsonString);
-                JsonArray jsonArray = jsonObject.GetNamedArray("ShoppingList");
-
-                foreach (var jsonShoppingListGroup in jsonArray)
+                msgError = "";
+                error = false;
+                try
                 {
-                    JsonObject groupObject = JsonObject.Parse(jsonShoppingListGroup.Stringify());
-                    String groupName = groupObject.GetNamedString("Name");
-                    this.Model.AddShoppingListGroup(groupName);
-                    JsonArray ingredientsArray = groupObject.GetNamedArray("Ingredients");
+                    StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
+                    String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
+                    JsonObject jsonObject = JsonObject.Parse(jsonString);
+                    JsonArray jsonArray = jsonObject.GetNamedArray("ShoppingList");
 
-                    foreach (var ingredientJson in ingredientsArray)
+                    foreach (var jsonShoppingListGroup in jsonArray)
                     {
-                        Ingredient ingredient = new Ingredient(ingredientJson.GetObject());
-                        this.Model.AddIngredientToShoppingList(ingredient, groupName);
+                        JsonObject groupObject = JsonObject.Parse(jsonShoppingListGroup.Stringify());
+                        String groupName = groupObject.GetNamedString("Name");
+                        this.Model.AddShoppingListGroup(groupName);
+                        JsonArray ingredientsArray = groupObject.GetNamedArray("Ingredients");
+
+                        foreach (var ingredientJson in ingredientsArray)
+                        {
+                            Ingredient ingredient = new Ingredient(ingredientJson.GetObject());
+                            this.Model.AddIngredientToShoppingList(ingredient, groupName);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    error = true;
+                    msgError = ex.Message;
+                }
+                if (error)
+                {
+                    var messageDialog = new MessageDialog("shopping");
+                    await messageDialog.ShowAsync();
+                }
             }
-            catch (Exception ex)
-            {
-                error = true;
-                msgError = ex.Message;
-            }
-            if (error)
-            {
-                var messageDialog = new MessageDialog("shopping");
-                await messageDialog.ShowAsync();
-            }   
         }
 
         #region Inscription de NavigationHelper
