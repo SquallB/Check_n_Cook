@@ -178,6 +178,8 @@ namespace Check_n_Cook
                 this.favouriteButton.Content = "Ajouter cette recette à vos favoris";
             }
 
+            isFavourite = !isFavourite;
+
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile receipeFile = await folder.CreateFileAsync("receipesFavorite.json", CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
@@ -323,9 +325,10 @@ namespace Check_n_Cook
         private Button favouriteButton;
         private void AddReceipeFavorite_Loaded(object sender, RoutedEventArgs e)
         {
+            this.favouriteButton = (Button)sender;
+
             if (this.isFavourite && sender is Button)
             {
-                this.favouriteButton = (Button)sender;
                 this.favouriteButton.Content = "Enlever cette recette de vos favoris";
             }
         }

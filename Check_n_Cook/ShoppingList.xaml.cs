@@ -22,7 +22,6 @@ namespace Check_n_Cook
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private AppModel model;
         private List<ShoppingListGroup> shoppingListGroup;
-        private List<ShoppingListGroup> tmpShoppingListGroup;
         private bool isModifyingList;
 
         /// <summary>
@@ -51,28 +50,6 @@ namespace Check_n_Cook
             this.deleteButtons = new List<Button>();
             this.isModifyingList = false;
             this.shoppingListGroup = new List<ShoppingListGroup>();
-            this.tmpShoppingListGroup = new List<ShoppingListGroup>();
-        }
-
-        private void addIngredient(Ingredient ingredient, Dictionary<string, Ingredient> groupDictionnary)
-        {
-            if (groupDictionnary.ContainsKey(ingredient.name))
-            {
-                if (ingredient.quantity != String.Empty && ingredient.quantity != null)
-                {
-                    String quantity = HandleQuantity(groupDictionnary[ingredient.name].quantity, ingredient.quantity).ToString();
-                    groupDictionnary[ingredient.name].quantity = quantity;
-                }
-            }
-            else
-            {
-                groupDictionnary[ingredient.name] = ingredient.ToClone();
-            }
-        }
-
-        private void removeIngredient(Ingredient ingredient, Dictionary<string, Ingredient> groupDictionnary)
-        {
-            groupDictionnary.Remove(ingredient.name);
         }
 
         /// <summary>
@@ -260,49 +237,28 @@ namespace Check_n_Cook
         {
             if (e is IngredientEvent)
             {
-                IngredientEvent ingredientE = (IngredientEvent)e;
-                Ingredient ingredient = ingredientE.Ingredient;
-                String groupName = ingredientE.GroupName;
-                /*
-                if (ingredientE is AddedIngredientEvent)
+                this.shoppingListGroup.Clear();
+                this.shoppingListGroup = new List<ShoppingListGroup>();
+                foreach (ShoppingListGroup listGroup in this.model.ShoppingList.Values)
                 {
-                    this.addIngredient(ingredient, this.tmpShoppingListGroup[groupName]);
-                }
-                else if (ingredientE is RemovedIngredientEvent)
-                {
-                    this.removeIngredient(ingredient, this.tmpShoppingListGroup[groupName]);
+                    this.shoppingListGroup.Add(listGroup);
                 }
 
-                this.shop.Clear();
-                this.ingredients = new List<List<Ingredient>>();
-
-                foreach (Dictionary<string, Ingredient> group in this.tempIngredients.Values)
-                {
-                    List<Ingredient> list = new List<Ingredient>();
-
-                    foreach (Ingredient ing in group.Values)
-                    {
-                        list.Add(ing);
-                    }
-
-                    this.ingredients.Add(list);
-                }
-                
-                this.DefaultViewModel["Groups"] = ingredients;*/
+                this.DefaultViewModel["Groups"] = shoppingListGroup;
             }
             else if (e is RemovedShoppingListGroupEvent)
             {
                 RemovedShoppingListGroupEvent srcEvt = (RemovedShoppingListGroupEvent)e;
                 AppModel model = (AppModel)srcEvt.Model;
 
-                this.tmpShoppingListGroup.Clear();
-                this.tmpShoppingListGroup = new List<ShoppingListGroup>();
+                this.shoppingListGroup.Clear();
+                this.shoppingListGroup = new List<ShoppingListGroup>();
                 foreach (ShoppingListGroup listGroup in this.model.ShoppingList.Values)
                 {
-                    this.tmpShoppingListGroup.Add(listGroup);
+                    this.shoppingListGroup.Add(listGroup);
                 }
 
-                this.DefaultViewModel["Groups"] = this.tmpShoppingListGroup;
+                this.DefaultViewModel["Groups"] = this.shoppingListGroup;
 
             }
         }
@@ -352,11 +308,15 @@ namespace Check_n_Cook
             String unity = this.unityIngredient.SelectedItem.ToString();
             Ingredient ingredient = new Ingredient(name, quantity, unity);
             String groupName = this.groupIngredient.SelectedItem.ToString();
-            this.model.AddIngredientToShoppingList(ingredient, groupName);
 
-            StorageFolder folder = KnownFolders.PicturesLibrary;
-            StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
-            await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+            if (name != "" && groupName != "")
+            {
+                this.model.AddIngredientToShoppingList(ingredient, groupName);
+
+                StorageFolder folder = KnownFolders.PicturesLibrary;
+                StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+                await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+            }
         }
 
         private Button addItemButton;
