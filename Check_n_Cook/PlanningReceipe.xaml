@@ -109,9 +109,9 @@
                             <RowDefinition Height="48" />
                         </Grid.RowDefinitions>
                         <Button Content="Supprimer les listes de recettes sélectionnées" Grid.Row="3" Visibility="Collapsed" Width="427" Click="DeleteReceipeList_Click" Loaded="DeleteReceipeList_Loaded"/>
-                        <Button Content="Ajouter toutes les recettes dans la liste de course" Grid.Row="2" Visibility="Collapsed" Width="427" Loaded="PrintReceipeList_Loaded" Click="GoToShoppingList_Click" />
+                        <Button Content="Ajouter toutes les recettes dans la liste de course" Grid.Row="2" Visibility="Collapsed" Width="427" Loaded="PrintReceipeList_Loaded" Click="AddAllIngredients_Click" />
                         <Button Content="Déselectionner toutes les listes de recettes" Grid.Row="1" Visibility="Collapsed" Click="UnselectReceipeList_Click" Width="427" Loaded="SelectionMode_Loaded"/>
-                        <Button Content="Sélection: OFF" Grid.Row="0" RenderTransformOrigin="-1.004,0.078"  Click="SelectionMode_Click" Width="427"/>
+                        <Button Content="Activer la sélection" Grid.Row="0" RenderTransformOrigin="-1.004,0.078"  Click="SelectionMode_Click" Width="427"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
