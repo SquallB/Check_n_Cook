@@ -25,7 +25,6 @@ namespace Check_n_Cook
         private bool isModifyingList;
         private List<Button> buttonIngredient;
         private ComboBox groupIngredient;
-        private TextBlock newIngredientText;
         private Button addItemButton;
 
         /// <summary>
@@ -141,7 +140,6 @@ namespace Check_n_Cook
                     b.Visibility = Visibility.Collapsed;
                 }
 
-                this.newIngredientText.Visibility = Visibility.Collapsed;
                 this.nameIngredient.Visibility = Visibility.Collapsed;
                 this.quantityIngredient.Visibility = Visibility.Collapsed;
                 this.unityIngredient.Visibility = Visibility.Collapsed;
@@ -162,10 +160,7 @@ namespace Check_n_Cook
                     b.Visibility = Visibility.Visible;
                 }
 
-                this.newIngredientText.Visibility = Visibility.Visible;
-                this.nameIngredient.Text = "";
                 this.nameIngredient.Visibility = Visibility.Visible;
-                this.quantityIngredient.Text = "";
                 this.quantityIngredient.Visibility = Visibility.Visible;
                 this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
                 this.unityIngredient.Visibility = Visibility.Visible;
@@ -251,7 +246,7 @@ namespace Check_n_Cook
                 {
                     this.unityIngredient.Items.Add(unity);
                 }
-                this.unityIngredient.SelectedIndex = 0;
+                this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
             }
         }
 
@@ -280,11 +275,6 @@ namespace Check_n_Cook
         }
 
 
-        private void NewIngredientText_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.newIngredientText = (TextBlock)sender;
-        }
-
         private void ComboBoxGroup_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -296,7 +286,7 @@ namespace Check_n_Cook
                     this.groupIngredient.Items.Add(group.Name);
                 }
 
-                this.unityIngredient.SelectedIndex = 0;
+                this.groupIngredient.SelectedItem = this.groupIngredient.Items[0];
             }
         }
 
@@ -362,6 +352,58 @@ namespace Check_n_Cook
 
                 this.PagesToPrint.Clear();
                 PreparePrintContent();
+            }
+        }
+
+        private void EnterIngredient_Focus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals("Entrer un ingrédient..."))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void EnterIngredient_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "Entrer un ingrédient...";
+                }
+            }
+        }
+
+        private void Quantity_Focus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals("Quantité"))
+                {
+                    textbox.Text = "";
+                }
+            }
+        }
+
+        private void Quantity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                TextBox textbox = (TextBox)sender;
+
+                if (textbox.Text.Equals(""))
+                {
+                    textbox.Text = "Quantité";
+                }
             }
         }
 
