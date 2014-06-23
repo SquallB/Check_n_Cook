@@ -44,9 +44,5 @@
             <Paragraph>
             </Paragraph>
         </RichTextBlock>
-        <RichTextBlock x:Name="instructionsBlock" HorizontalAlignment="Left" Height="261" Margin="32,339,0,0" Grid.Row="1" VerticalAlignment="Top" Width="627">
-            <Paragraph>
-            </Paragraph>
-        </RichTextBlock>
     </Grid>
 </Page>

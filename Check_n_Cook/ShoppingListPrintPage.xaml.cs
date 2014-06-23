@@ -17,10 +17,12 @@ namespace Check_n_Cook.Model
         {
             InitializeComponent();
 
-            Paragraph paragraph = new Paragraph();
-
             foreach (ShoppingListGroup group in shoppingList)
             {
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run { Text = group.Name });
+                paragraph.Inlines.Add(new LineBreak());
+                paragraph.Inlines.Add(new LineBreak());
 
                 foreach (Ingredient ingredient in group.Items)
                 {
@@ -28,9 +30,10 @@ namespace Check_n_Cook.Model
                     paragraph.Inlines.Add(new Run { Text = ingredientText });
                     paragraph.Inlines.Add(new LineBreak());
                 }
+
+                this.ingredientsBlock.Blocks.Add(paragraph);
             }
 
-            this.ingredientsBlock.Blocks.Add(paragraph);
         }
     }
 }
