@@ -24,6 +24,7 @@ namespace Check_n_Cook.Model
 
         public Dictionary<string, ShoppingListGroup> ShoppingList { get; set; }
 
+        public List<ItemReceipe> PreviousReceipeSearch { get; set; }
         public AppModel()
         {
             this.Receipes = new List<Receipe>();
@@ -33,6 +34,7 @@ namespace Check_n_Cook.Model
             this.ReceipeList = new Dictionary<string, ReceipeDate>();
             this.SelectedReceipe = null;
             this.ShoppingList = new Dictionary<string, ShoppingListGroup>();
+            this.PreviousReceipeSearch = new List<ItemReceipe>();
         }
 
         public void AddReceipe(Receipe receipe)
@@ -81,19 +83,6 @@ namespace Check_n_Cook.Model
             {
                 ReceipeDate receipeDate = this.ReceipeList[time.Date];
                 this.ReceipeList.Remove(time.Date);
-                /*
-                foreach (ReceipeTimeOfDay receipeTimeOfDay in receipeDate.ReceipeTimeOfDay.Values)
-                {
-                    Time time2 = receipeTimeOfDay.Time;
-                    time2.Date = time.Date;
-
-                    foreach (Receipe receipe in receipeTimeOfDay.Receipes.Values)
-                    {
-                       
-                        this.ReceipeList[time2.Date].ReceipeTimeOfDay[time2.TimeOfDay].RemoveReceipe(receipe);
-                    }
-                }
-                */
                 this.RefreshViews(new RemovedReceipeDateEvent(this));
             }
         }

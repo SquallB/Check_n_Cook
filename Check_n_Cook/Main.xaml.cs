@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -77,29 +78,45 @@ namespace Check_n_Cook
         /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (this.Model.FavouriteReceipes.Count == 0)
+            if (this.Model.FavouriteReceipes.Count > 0)
             {
-                StorageFolder folder = KnownFolders.PicturesLibrary;
-                try
-                {
-                    StorageFile receipesFile = await folder.GetFileAsync("receipesFavorite.json");
-                    String jsonString = await FileIO.ReadTextAsync(receipesFile);
-                    JsonObject jsonObject = JsonObject.Parse(jsonString);
-                    JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
-                    foreach (var jsonReceipe in jsonArray)
-                    {
-                        Receipe receipe = new Receipe(jsonReceipe.Stringify());
-                        this.Model.AddFavoriteReceipe(receipe);
-                    }
-                }
-                catch (FileNotFoundException ex) { }
-
-                this.favoriteViewSource.Source = this.Model.FavouriteReceipes.Values;
+                this.Model.FavouriteReceipes.Clear();
+                this.Model.FavouriteReceipes = new Dictionary<string, Receipe>();
             }
+
+            string msgError = "";
+            bool error = false;
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+
+            try
+            {
+                StorageFile receipesFile = await folder.GetFileAsync("receipesFavorite.json");
+                String jsonString = await FileIO.ReadTextAsync(receipesFile);
+                JsonObject jsonObject = JsonObject.Parse(jsonString);
+                JsonArray jsonArray = jsonObject.GetNamedArray("Receipes");
+                foreach (var jsonReceipe in jsonArray)
+                {
+                    Receipe receipe = new Receipe(jsonReceipe.Stringify());
+                    this.Model.AddFavoriteReceipe(receipe);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                error = true;
+                msgError = ex.Message;
+            }
+            if (error)
+            {
+                var messageDialog = new MessageDialog("favourite");
+                await messageDialog.ShowAsync();
+            }
+
+            this.favoriteViewSource.Source = this.Model.FavouriteReceipes.Values;
 
             if (this.Model.ReceipeList.Count == 0)
             {
-                StorageFolder folder = KnownFolders.PicturesLibrary;
+                msgError = "";
+                error = false;
                 try
                 {
                     StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
@@ -117,39 +134,49 @@ namespace Check_n_Cook
                 }
                 catch (Exception ex)
                 {
-
+                    error = true;
+                    msgError = ex.Message;
+                }
+                if (error)
+                {
+                    var messageDialog = new MessageDialog("list");
+                    await messageDialog.ShowAsync();
                 }
             }
 
-            if (this.Model.ShoppingList.Count == 0)
+            msgError = "";
+            error = false;
+            try
             {
-                StorageFolder folder = KnownFolders.PicturesLibrary;
-                try
+                StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
+                String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
+                JsonObject jsonObject = JsonObject.Parse(jsonString);
+                JsonArray jsonArray = jsonObject.GetNamedArray("ShoppingList");
+
+                foreach (var jsonShoppingListGroup in jsonArray)
                 {
-                    StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
-                    String jsonString = await FileIO.ReadTextAsync(shoppingListFile);
-                    JsonObject jsonObject = JsonObject.Parse(jsonString);
-                    JsonArray jsonArray = jsonObject.GetNamedArray("ShoppingList");
+                    JsonObject groupObject = JsonObject.Parse(jsonShoppingListGroup.Stringify());
+                    String groupName = groupObject.GetNamedString("Name");
+                    this.Model.AddShoppingListGroup(groupName);
+                    JsonArray ingredientsArray = groupObject.GetNamedArray("Ingredients");
 
-                    foreach (var jsonShoppingListGroup in jsonArray)
+                    foreach (var ingredientJson in ingredientsArray)
                     {
-                        JsonObject groupObject = JsonObject.Parse(jsonShoppingListGroup.Stringify());
-                        String groupName = groupObject.GetNamedString("Name");
-                        this.Model.AddShoppingListGroup(groupName);
-                        JsonArray ingredientsArray = groupObject.GetNamedArray("Ingredients");
-
-                        foreach (var ingredientJson in ingredientsArray)
-                        {
-                            Ingredient ingredient = new Ingredient(ingredientJson.GetObject());
-                            this.Model.AddIngredientToShoppingList(ingredient, groupName);
-                        }
+                        Ingredient ingredient = new Ingredient(ingredientJson.GetObject());
+                        this.Model.AddIngredientToShoppingList(ingredient, groupName);
                     }
                 }
-                catch (Exception ex)
-                {
-
-                }
             }
+            catch (Exception ex)
+            {
+                error = true;
+                msgError = ex.Message;
+            }
+            if (error)
+            {
+                var messageDialog = new MessageDialog("shopping");
+                await messageDialog.ShowAsync();
+            }   
         }
 
         #region Inscription de NavigationHelper
@@ -204,7 +231,6 @@ namespace Check_n_Cook
             bool error = await this.retriever.GetData(keyWord, 200, 1, Model);
             this.resultsFoundViewSource.Source = this.ItemsReceipe;
             progressBar.Visibility = Visibility.Collapsed;
-
             Check_n_Cook.ScrollToSection(Check_n_Cook.Sections[2]);
 
         }
@@ -216,20 +242,21 @@ namespace Check_n_Cook
         #endregion
 
 
-        public async void searchConfirmation(){
+        public async void searchConfirmation()
+        {
 
             await Model.ExtractPersonnalReceipes();
-             
-            
-            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") ||txtIngredientSearch==null ||txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
+
+
+            if (!this.textBoxSearch.Text.Equals("Entrer une recette...") || txtIngredientSearch == null || txtIngredientSearch.Text == null || txtIngredientSearch.Text.Equals("") || txtIngredientSearch.Text.Equals("Entrez une liste ex : citron-riz-poulet"))
             {
-                
+
                 this.search(this.textBoxSearch.Text);
                 if (txtIngredientSearch != null)
                 {
                     txtIngredientSearch.Text = "Entrez une liste ex : citron-riz-poulet";
                 }
-                
+
             }
             else
             {
@@ -240,13 +267,13 @@ namespace Check_n_Cook
                     textBoxSearch.Text = "Entrer une recette...";
 
                 }
-                
+
             }
         }
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-             searchConfirmation();
+            searchConfirmation();
 
         }
 
@@ -258,7 +285,7 @@ namespace Check_n_Cook
 
                 progressBar.Visibility = Visibility.Visible;
 
-                
+
                 error = await this.retriever.GetDataByIngredients(keyWords, 100, 1, Model);
                 this.resultsFoundViewSource.Source = this.ItemsReceipe;
 
@@ -381,7 +408,7 @@ namespace Check_n_Cook
                     sliderSearch.IsEnabled = false;
 
                 }
-                
+
 
             }
 
