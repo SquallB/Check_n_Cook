@@ -258,7 +258,7 @@ namespace Check_n_Cook
 
                 progressBar.Visibility = Visibility.Visible;
 
-                this.Model.ClearReceipes();
+                
                 error = await this.retriever.GetDataByIngredients(keyWords, 100, 1, Model);
                 this.resultsFoundViewSource.Source = this.ItemsReceipe;
 

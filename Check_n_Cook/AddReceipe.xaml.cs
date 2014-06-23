@@ -243,7 +243,7 @@ namespace Check_n_Cook
                 var costlevel = (ComboBox)sender;
                 costlevel.Items.Add(" ");
 
-                for (int i = 1; i <= 5; i++)
+                for (int i = 1; i <= 3; i++)
                 {
                     costlevel.Items.Add(i);
 
@@ -383,7 +383,7 @@ namespace Check_n_Cook
 
                 }
 
-                Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex + 1, this.costLevelIndex + 1, false, false);
+                Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex , this.costLevelIndex, false, false);
                 rec.Id = -1;
                 rec.Image = this.urlForImage;
                 rec.ToDoInstructions = this.toDoInstructions;
