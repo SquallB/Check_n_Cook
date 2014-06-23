@@ -312,6 +312,9 @@ namespace Check_n_Cook
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+
+                this.PagesToPrint.Clear();
+                PreparePrintContent();
             }
         }
 
@@ -341,6 +344,9 @@ namespace Check_n_Cook
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+
+                this.PagesToPrint.Clear();
+                PreparePrintContent();
             }
         }
 
