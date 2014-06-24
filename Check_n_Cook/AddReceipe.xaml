@@ -82,10 +82,10 @@
             </HubSection>
             <HubSection Width="auto" Header="Ingrédients">
                 <DataTemplate>
-                    <Grid Width="auto">
+                    <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="48" />
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="500"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>

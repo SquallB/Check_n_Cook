@@ -83,14 +83,15 @@
             </HubSection>
             <HubSection x:Name="ingredientsHub" Width="auto" Header="Ingredients" Visibility="Collapsed">
                 <DataTemplate>
-                    <Grid>
+                    <Grid >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="500" />
+                            <RowDefinition Height="48" />
                         </Grid.RowDefinitions>
-                        <GridView Grid.Row="0" x:Name="ingredients" 
+                        <GridView x:Name="ingredients" 
                                   SelectionMode="None" 
-                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="True">
+                                  Grid.Row="0"
+                              ItemsSource="{Binding Source={StaticResource ingredientsViewSource}}"  IsHitTestVisible="True" Grid.RowSpan="2">
                             <GridView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsWrapGrid MaximumRowsOrColumns="10" />
@@ -98,7 +99,7 @@
                             </GridView.ItemsPanel>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Ingredient.name}">
+                                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Ingredient.name}" >
                                         <Image Source="{Binding Ingredient.Image}" Width="80" Height="60"/>
                                         <StackPanel Orientation="Vertical" Background="LightGray" Width="150">
                                             <TextBlock Text="{Binding Name}" FontSize="14.667" FontFamily="Segoe UI" Margin="5,0,0,0"/>
@@ -109,8 +110,9 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
-                        <Button x:Name="button_validateIngredients" Grid.Row="1" Visibility="Collapsed" Content="Valider le choix des ingrédients" Click="ValidateIngredients_Click" Loaded="button_validateIngredients_Loaded" />
+                        <Button Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="button_validateIngredients" Visibility="Collapsed" Content="Valider le choix des ingrédients" Click="ValidateIngredients_Click" Loaded="button_validateIngredients_Loaded" />
                     </Grid>
+                    
                 </DataTemplate>
             </HubSection>
 
