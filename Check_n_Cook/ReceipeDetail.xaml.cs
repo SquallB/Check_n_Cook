@@ -3,59 +3,100 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// This page displays a collection of element
     /// </summary>
     public sealed partial class ReceipeDetail : BasePrintPage
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public AppModel Model { get; set; }
-        public Image ImageReceipe { get; set; }
-        public TextBlock ReceipeInstruction { get; set; }
-        private string Date;
-        private string TimeOfDay;
-        private Receipe receipe;
-        private List<ItemIngredient> ingredients;
-        private List<Ingredient> currentShoppingList;
-        private bool isFavourite;
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Gets or sets the model.
         /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
+        public AppModel Model { get; set; }
+        /// <summary>
+        /// Gets or sets the image receipe.
+        /// </summary>
+        /// <value>
+        /// The image receipe.
+        /// </value>
+        public Image ImageReceipe { get; set; }
+        /// <summary>
+        /// Gets or sets the receipe instruction.
+        /// </summary>
+        /// <value>
+        /// The receipe instruction.
+        /// </value>
+        public TextBlock ReceipeInstruction { get; set; }
+        /// <summary>
+        /// The date
+        /// </summary>
+        private string Date;
+        /// <summary>
+        /// The time of day
+        /// </summary>
+        private string TimeOfDay;
+        /// <summary>
+        /// The receipe
+        /// </summary>
+        private Receipe receipe;
+        /// <summary>
+        /// The ingredients
+        /// </summary>
+        private List<ItemIngredient> ingredients;
+        /// <summary>
+        /// The current shopping list
+        /// </summary>
+        private List<Ingredient> currentShoppingList;
+        /// <summary>
+        /// The is favourite
+        /// </summary>
+        private bool isFavourite;
+
+        /// <summary>
+        /// Gets the default view model.
+        /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
-        /// gestion de la durée de vie des processus
+        /// Gets the navigation helper.
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceipeDetail"/> class.
+        /// </summary>
         public ReceipeDetail()
         {
             this.InitializeComponent();
@@ -69,16 +110,16 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the previous elements while the navigation. Any state loaded is given when the page
+        /// is recreated from a previous session.
         /// </summary>
         /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
+        /// The event source ; generaly <see cref="NavigationHelper"/>
         /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="e"> Event data that give the parameter of the navigation transmitted
+        /// <see cref="Frame.Navigate(Type, Object)"/> during the initial request of this page and
+        /// a state dictionnary preserved by this page during a previous session
+        /// The state will not take the value Null when the first visit of this page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.progressBar.Visibility = Visibility.Visible;
@@ -165,6 +206,11 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Handle the control when the user add the receipe to his favorite.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private async void AddReceipeFavorite_Click(object sender, RoutedEventArgs e)
         {
             if (!isFavourite)
@@ -185,6 +231,11 @@ namespace Check_n_Cook
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyFavouriteReceipes());
         }
 
+        /// <summary>
+        /// handle the control when the user add the receipe to his planning
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private async void AddReceipeList_Click(object sender, RoutedEventArgs e)
         {
             this.Model.AddReceipeList(this.receipe, this.TimeOfDay, this.Date);
@@ -193,6 +244,11 @@ namespace Check_n_Cook
             await Windows.Storage.FileIO.WriteTextAsync(receipeFile, this.Model.StringifyReceipesList());
         }
 
+        /// <summary>
+        /// Store the date given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.Controls.DatePickerValueChangedEventArgs"/> instance containing the event data.</param>
         private void DatePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
             DatePicker datePicker = sender as DatePicker;
@@ -203,6 +259,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Initialize the combox for the time of the day
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
@@ -218,6 +279,11 @@ namespace Check_n_Cook
         }
 
 
+        /// <summary>
+        /// Get the time of day selected by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -229,6 +295,11 @@ namespace Check_n_Cook
 
         }
         public WebView wb;
+        /// <summary>
+        /// Initialize the instruction for the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void description_Loaded(object sender, RoutedEventArgs e)
         {
             WebView wb = sender as WebView;
@@ -247,11 +318,21 @@ namespace Check_n_Cook
             this.PagesToPrint.Add(new ReceipePrintPage(this.receipe));
         }
 
+        /// <summary>
+        /// Handles the Click event of the PrintReceipe control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private async void PrintReceipe_Click(object sender, RoutedEventArgs e)
         {
             await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
         }
 
+        /// <summary>
+        /// Displays the checkbox for select the ingredient
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void SelectIngredients_Click(object sender, RoutedEventArgs e)
         {
             this.button_validateIngredients.Visibility = Visibility.Visible;
@@ -262,6 +343,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the ingredient selected by the user in the list of ingredient selected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox)
@@ -276,6 +362,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Remove the ingredient of the list of ingredient selected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox) {
@@ -288,6 +379,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Put all the ingredient selected by the user in the shopping list
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private async void ValidateIngredients_Click(object sender, RoutedEventArgs e)
         {
             this.button_validateIngredients.Visibility = Visibility.Collapsed;
@@ -311,18 +407,33 @@ namespace Check_n_Cook
         }
 
         private Button button_validateIngredients;
+        /// <summary>
+        /// Store the button to validate the ingredient selected by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void button_validateIngredients_Loaded(object sender, RoutedEventArgs e)
         {
             this.button_validateIngredients = (Button)sender;
         }
 
         private List<CheckBox> checkboxes;
+        /// <summary>
+        /// Store all the checkbox in the list
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Loaded(object sender, RoutedEventArgs e)
         {
             checkboxes.Add((CheckBox)sender);
         }
 
         private Button favouriteButton;
+        /// <summary>
+        /// Store the button to add the receipe in favorite
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void AddReceipeFavorite_Loaded(object sender, RoutedEventArgs e)
         {
             this.favouriteButton = (Button)sender;
