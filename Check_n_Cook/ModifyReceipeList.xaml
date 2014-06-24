@@ -15,7 +15,6 @@
         <CollectionViewSource x:Name="morningReceipeViewSource" />
         <CollectionViewSource x:Name="noonReceipeViewSource" />
         <CollectionViewSource x:Name="evenningReceipeViewSource" />
-        <x:String x:Key="AppName">Mon application</x:String>
 
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -27,7 +26,6 @@
 
         <Hub>
             <Hub.Header>
-                <!-- Bouton Précédent et titre de la page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>

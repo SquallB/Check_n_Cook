@@ -11,17 +11,11 @@
     mc:Ignorable="d" RequestedTheme="Light">
 
     <Page.Resources>
-        <!-- Collection d'éléments affichés par cette page -->
         <CollectionViewSource
         x:Name="itemsViewSource"
         Source="{Binding Items}"/>
     </Page.Resources>
-
-    <!--
-        La grille sert de panneau racine à la page, permettant de définir deux lignes :
-        * La ligne 0 qui contient le bouton Précédent et le titre de la page
-        * La ligne 1 qui contient le reste de la page
-    -->
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -37,7 +31,6 @@
             <ColumnDefinition x:Name="secondaryColumn" Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Bouton Précédent et titre de la page -->
         <Grid x:Name="titlePanel">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
@@ -53,7 +46,6 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,0,40" Text="A propos"/>
         </Grid>
 
-        <!-- Liste d'éléments à défilement vertical -->
         <ListView
             x:Name="itemListView"
             AutomationProperties.AutomationId="ItemsListView"
@@ -90,7 +82,6 @@
         </ListView>
 
 
-        <!-- Détails de l'élément sélectionné -->
         <ScrollViewer
             x:Name="itemDetail"
             AutomationProperties.AutomationId="ItemDetailScrollViewer"
@@ -124,7 +115,6 @@
 
         <VisualStateManager.VisualStateGroups>
 
-            <!-- Les états visuels reflètent l'état d'affichage de l'application -->
             <VisualStateGroup x:Name="ViewStates">
                 <VisualState x:Name="PrimaryView" />
                 <VisualState x:Name="SinglePane">
@@ -143,13 +133,6 @@
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
-                <!--
-                    Lorsqu'un élément est sélectionné et qu'un seul volet s'affiche, l'affichage des détails nécessite davantage de modifications :
-                     * Masquer la liste principale et la colonne dans laquelle elle se trouve
-                     * Déplacer les détails des éléments d'une ligne vers le bas pour faire de la place pour le titre
-                     * Placer le titre directement au-dessus des détails
-                     * Ajuster la marge intérieure des détails
-                 -->
                 <VisualState x:Name="SinglePane_Detail">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="primaryColumn" Storyboard.TargetProperty="Width">
