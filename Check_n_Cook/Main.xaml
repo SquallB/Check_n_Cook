@@ -153,7 +153,7 @@
                         <ProgressBar x:Name="progressBar" Height="28" IsIndeterminate="True" Loaded="progress_Loaded"  Foreground="Black" Grid.Row="8" Visibility="Collapsed" Margin="150,-830,0,9"/>
                         <Button Content="OK" Margin="361,-3,0,-3" Height="38" Click="Button_Click" HorizontalAlignment="Stretch"/>
                         <Button Grid.Row="5" Width="421" Click="GoToPlanningReceipe_Click" Content="Mon planning" Height="34" Margin="0,7,-3,7"/>
-                        <Button Content="Accéder à ma liste de course" Grid.Row="3" Width="421" Click="GoToShoppingList_Click" Margin="0,7,-3,-0.746"/>
+                        <Button Content="Accéder à ma liste de courses" Grid.Row="3" Width="421" Click="GoToShoppingList_Click" Margin="0,7,-3,-0.746"/>
                         <Button Content="Ajouter une recette" Grid.Row="4" Margin="0,6.746,-3,7.254" Width="421" Click="GoToAddReceipe_Click"/>
                     </Grid>
                 </DataTemplate>

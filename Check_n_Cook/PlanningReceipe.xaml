@@ -45,7 +45,7 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="auto" Header="Listes de recettes" Height="auto">
+            <HubSection Width="auto" Header="Liste de recettes" Height="auto">
                 <DataTemplate>
                     <GridView x:Name="itemGridView" ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
                               SelectionMode="None" 

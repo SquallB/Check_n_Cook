@@ -45,11 +45,11 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-                    <TextBlock x:Name="pageTitle" Text="Liste de course" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                    <TextBlock x:Name="pageTitle" Text="Liste de courses" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
                 </Grid>
             </Hub.Header>
-            <HubSection Width="auto" Header="Listes des groupes" Height="auto">
+            <HubSection Width="auto" Header="Liste des groupes" Height="auto">
                 <DataTemplate>
                     <GridView x:Name="itemGridView" ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
                               SelectionMode="None" 
