@@ -127,8 +127,6 @@ namespace Check_n_Cook
                 this.Model.FavouriteReceipes = new Dictionary<string, Receipe>();
             }
 
-            string msgError = "";
-            bool error = false;
             StorageFolder folder = KnownFolders.PicturesLibrary;
 
             try
@@ -145,21 +143,12 @@ namespace Check_n_Cook
             }
             catch (FileNotFoundException ex)
             {
-                error = true;
-                msgError = ex.Message;
-            }
-            if (error)
-            {
-                var messageDialog = new MessageDialog("favourite");
-                await messageDialog.ShowAsync();
             }
 
             this.favoriteViewSource.Source = this.Model.FavouriteReceipes.Values;
 
             if (this.Model.ReceipeList.Count == 0)
             {
-                msgError = "";
-                error = false;
                 try
                 {
                     StorageFile receipesFile = await folder.GetFileAsync("receipes.json");
@@ -177,20 +166,11 @@ namespace Check_n_Cook
                 }
                 catch (Exception ex)
                 {
-                    error = true;
-                    msgError = ex.Message;
-                }
-                if (error)
-                {
-                    var messageDialog = new MessageDialog("list");
-                    await messageDialog.ShowAsync();
                 }
             }
 
             if (this.Model.ShoppingList.Count == 0)
             {
-                msgError = "";
-                error = false;
                 try
                 {
                     StorageFile shoppingListFile = await folder.GetFileAsync("shoppingList.json");
