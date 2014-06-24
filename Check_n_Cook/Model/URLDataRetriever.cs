@@ -365,7 +365,7 @@ namespace Check_n_Cook.Model
         /// <returns></returns>
         public bool checkDifficulty(Receipe receipe)
         {
-            return (AdvancedDifficulty == 0) ||(AdvancedDifficulty == receipe.Difficulty.Value);
+            return (AdvancedDifficulty == 0) ||receipe.Difficulty.Value>=4||receipe.Difficulty.Value<1||(AdvancedDifficulty == receipe.Difficulty.Value);
         }
 
         /// <summary>
