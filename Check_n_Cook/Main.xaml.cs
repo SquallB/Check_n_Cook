@@ -265,6 +265,13 @@ namespace Check_n_Cook
                 }
 
             }
+
+            if (Model.Receipes.Count == 0)
+            {
+
+                FlyoutBase fly = FlyoutBase.GetAttachedFlyout(this.resultsSection);
+                fly.ShowAt(this.resultsSection);
+            }
         }
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
