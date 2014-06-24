@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PlanningReceipe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ShoppingList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -126,10 +130,6 @@
     <Page Include="ReceipePrintPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PlanningReceipe.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="ReceipeDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +181,9 @@
     <Compile Include="Model\ReceipeListSelected.cs" />
     <Compile Include="Model\ShoppingListGroup.cs" />
     <Compile Include="Model\UnityAvailable.cs" />
+    <Compile Include="PlanningReceipe.xaml.cs">
+      <DependentUpon>PlanningReceipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShoppingList.xaml.cs">
       <DependentUpon>ShoppingList.xaml</DependentUpon>
     </Compile>
@@ -195,9 +198,6 @@
     <Compile Include="Model\ReceipeTimeOfDay.cs" />
     <Compile Include="Events\RemovedReceipeListEvent.cs" />
     <Compile Include="Model\Time.cs" />
-    <Compile Include="PlanningReceipe.xaml.cs">
-      <DependentUpon>PlanningReceipe.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

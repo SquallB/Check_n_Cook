@@ -285,8 +285,8 @@ namespace Check_n_Cook
                 }
                 else
                 {
-                    //Checkbox has already loaded
-                    cb.Visibility = Visibility.Visible;
+                    checkBoxs.Remove(data.Title);
+                    checkBoxs.Add(data.Title, cb);
                 }
             }
         }
@@ -471,6 +471,11 @@ namespace Check_n_Cook
 
                 //update the eceipeListSelected model
                 this.receipeListSelectedModel.RemoveReceipeList(dataGroup);
+            }
+
+            foreach (CheckBox cb in checkBoxs.Values)
+            {
+                cb.Visibility = Visibility.Visible;
             }
         }
 
