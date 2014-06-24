@@ -116,7 +116,7 @@
                 </DataTemplate>
             </HubSection>
 
-            <HubSection x:Name="gestionHub" Header="Outil de gestion" Visibility="Collapsed">
+            <HubSection x:Name="gestionHub" Header="Outils de gestion" Visibility="Collapsed">
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <Grid>
@@ -136,7 +136,7 @@
                             <DatePicker HorizontalAlignment="Left" Margin="118,10,0,0" Grid.Row="2" VerticalAlignment="Top" DateChanged="DatePicker_DateChanged" Width="auto" />
                             <ComboBox HorizontalAlignment="Left" Margin="3,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="auto" Loaded="ComboBox_Loaded" IsSynchronizedWithCurrentItem="False" SelectionChanged="ComboBox_SelectionChanged"/>
                             <Button Content="Imprimer la recette" Grid.Row="4" Width="437" Click="PrintReceipe_Click" />
-                            <Button Content="Ajouter des ingrédients à la liste de course" Grid.Row="0" HorizontalAlignment="Left" Width="437" Click="SelectIngredients_Click"/>
+                            <Button Content="Ajouter des ingrédients à la liste de courses" Grid.Row="0" HorizontalAlignment="Left" Width="437" Click="SelectIngredients_Click"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

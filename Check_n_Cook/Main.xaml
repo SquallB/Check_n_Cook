@@ -159,7 +159,7 @@
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Width="1020" Header="Résultat de recherche">
+            <HubSection Width="1020" Header="Résultats de recherche">
 
                 <DataTemplate>
 

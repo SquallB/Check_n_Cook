@@ -122,7 +122,7 @@ namespace Check_n_Cook
             }
             else
             {
-                this.pageTitle.Text = "Liste de recette";
+                this.pageTitle.Text = "Liste de recettes";
             }
 
         }

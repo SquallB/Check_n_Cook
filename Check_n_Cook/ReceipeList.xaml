@@ -118,7 +118,7 @@ Cette grille sert de panneau racine à la page.
                 </DataTemplate>
             </HubSection>
 
-            <HubSection Header="Outil de gestion">
+            <HubSection Header="Outils de gestion">
                 <DataTemplate>
                     <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
