@@ -393,13 +393,17 @@ namespace Check_n_Cook
             }
 
             String groupName = this.receipe.Title;
-            this.Model.AddShoppingListGroup(groupName);
-
-            foreach (Ingredient ingredient in this.currentShoppingList)
+            if (!this.Model.ShoppingList.ContainsKey(groupName))
             {
-                this.Model.AddIngredientToShoppingList(ingredient, groupName);
-            }
+                this.Model.AddShoppingListGroup(groupName);
 
+                foreach (Ingredient ingredient in this.currentShoppingList)
+                {
+                    this.Model.AddIngredientToShoppingList(ingredient, groupName);
+                }
+
+            }
+           
             
             StorageFolder folder = KnownFolders.PicturesLibrary;
             StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
