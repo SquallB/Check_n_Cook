@@ -171,13 +171,6 @@ namespace Check_n_Cook
                 }
                 catch (Exception ex)
                 {
-                    error = true;
-                    msgError = ex.Message;
-                }
-                if (error)
-                {
-                    var messageDialog = new MessageDialog("shopping");
-                    await messageDialog.ShowAsync();
                 }
             }
         }
