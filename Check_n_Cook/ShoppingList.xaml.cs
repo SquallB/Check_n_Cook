@@ -170,6 +170,7 @@ namespace Check_n_Cook
         /// </summary>
         protected override void PreparePrintContent()
         {
+            this.PagesToPrint.Clear();
             this.PagesToPrint.Add(new ShoppingListPrintPage(this.shoppingListGroup));
         }
 
@@ -410,7 +411,6 @@ namespace Check_n_Cook
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
 
-                this.PagesToPrint.Clear();
                 PreparePrintContent();
             }
         }
