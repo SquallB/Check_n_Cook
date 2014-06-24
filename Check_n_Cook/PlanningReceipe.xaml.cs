@@ -15,37 +15,72 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// This page displays a collection of element
     /// </summary>
     public sealed partial class PlanningReceipe : Page, View
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        /// <summary>
+        /// The application model
+        /// </summary>
         private AppModel appModel;
+        /// <summary>
+        /// The check boxs
+        /// </summary>
         private Dictionary<string, CheckBox> checkBoxs;
+        /// <summary>
+        /// The print receipe list
+        /// </summary>
         private Button printReceipeList;
+        /// <summary>
+        /// The receipe list selected model
+        /// </summary>
         private ReceipeListSelected receipeListSelectedModel;
+        /// <summary>
+        /// The list receipe list selected
+        /// </summary>
         private List<ItemReceipeListSelected> listReceipeListSelected;
+        /// <summary>
+        /// The delte receipe list
+        /// </summary>
         private Button delteReceipeList;
+        /// <summary>
+        /// The selection mode
+        /// </summary>
         private Button selectionMode;
 
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Gets the default view model.
         /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
-        /// gestion de la durée de vie des processus
+        /// Gets the navigation helper.
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlanningReceipe"/> class.
+        /// </summary>
         public PlanningReceipe()
         {
             this.InitializeComponent();
@@ -59,17 +94,16 @@ namespace Check_n_Cook
         }
 
 
-        /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the previous elements while the navigation. Any state loaded is given when the page
+        /// is recreated from a previous session.
         /// </summary>
         /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
+        /// The event source ; generaly <see cref="NavigationHelper"/>
         /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="e"> Event data that give the parameter of the navigation transmitted
+        /// <see cref="Frame.Navigate(Type, Object)"/> during the initial request of this page and
+        /// a state dictionnary preserved by this page during a previous session
+        /// The state will not take the value Null when the first visit of this page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (this.appModel == null)
@@ -116,6 +150,10 @@ namespace Check_n_Cook
             this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
+        /// <summary>
+        /// Sort the collection given
+        /// </summary>
+        /// <param name="sampleDataGroups">The sample data groups.</param>
         public void BubbleSort(List<SampleDataGroup> sampleDataGroups)
         {
             int n = sampleDataGroups.Count;
@@ -142,20 +180,19 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
-        /// en plus de l'état de page conservé durant une session antérieure.
-
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will load the active page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will unload the active page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -163,6 +200,11 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Listener that allow to go to the ReceipeList page.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ItemClickEventArgs"/> instance containing the event data.</param>
         public void GoToReceipeList_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ItemReceipeTimeOfDay)
@@ -177,6 +219,11 @@ namespace Check_n_Cook
 
             }
         }
+        /// <summary>
+        ///  Listener that allow to go to the ReceipeList page.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void GoToReceipeListAll_CLick(object sender, RoutedEventArgs e)
         {
             var group = (sender as FrameworkElement).DataContext;
@@ -192,6 +239,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Add the DataGroup to the list of receipeListSelected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox)
@@ -202,6 +254,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Remove the DataGroup to the list of receipeListSelected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox)
@@ -212,6 +269,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the checkbox loaded
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CheckBox_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox)
@@ -230,6 +292,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Change the disposition of the page when the selection mode is actived or desactived
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SelectionMode_Click(object sender, RoutedEventArgs e)
         {
             Button but = (Button)sender;
@@ -266,6 +333,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the button to print the receipeList
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void PrintReceipeList_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -274,6 +346,10 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Refresh the page according to the event given
+        /// </summary>
+        /// <param name="e">The e.</param>
         public void Refresh(Event e)
         {
             if (e is ModifyReceipeListPrint)
@@ -340,6 +416,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Add the ingredients of the receipe in the receipeList, in the shoppingList
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddAllIngredients_Click(object sender, RoutedEventArgs e)
         {
             foreach (SampleDataGroup data in this.receipeListSelectedModel.GetReceipeListSelected())
@@ -357,6 +438,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Delete all the receipeList selected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void DeleteReceipeList_Click(object sender, RoutedEventArgs e)
         {
             List<SampleDataGroup> sampleDataGroups = new List<SampleDataGroup>();
@@ -385,6 +471,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the button to delete the receipe list selected
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void DeleteReceipeList_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -393,6 +484,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Unselected all the checkbox
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void UnselectReceipeList_Click(object sender, RoutedEventArgs e)
         {
             foreach (CheckBox cb in checkBoxs.Values)
@@ -401,6 +497,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the button to get te selection mode
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SelectionMode_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -409,6 +510,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handle the button to go to the receipe list
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ItemClickEventArgs"/> instance containing the event data.</param>
         private void ItemReceipeListSelected_Click(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ItemReceipeListSelected)
