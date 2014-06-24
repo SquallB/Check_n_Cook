@@ -538,7 +538,16 @@ namespace Check_n_Cook
                 Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex, this.costLevelIndex, false, false);
                 rec.Id = -1;
                 rec.Image = this.urlForImage;
-                rec.ToDoInstructions = this.toDoInstructions;
+
+                if (this.toDoInstructions == null || this.toDoInstructions == String.Empty)
+                {
+                    rec.ToDoInstructions = "Aucune instruction.";
+                }
+                else
+                {
+                    rec.ToDoInstructions = this.toDoInstructions;
+
+                }
                 foreach (Ingredient ing in this.ingredientsNews.Values)
                 {
                     rec.ingredients.Add(ing);
