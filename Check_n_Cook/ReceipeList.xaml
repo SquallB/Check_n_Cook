@@ -16,9 +16,6 @@
         <CollectionViewSource x:Name="listIngredientsViewSource" />
     </Page.Resources>
 
-    <!--
-Cette grille sert de panneau racine à la page.
--->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -28,7 +25,6 @@ Cette grille sert de panneau racine à la page.
 
         <Hub>
             <Hub.Header>
-                <!-- Bouton Précédent et titre de la page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
@@ -120,7 +116,6 @@ Cette grille sert de panneau racine à la page.
 
             <HubSection Header="Outils de gestion">
                 <DataTemplate>
-                    <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>

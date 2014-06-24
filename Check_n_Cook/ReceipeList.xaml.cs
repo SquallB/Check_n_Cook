@@ -4,7 +4,6 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Model.Data;
 using System;
 using System.Collections.Generic;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,37 +11,82 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// This page displays a collection of element
     /// </summary>
     public sealed partial class ReceipeList : Page
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
         public AppModel Model { get; set; }
+        /// <summary>
+        /// The time
+        /// </summary>
         private Time time;
+        /// <summary>
+        /// The hub receipe
+        /// </summary>
         private HubSection hubReceipe;
+        /// <summary>
+        /// The nb count receipe
+        /// </summary>
         private int nbCountReceipe;
+        /// <summary>
+        /// The day
+        /// </summary>
         private bool day;
+        /// <summary>
+        /// Gets or sets the receipe text block.
+        /// </summary>
+        /// <value>
+        /// The receipe text block.
+        /// </value>
         public TextBlock ReceipeTextBlock { get; set; }
+        /// <summary>
+        /// Gets or sets the ingredient text block.
+        /// </summary>
+        /// <value>
+        /// The ingredient text block.
+        /// </value>
         public TextBlock IngredientTextBlock { get; set; }
 
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Gets the default view model.
         /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
+
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et
-        /// gestion de la durée de vie des processus
+        /// Gets the navigation helper.
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceipeList"/> class.
+        /// </summary>
         public ReceipeList()
         {
             this.InitializeComponent();
@@ -53,16 +97,14 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the previous elements while the navigation. Any state loaded is given when the page
+        /// is recreated from a previous session.
         /// </summary>
-        /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure. L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="sender">The event source ; generaly <see cref="NavigationHelper" /></param>
+        /// <param name="e">Event data that give the parameter of the navigation transmitted
+        /// <see cref="Frame.Navigate(Type, Object)" /> during the initial request of this page and
+        /// a state dictionnary preserved by this page during a previous session
+        /// The state will not take the value Null when the first visit of this page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoToReceipeListEvent evnt = e.NavigationParameter as GoToReceipeListEvent;
@@ -96,6 +138,10 @@ namespace Check_n_Cook
             listReceipeViewSource.Source = receipes;
         }
 
+        /// <summary>
+        /// Handles the title if there is more than one receipe
+        /// </summary>
+        /// <param name="receipeTime">The receipe time.</param>
         public void HandleTitle(ReceipeTime receipeTime)
         {
             this.nbCountReceipe = 0;
@@ -131,20 +177,19 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        ///
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState
-        /// en plus de l'état de page conservé durant une session antérieure.
-
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will load the active page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will unload the active page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -152,6 +197,11 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Display all the ingredients of a receipe
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ClickHandleIngredients(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
@@ -178,6 +228,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Handles the Loaded event of the TextBlockReceipe control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBlockReceipe_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBlock)
@@ -208,6 +263,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the TextBlock for the name of the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBlockIngredient_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBlock)
@@ -216,6 +276,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the GoToModifyReceipeList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void GoToModifyReceipeList_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
@@ -224,6 +289,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the GoToShoppingList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void GoToShoppingList_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame != null)
@@ -232,6 +302,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Go to the ReceipeDetail page when the user click on the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ItemClickEventArgs"/> instance containing the event data.</param>
         private void ReceipeClick_Click(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ItemReceipe)
@@ -243,6 +318,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Loaded event of the HubSection control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void HubSection_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is HubSection)
