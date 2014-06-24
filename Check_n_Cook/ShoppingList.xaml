@@ -121,8 +121,8 @@
                                 <RowDefinition Height="48"/>
                                 <RowDefinition Height="48"/>
                             </Grid.RowDefinitions>
-                            <Button HorizontalAlignment="Right" Width="440" Content="Imprimer la liste de course" Click="Button_Click" Grid.Row="0" Grid.ColumnSpan="3" Height="34" Margin="-3,7,0,7"/>
-                            <Button HorizontalAlignment="Left" Width="440" Content="Modifier la liste de course" Click="ModifyList_Click" Loaded="ModifyList_Loaded"  Grid.Row="1" Grid.ColumnSpan="3" Height="34" Margin="-3,7,0,7"/>
+                            <Button HorizontalAlignment="Right" Width="440" Content="Imprimer la liste de courses" Click="Button_Click" Grid.Row="0" Grid.ColumnSpan="3" Height="34" Margin="-3,7,0,7"/>
+                            <Button HorizontalAlignment="Left" Width="440" Content="Modifier la liste de courses" Click="ModifyList_Click" Loaded="ModifyList_Loaded"  Grid.Row="1" Grid.ColumnSpan="3" Height="34" Margin="-3,7,0,7"/>
                             <TextBox Visibility="Collapsed" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Quantité" VerticalAlignment="Center" Width="85" Height="32" Loaded="TextBoxQuantity_Loaded" GotFocus="Quantity_Focus" LostFocus="Quantity_LostFocus" Grid.Row="2"  Grid.Column="1"/>
                             <TextBox Visibility="Collapsed" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Entrer un ingrédient..." VerticalAlignment="Center" Width="197" Height="32" Loaded="TextBoxNameIngredient_Loaded" Grid.Row="2" LostFocus="EnterIngredient_LostFocus" GotFocus="EnterIngredient_Focus" />
                             <ComboBox Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="86" Height="32" Loaded="ComboBoxUnity_Loaded" Grid.Row="2" Grid.Column="2"/>
