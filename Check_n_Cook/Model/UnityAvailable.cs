@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace Check_n_Cook.Model
 {
+    /// <summary>
+    /// Represents all the available unities.
+    /// </summary>
     public static class UnityAvailable
     {
+        /// <summary>
+        /// The unities
+        /// </summary>
         public static List<string> unitys = null;
 
+        /// <summary>
+        /// Gets the unities.
+        /// </summary>
+        /// <returns>a list of available unities</returns>
         public static List<string> GetUnity()
         {
             if (unitys == null)
