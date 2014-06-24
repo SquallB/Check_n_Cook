@@ -10,16 +10,54 @@ using Windows.UI.Xaml.Controls;
 
 namespace Check_n_Cook.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class URLDataRetriever
     {
+        /// <summary>
+        /// Gets or sets the URL.
+        /// </summary>
+        /// <value>
+        /// The URL.
+        /// </value>
         public String URL { get; set; }
+        /// <summary>
+        /// Gets or sets the advanced search.
+        /// </summary>
+        /// <value>
+        /// The advanced search.
+        /// </value>
         public List<string> AdvancedSearch { get; set; }
-        public string level="";
+       
+        /// <summary>
+        /// Gets or sets the advanced difficulty.
+        /// </summary>
+        /// <value>
+        /// The advanced difficulty.
+        /// </value>
         public int AdvancedDifficulty { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [advanced vegetarian].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [advanced vegetarian]; otherwise, <c>false</c>.
+        /// </value>
         public bool AdvancedVegetarian { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether [advanced alcool].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [advanced alcool]; otherwise, <c>false</c>.
+        /// </value>
         public bool AdvancedAlcool { get; set; }
 
+        /// <summary>
+        /// Gets the date time from string.
+        /// </summary>
+        /// <param name="dateString">The date string.</param>
+        /// <returns></returns>
         private DateTime getDateTimeFromString(String dateString)
         {
             String date = dateString.Substring(0, dateString.IndexOf('T'));
@@ -39,6 +77,11 @@ namespace Check_n_Cook.Model
             return new DateTime(year, month, day, hour, minute, second);
         }
 
+        /// <summary>
+        /// Gets the items array from json object.
+        /// </summary>
+        /// <param name="jsonObject">The json object.</param>
+        /// <returns></returns>
         private JsonArray getItemsArrayFromJSONObject(JsonObject jsonObject)
         {
             foreach (var item in jsonObject)
@@ -59,6 +102,11 @@ namespace Check_n_Cook.Model
             return null;
         }
 
+        /// <summary>
+        /// Gets the receipe from json item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         private Receipe getReceipeFromJSONItem(JsonObject item)
         {
             Receipe receipe = new Receipe();
@@ -141,6 +189,14 @@ namespace Check_n_Cook.Model
             return receipe;
         }
 
+        /// <summary>
+        /// Gets the data.
+        /// </summary>
+        /// <param name="keyWord">The key word.</param>
+        /// <param name="nbItemsPerPage">The nb items per page.</param>
+        /// <param name="startIndex">The start index.</param>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<bool> GetData(String keyWord, int nbItemsPerPage, int startIndex, AppModel model)
         {
             HttpClient http = new System.Net.Http.HttpClient();
@@ -151,7 +207,7 @@ namespace Check_n_Cook.Model
                 foreach (var jsonItem in model.LocalReceipes)
                 {
                     Receipe localToAdd = new Receipe(jsonItem.Stringify());
-                    if (localToAdd.ToDoInstructions.ToUpper().Contains(keyWord.ToUpper()) || localToAdd.Title.ToUpper().Contains(keyWord.ToUpper()))
+                    if (checkInstructions( localToAdd,keyWord)|| checkTitle(localToAdd,keyWord))
                     {
                         addReceipe(localToAdd,model);
                     }
@@ -187,12 +243,22 @@ namespace Check_n_Cook.Model
 
             return error;
         }
+
+        /// <summary>
+        /// Gets the data by ingredients.
+        /// </summary>
+        /// <param name="keyWords">The key words.</param>
+        /// <param name="nbItemsPerPage">The nb items per page.</param>
+        /// <param name="startIndex">The start index.</param>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<bool> GetDataByIngredients(String[] keyWords, int nbItemsPerPage, int startIndex, AppModel model)
         {
             bool error = false;
             model.ClearReceipes();
             try
             {
+                //we add all receipes created by the user
                 foreach (var jsonItem in model.LocalReceipes)
                 {
                     Receipe localToAdd = new Receipe(jsonItem.Stringify());
@@ -215,28 +281,30 @@ namespace Check_n_Cook.Model
                     keyWords[i] = keyWords[i].ToUpper();
                     
                 }
-                
+                //we add all basic research associated to each keyword to the model
                 foreach (var keyWord in keyWords)
                 {
-                    
                    await this.GetData(keyWord, nbItemsPerPage, startIndex, model);
-                   
                 }
                
-                int bestResults = 1;
+                int bestResults = 1;// confidence level
                 
                 foreach (var receipe in model.Receipes)
                 {
+                    //we check the research parameters to go faster
                     if (checkType(receipe))
                     {
                         if (checkDifficulty(receipe))
                         {
                             if (checkOptions(receipe))
                             {
-                                
+                                //used to compute the confidence level
                                 int count = 0;
+
+                                //case of receipes from marmiton
                                 if (receipe.Id != -1)
                                 {
+                                    //retrieves ingredients
                                     ReceipeRetriever rr = new ReceipeRetriever();
                                     var task = rr.extractReceipeFromMarmiton(receipe);
 
@@ -248,33 +316,15 @@ namespace Check_n_Cook.Model
                                     }
                                 }
                                 
-
+                                //we compute the confidence level
                                 foreach (var keyWord in keyWords)
                                 {
-
-                                    bool containsKey = false;
-
-                                    foreach (var ingredient in receipe.ingredients)
+                                    //each key word in the receipe informations add 1 confidence level
+                                    if (checkIngredients(receipe, keyWord) || checkInstructions(receipe, keyWord) || checkTitle(receipe, keyWord))
                                     {
-                                        if (ingredient.name.ToUpper().IndexOf(keyWord.ToUpper()) > 0 || ingredient.unity.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
-                                        {
-                                            containsKey = true;
-
-                                        }
-                                    }
-
-                                    if (containsKey || (receipe.ToDoInstructions != null) && (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper()) > 0) || (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper())>0)|| receipe.Title.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
-                                    {
-
                                         count++;
-
                                     }
-
-
                                 }
-                                
-                             
-
                                 results[count].Add(receipe);
                                 if (count > bestResults)
                                 {
@@ -292,10 +342,9 @@ namespace Check_n_Cook.Model
                 model.ClearReceipes();
 
                 
-
+                //only best results are displayed
                 foreach (var receipe in results[bestResults])
                 {
-
                     model.AddReceipe(receipe);
                 }
                 
@@ -308,21 +357,41 @@ namespace Check_n_Cook.Model
 
             return error;
         }
-        
+
+        /// <summary>
+        /// Checks the difficulty.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <returns></returns>
         public bool checkDifficulty(Receipe receipe)
         {
             return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
         }
 
+        /// <summary>
+        /// Checks the options.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <returns></returns>
         public bool checkOptions(Receipe receipe)
         {
             return ((receipe.Vegetarian == AdvancedVegetarian) || (AdvancedVegetarian == false)) && ((receipe.WithAlcohol == AdvancedAlcool) || (AdvancedAlcool == true));
         }
+        /// <summary>
+        /// Checks the type.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <returns></returns>
         public bool checkType(Receipe receipe)
         {
             return (AdvancedSearch == null || AdvancedSearch.Count == 0) || AdvancedSearch.Contains(receipe.DishType.Name);
            
         }
+        /// <summary>
+        /// Adds the receipe.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <param name="model">The model.</param>
         public void addReceipe(Receipe receipe, AppModel model)
         {
             if (checkType(receipe))
@@ -337,7 +406,52 @@ namespace Check_n_Cook.Model
                
             }
         }
+        /// <summary>
+        /// Checks the title.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <param name="keyWord">The key word.</param>
+        /// <returns></returns>
+        public bool checkTitle(Receipe receipe,string keyWord)
+        {
+            return receipe.Title.ToUpper().IndexOf(keyWord.ToUpper()) > 0;
+        }
 
+        /// <summary>
+        /// Checks the instructions.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <param name="keyWord">The key word.</param>
+        /// <returns></returns>
+        public bool checkInstructions(Receipe receipe, string keyWord)
+        {
+            return (receipe.ToDoInstructions != null) && (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper()) > 0);
+            
+        }
+        /// <summary>
+        /// Checks the ingredients.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <param name="keyWord">The key word.</param>
+        /// <returns></returns>
+        public bool checkIngredients(Receipe receipe, string keyWord)
+        {
+            bool containsKey = false;
+
+            foreach (var ingredient in receipe.ingredients)
+            {
+                if (ingredient.name.ToUpper().IndexOf(keyWord.ToUpper()) > 0 || ingredient.unity.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
+                {
+                    containsKey = true;
+
+                }
+            }
+            return containsKey;
+
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="URLDataRetriever"/> class.
+        /// </summary>
         public URLDataRetriever()
         {
             this.URL = "http://m.marmiton.org/webservices/json.svc/GetRecipeSearch?SiteId=1&KeyWord={0}&SearchType=0&ItemsPerPage={1}&StartIndex={2}";
