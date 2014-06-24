@@ -4,19 +4,11 @@ using Check_n_Cook.Model;
 using Check_n_Cook.Views;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Data.Json;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -25,45 +17,104 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// This page displays a collection of element
     /// </summary>
     public sealed partial class AddReceipe : Page, View
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        /// <summary>
+        /// The new receipe
+        /// </summary>
         private NewReceipe newReceipe;
+        /// <summary>
+        /// The ingredients news
+        /// </summary>
         private Dictionary<string, Ingredient> ingredientsNews;
+        /// <summary>
+        /// The name ingredient
+        /// </summary>
         private TextBox nameIngredient;
+        /// <summary>
+        /// The quantity ingredient
+        /// </summary>
         private TextBox quantityIngredient;
+        /// <summary>
+        /// The untity ingredient
+        /// </summary>
         private ComboBox untityIngredient;
+        /// <summary>
+        /// The receipe name
+        /// </summary>
         private string receipeName;
+        /// <summary>
+        /// The author name
+        /// </summary>
         private string authorName;
+        /// <summary>
+        /// The meal type index
+        /// </summary>
         private int mealTypeIndex;
+        /// <summary>
+        /// The cooking time
+        /// </summary>
         private string cookingTime;
+        /// <summary>
+        /// The difficulty level index
+        /// </summary>
         private int difficultyLevelIndex;
+        /// <summary>
+        /// The cost level index
+        /// </summary>
         private int costLevelIndex;
+        /// <summary>
+        /// To do instructions
+        /// </summary>
         private string toDoInstructions;
+        /// <summary>
+        /// The URL for image
+        /// </summary>
         private string urlForImage;
+        /// <summary>
+        /// The instruction
+        /// </summary>
         private TextBox instruction;
+        /// <summary>
+        /// The image
+        /// </summary>
         private Image image;
 
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Gets the default view model.
         /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
-        /// gestion de la durée de vie des processus
+        /// Gets the navigation helper.
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddReceipe"/> class.
+        /// </summary>
         public AddReceipe()
         {
             this.InitializeComponent();
@@ -85,16 +136,16 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the previous elements while the navigation. Any state loaded is given when the page
+        /// is recreated from a previous session.
         /// </summary>
         /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
+        /// The event source ; generaly <see cref="NavigationHelper"/>
         /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="e"> Event data that give the parameter of the navigation transmitted
+        /// <see cref="Frame.Navigate(Type, Object)"/> during the initial request of this page and
+        /// a state dictionnary preserved by this page during a previous session
+        /// The state will not take the value Null when the first visit of this page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
 
@@ -102,20 +153,19 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
-        /// en plus de l'état de page conservé durant une session antérieure.
-
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will load the active page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will unload the active page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -123,6 +173,11 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Delete an ingredient
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         private void DeleteIngredient_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (this.Frame != null && sender is Button)
@@ -137,6 +192,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Add an ingredient
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (nameIngredient.Text != null && nameIngredient.Text != "" && nameIngredient.Text != "Nom de l'ingrédient")
@@ -151,6 +211,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the textbox of the name of the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBoxNameIngredient_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -159,6 +224,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the textbox of the name of the quanity of the ingredient
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBoxQuantity_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -166,11 +236,21 @@ namespace Check_n_Cook
                 this.quantityIngredient = (TextBox)sender;
             }
         }
+        /// <summary>
+        /// Handles the Loaded event of the TextBlock control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBlock_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Initialise the combobox of quantity with the quantity available
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBoxUnity_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -184,6 +264,10 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Refreshes the page with the specific event given.
+        /// </summary>
+        /// <param name="e">The e.</param>
         public void Refresh(Event e)
         {
             if (e is ModifyIngredients)
@@ -203,6 +287,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Initialize the ComboBox of the type of the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -218,6 +307,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Initialize the ComboBox of the difficulty of the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBox_Loaded_1(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -236,6 +330,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Initialize the ComboBox of the cost of the receipe
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void CostLevelCombo_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -255,6 +354,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the name of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void ReceipeTitle_Changed(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
@@ -265,6 +369,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the name of the author of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void authorName_Changed(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
@@ -275,6 +384,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the meal type given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void MealType_Changed(object sender, SelectionChangedEventArgs e)
         {
             var tb = (ComboBox)sender;
@@ -286,6 +400,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the time of cook given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void CookingTime_Changed(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
@@ -296,6 +415,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store difficulty of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void DifficultyLevel_Changed(object sender, SelectionChangedEventArgs e)
         {
             var tb = (ComboBox)sender;
@@ -307,6 +431,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the cost of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void CostLevel_Changed(object sender, SelectionChangedEventArgs e)
         {
             var tb = (ComboBox)sender;
@@ -318,6 +447,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the instruction of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void ReceipeContent_Changed(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
@@ -328,15 +462,21 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Store the image of the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void ImageLink_Changed(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
             if (tb.Text != "" && tb.Text.Length > 0)
             {
-                this.urlForImage = tb.Text; 
+                this.urlForImage = tb.Text;
                 var bitmapImage = new BitmapImage();
-                try{
-                    
+                try
+                {
+
                     bitmapImage.UriSource = new Uri(tb.Text);
                     image.Source = bitmapImage;
                 }
@@ -348,6 +488,13 @@ namespace Check_n_Cook
 
 
         }
+
+        /// <summary>
+        /// Check if the file exists
+        /// </summary>
+        /// <param name="sf">The sf.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
         private async Task<Boolean> fileExists(StorageFolder sf, string fileName)
         {
             try
@@ -360,6 +507,11 @@ namespace Check_n_Cook
                 return false;
             }
         }
+        /// <summary>
+        /// Add the receipe given by the user
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void AddReceipe_Clicked(object sender, RoutedEventArgs e)
         {
             if (this.receipeName != "")
@@ -383,7 +535,7 @@ namespace Check_n_Cook
 
                 }
 
-                Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex , this.costLevelIndex, false, false);
+                Receipe rec = new Receipe(this.receipeName, this.authorName, DateTime.Today, dt, -1, this.difficultyLevelIndex, this.costLevelIndex, false, false);
                 rec.Id = -1;
                 rec.Image = this.urlForImage;
                 rec.ToDoInstructions = this.toDoInstructions;
@@ -428,9 +580,14 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Handles the ingredient textbox when he got focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void NameIngredientGotFocus(object sender, RoutedEventArgs e)
         {
-           
+
             if (sender is TextBox)
             {
                 TextBox textbox = (TextBox)sender;
@@ -442,6 +599,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the texbox of the ingredient when he lost focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void NameINgredientLostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -456,6 +618,11 @@ namespace Check_n_Cook
 
         }
 
+        /// <summary>
+        /// Handles the quantity textbox when he got focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void QuantityGotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -469,6 +636,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the quantity textbox when he lost focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void QuanityLostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -482,6 +654,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the textbox of the instruction
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void InstructionLoaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -490,9 +667,14 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the instruction textbox when he got focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void InstructionFocus(object sender, RoutedEventArgs e)
         {
-         
+
             if (sender is TextBox)
             {
                 TextBox textbox = (TextBox)sender;
@@ -503,6 +685,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the instruction textbox when he lost focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void InstructionLostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -516,6 +703,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Store the image
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ImageLoaded(object sender, RoutedEventArgs e)
         {
             if (sender is Image)
@@ -524,6 +716,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the image textbox when he got focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ImageFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -537,6 +734,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the image textbox when he lost focus.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ImageLostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
