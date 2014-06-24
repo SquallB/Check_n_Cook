@@ -283,7 +283,7 @@
     <Content Include="Assets\supprimer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\sylvain_CheckNCook.jpg">
+    <Content Include="Assets\sylvain_CheckNCook.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Common\ReadMe.txt" />
