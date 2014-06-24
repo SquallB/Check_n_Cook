@@ -8,12 +8,19 @@ using Windows.UI.Xaml.Documents;
 namespace Check_n_Cook.Model
 {
     /// <summary>
-    /// Page de base qui inclut des caractéristiques communes à la plupart des applications.
+    /// Page used to format the shopping list in an A4 page, which is meant to be printed.
     /// </summary>
     public sealed partial class ShoppingListPrintPage : Page
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShoppingListPrintPage"/> class.
+        /// </summary>
         public ShoppingListPrintPage() : this(new List<ShoppingListGroup>()) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShoppingListPrintPage"/> class.
+        /// </summary>
+        /// <param name="shoppingList">The shopping list.</param>
         public ShoppingListPrintPage(List<ShoppingListGroup> shoppingList)
         {
             InitializeComponent();

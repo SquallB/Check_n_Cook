@@ -21,7 +21,7 @@
     </Page.Resources>
 
     <!--
-        Cette grille sert de panneau racine à la page.
+        This grid is used as the main panel of the page.
     -->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
@@ -33,7 +33,7 @@
         <Canvas x:Name="printingRoot" Opacity="0"/>
         <Hub>
             <Hub.Header>
-                <!-- Bouton Précédent et titre de la page -->
+                <!-- Back button and title of the page -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80"/>
@@ -107,7 +107,6 @@
 
             <HubSection Header="Outils de gestion">
                 <DataTemplate>
-                    <!-- largeur de 400 -->
                     <StackPanel Orientation="Vertical">
                         <Grid Width="auto">
                             <Grid.ColumnDefinitions>

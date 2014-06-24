@@ -6,12 +6,19 @@ using Windows.UI.Xaml.Documents;
 namespace Check_n_Cook.Model
 {
     /// <summary>
-    /// Page de base qui inclut des caractéristiques communes à la plupart des applications.
+    /// Page used to format the receipe in an A4 page, which is meant to be printed.
     /// </summary>
     public sealed partial class ReceipePrintPage : Page
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceipePrintPage"/> class.
+        /// </summary>
         public ReceipePrintPage() : this(null) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceipePrintPage"/> class.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
         public ReceipePrintPage(Receipe receipe)
         {
             this.InitializeComponent();

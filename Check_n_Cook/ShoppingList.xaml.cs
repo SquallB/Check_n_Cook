@@ -14,21 +14,77 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// Page displaying the shopping list of the user, and provides tools to edit it.
     /// </summary>
     public sealed partial class ShoppingList : BasePrintPage, View
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+
+        /// <summary>
+        /// The model
+        /// </summary>
         private AppModel model;
+
+        /// <summary>
+        /// The groups of the shopping list
+        /// </summary>
         private List<ShoppingListGroup> shoppingListGroup;
+
+        /// <summary>
+        /// True if the list is being modified, false otherwise.
+        /// </summary>
         private bool isModifyingList;
+
+        /// <summary>
+        /// The list of buttons allowing to delete ingrdients.
+        /// </summary>
         private List<Button> buttonIngredient;
+
+        /// <summary>
+        /// The combobox allowing to the group to which the ingredient will be added to.
+        /// </summary>
         private ComboBox groupIngredient;
+
+        /// <summary>
+        /// The button adding the ingredient.
+        /// </summary>
         private Button addItemButton;
 
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// The textbox allowing to enter the name of the ingredient.
+        /// </summary>
+        private TextBox nameIngredient;
+
+        /// <summary>
+        /// The textbox allowing to enter the quantity of the ingredient.
+        /// </summary>
+        private TextBox quantityIngredient;
+
+        /// <summary>
+        /// The combobox allowing to choose the unity of the ingredient.
+        /// </summary>
+        private ComboBox unityIngredient;
+
+        /// <summary>
+        /// The list of butons allowing to delete a group of ingredients.
+        /// </summary>
+        private List<Button> deleteButtons;
+
+        /// <summary>
+        /// The button that (des)activates the edition mode.
+        /// </summary>
+        private Button modifyListButton;
+
+        /// <summary>
+        /// Used to display the groups of the shopping list along with the ingredients inside them.
         /// </summary>
         public ObservableDictionary DefaultViewModel
         {
@@ -44,6 +100,9 @@ namespace Check_n_Cook
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShoppingList"/> class.
+        /// </summary>
         public ShoppingList()
         {
             this.InitializeComponent();
@@ -57,16 +116,10 @@ namespace Check_n_Cook
         }
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Handles the LoadState event of the navigationHelper control.
         /// </summary>
-        /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="LoadStateEventArgs"/> instance containing the event data.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (e.NavigationParameter is AppModel)
@@ -89,20 +142,19 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
-        /// en plus de l'état de page conservé durant une session antérieure.
-
+        /// <summary>
+        /// Raises the <see cref="E:NavigatedTo" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:NavigatedFrom" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="NavigationEventArgs"/> instance containing the event data.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.UnregisterForPrinting();
@@ -112,18 +164,28 @@ namespace Check_n_Cook
         #endregion
 
         /// <summary>
-        /// Provide print content for scenario 1 first page
+        /// Provide print content for the shopping list.
         /// </summary>
         protected override void PreparePrintContent()
         {
             this.PagesToPrint.Add(new ShoppingListPrintPage(this.shoppingListGroup));
         }
 
+        /// <summary>
+        /// Handles the Click event of the print button. Displays the print menu.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await Windows.Graphics.Printing.PrintManager.ShowPrintUIAsync();
         }
 
+        /// <summary>
+        /// Handles the Click event of the ModifyList button. Turn on or off the edition mode of the list, by making visible or hidden the corresponding controls. Also changes the text of the button clicked.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ModifyList_Click(object sender, RoutedEventArgs e)
         {
             if (this.isModifyingList)
@@ -171,7 +233,11 @@ namespace Check_n_Cook
             this.isModifyingList = !isModifyingList;
         }
 
-        private List<Button> deleteButtons;
+        /// <summary>
+        /// Handles the Loaded event of the ButtonShoppingList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonShoppingList_Loaded(object sender, RoutedEventArgs e)
         {
             this.deleteButtons.Add((Button)sender);
@@ -181,9 +247,13 @@ namespace Check_n_Cook
                 ((Button)sender).Visibility = Visibility.Visible;
             }
         }
+        /// <summary>
+        /// Refreshes this page with the data contained in the fired event.
+        /// </summary>
+        /// <param name="e">The fired event.</param>
         public void Refresh(Event e)
         {
-            if (e is IngredientEvent)
+            if (e is IngredientEvent || e is ShoppingListGroupEvent)
             {
                 this.shoppingListGroup.Clear();
                 this.shoppingListGroup = new List<ShoppingListGroup>();
@@ -194,31 +264,23 @@ namespace Check_n_Cook
 
                 this.DefaultViewModel["Groups"] = shoppingListGroup;
             }
-            else if (e is RemovedShoppingListGroupEvent)
-            {
-                RemovedShoppingListGroupEvent srcEvt = (RemovedShoppingListGroupEvent)e;
-                AppModel model = (AppModel)srcEvt.Model;
-
-                this.shoppingListGroup.Clear();
-                this.shoppingListGroup = new List<ShoppingListGroup>();
-                foreach (ShoppingListGroup listGroup in this.model.ShoppingList.Values)
-                {
-                    this.shoppingListGroup.Add(listGroup);
-                }
-
-
-                this.DefaultViewModel["Groups"] = this.shoppingListGroup;
-
-            }
         }
 
-        private Button modifyListButton;
+        /// <summary>
+        /// Handles the Loaded event of the ModifyList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ModifyList_Loaded(object sender, RoutedEventArgs e)
         {
             this.modifyListButton = (Button)sender;
         }
 
-        private TextBox nameIngredient;
+        /// <summary>
+        /// Handles the Loaded event of the TextBoxNameIngredient control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBoxNameIngredient_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -227,7 +289,11 @@ namespace Check_n_Cook
             }
         }
 
-        private TextBox quantityIngredient;
+        /// <summary>
+        /// Handles the Loaded event of the TextBoxQuantity control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBoxQuantity_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -236,7 +302,11 @@ namespace Check_n_Cook
             }
         }
 
-        private ComboBox unityIngredient;
+        /// <summary>
+        /// Handles the Loaded event of the ComboBoxUnity control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBoxUnity_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -250,6 +320,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the AddIngredient button. Add a ingredient to the shopping list, in the selected group.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
             String name = this.nameIngredient.Text;
@@ -269,12 +344,22 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Loaded event of the AddIngredientButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void AddIngredientButton_Loaded(object sender, RoutedEventArgs e)
         {
             this.addItemButton = (Button)sender;
         }
 
 
+        /// <summary>
+        /// Handles the Loaded event of the ComboBoxGroup control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ComboBoxGroup_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is ComboBox)
@@ -290,6 +375,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the RemoveShoppingList button. Removes a group of ingredients from the shopping list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void RemoveShoppingList_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -323,6 +413,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Loaded event of the ButtonIngredient control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonIngredient_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -337,6 +432,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the RemoveIngredient control. Removes an ingredient from the corresponding group of the shopping list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void RemoveIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button)
@@ -355,6 +455,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Focus event of the EnterIngredient textbox. Removes the default text if still there.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void EnterIngredient_Focus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -368,6 +473,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the LostFocus event of the EnterIngredient textbox. Adds the default text if empty.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void EnterIngredient_LostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -381,6 +491,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Focus event of the Quantity textbox. Removes the default text if still there.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Quantity_Focus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
@@ -394,6 +509,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the LostFocus event of the Quantity textbox. Adds the default text if empty.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Quantity_LostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox)
