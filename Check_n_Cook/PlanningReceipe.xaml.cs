@@ -90,7 +90,6 @@ namespace Check_n_Cook
             this.receipeListSelectedModel = new ReceipeListSelected();
             this.listReceipeListSelected = new List<ItemReceipeListSelected>();
             this.receipeListSelectedModel.AddView(this);
-            //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
 
@@ -421,7 +420,7 @@ namespace Check_n_Cook
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void AddAllIngredients_Click(object sender, RoutedEventArgs e)
+        private async void AddAllIngredients_Click(object sender, RoutedEventArgs e)
         {
             foreach (SampleDataGroup data in this.receipeListSelectedModel.GetReceipeListSelected())
             {
@@ -436,6 +435,10 @@ namespace Check_n_Cook
                     }
                 }
             }
+
+            StorageFolder folder = KnownFolders.PicturesLibrary;
+            StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.appModel.StringifyShoppingList());
         }
 
         /// <summary>
