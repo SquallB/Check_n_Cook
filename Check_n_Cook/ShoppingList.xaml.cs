@@ -317,7 +317,10 @@ namespace Check_n_Cook
                 this.unityIngredient = (ComboBox)sender;
                 foreach (string unity in UnityAvailable.GetUnity())
                 {
-                    this.unityIngredient.Items.Add(unity);
+                    if (!this.unityIngredient.Items.Contains(unity))
+                    {
+                        this.unityIngredient.Items.Add(unity);
+                    }
                 }
                 this.unityIngredient.SelectedItem = this.unityIngredient.Items[0];
             }
@@ -344,6 +347,8 @@ namespace Check_n_Cook
                 StorageFolder folder = KnownFolders.PicturesLibrary;
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
+
+                PreparePrintContent();
             }
         }
 
@@ -371,7 +376,10 @@ namespace Check_n_Cook
 
                 foreach (ShoppingListGroup group in this.model.ShoppingList.Values)
                 {
-                    this.groupIngredient.Items.Add(group.Name);
+                    if (!this.groupIngredient.Items.Contains(group.Name))
+                    {
+                        this.groupIngredient.Items.Add(group.Name);
+                    }
                 }
 
                 this.groupIngredient.SelectedItem = this.groupIngredient.Items[0];
@@ -452,7 +460,6 @@ namespace Check_n_Cook
                 StorageFile shoppingListFile = await folder.CreateFileAsync("shoppingList.json", CreationCollisionOption.ReplaceExisting);
                 await Windows.Storage.FileIO.WriteTextAsync(shoppingListFile, this.model.StringifyShoppingList());
 
-                this.PagesToPrint.Clear();
                 PreparePrintContent();
             }
         }
