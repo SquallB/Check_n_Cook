@@ -365,7 +365,7 @@ namespace Check_n_Cook.Model
         /// <returns></returns>
         public bool checkDifficulty(Receipe receipe)
         {
-            return (AdvancedDifficulty == 0) || (AdvancedDifficulty == receipe.Difficulty.Value);
+            return (AdvancedDifficulty == 0) ||(AdvancedDifficulty == receipe.Difficulty.Value);
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Check_n_Cook.Model
         /// <returns></returns>
         public bool checkTitle(Receipe receipe,string keyWord)
         {
-            return receipe.Title.ToUpper().IndexOf(keyWord.ToUpper()) > 0;
+            return receipe.Title.ToUpper().IndexOf(keyWord.ToUpper()) >= 0;
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Check_n_Cook.Model
         /// <returns></returns>
         public bool checkInstructions(Receipe receipe, string keyWord)
         {
-            return (receipe.ToDoInstructions != null) && (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper()) > 0);
+            return (receipe.ToDoInstructions != null) && (receipe.ToDoInstructions.ToUpper().IndexOf(keyWord.ToUpper()) >= 0);
             
         }
         /// <summary>
@@ -440,7 +440,7 @@ namespace Check_n_Cook.Model
 
             foreach (var ingredient in receipe.ingredients)
             {
-                if (ingredient.name.ToUpper().IndexOf(keyWord.ToUpper()) > 0 || ingredient.unity.ToUpper().IndexOf(keyWord.ToUpper()) > 0)
+                if (ingredient.name.ToUpper().IndexOf(keyWord.ToUpper()) >= 0 || ingredient.unity.ToUpper().IndexOf(keyWord.ToUpper()) >= 0)
                 {
                     containsKey = true;
 
