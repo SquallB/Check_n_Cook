@@ -115,12 +115,8 @@ namespace Check_n_Cook
             this.buttonIngredient = new List<Button>();
         }
 
-        /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
-        /// Fills the page with content given during the navigation. Every saved sate is also given when the page
-        /// is created again based on a previous session.
-        /// </summary>
+        /// <summary>Fills the page with content given during the navigation. Every saved sate is also given when the page
+        /// is created again based on a previous session.<summary>
         /// /// <param name="sender">The source of the event; in general <see cref="NavigationHelper"/></param>
         /// <param name="e">Event data giving the first navigation parameter transmitted to 
         /// <see cref="Frame.Navigate(Type, Object)"/> during the first request of the page and
