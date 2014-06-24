@@ -116,10 +116,16 @@ namespace Check_n_Cook
         }
 
         /// <summary>
-        /// Handles the LoadState event of the navigationHelper control.
+        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
+        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with content given during the navigation. Every saved sate is also given when the page
+        /// is created again based on a previous session.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="LoadStateEventArgs"/> instance containing the event data.</param>
+        /// /// <param name="sender">The source of the event; in general <see cref="NavigationHelper"/></param>
+        /// <param name="e">Event data giving the first navigation parameter transmitted to 
+        /// <see cref="Frame.Navigate(Type, Object)"/> during the first request of the page and
+        /// a state dictionnary saved by the page during a previous session.
+        /// The state won't a Null value during the first visit of the page
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (e.NavigationParameter is AppModel)
