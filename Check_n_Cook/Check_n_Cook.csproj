@@ -280,6 +280,7 @@
     </Content>
     <Content Include="Assets\MapStopPushPin.png" />
     <Content Include="Assets\shopPushPin.png" />
+    <Content Include="Assets\stephane_CheckNCook.PNG" />
     <Content Include="Assets\supprimer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

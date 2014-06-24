@@ -87,7 +87,7 @@ namespace Check_n_Cook
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             List<ItemAbout> favorites = new List<ItemAbout>();
-        
+
             string copyRight = "Mentions légales et copyright : \nCertains contenus proviennent du site Marmiton ou de sources externes.\nToute reproduction ou utilisation de ces contenus à des fins commercials sont strictement interdits sous peine de poursuite judiciaire.\nL'application a été éditée par l'équipe easyLifer dont les membres sont présentés sur cette page. \nPour toutes informations supplémentaires ou signaler un problème, veuillez contacter le membre de l'équipe qui pourra vous renseigner.\n\nNotes de version :\nDate de dernière mise à jour : 24/06/2014\nVersion actuelle : 1.0";
 
             string descriptionSylvain = "Passionné d’informatique depuis qu’il est au collège, Sylvain a commencé par apprendre quelques langages par lui-même, grâce aux cours disponibles sur Internet. Par la suite il a tout naturellement choisi de faire des études dans ce domaine. Pour cela il a choisi l’école d’ingénieur ISEN, située à Lille. Cela lui a permis d’approfondir ses connaissances en informatique, mais aussi d’acquérir d’autres compétences nécessaires à un ingénieur.\n\nIl a ainsi pu acquérir de solides connaissances en informatique, notamment dans le développement. Il a ainsi pu assurer le poste de responsable technique lorsqu’il a rejoint l’équipe easyLifer. En travaillant avec les autres membres, il a pu donner à l’équipe les moyens de développer des applications robustes afin de limiter les éventuels bugs. Cela a permis de se rapprocher du but de l’équipe, qui est de créer des applications fiables et simples d’utilisations pour tous.\n\nPour contacter Sylvain, voici son adresse e-mail : sylvain.bardin@sfr.fr";
@@ -100,7 +100,7 @@ namespace Check_n_Cook
             favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Sylvain BARDIN", "Responsable technique", descriptionSylvain));
             favorites.Add(new ItemAbout("Assets/mehdi_CheckNCook.png", "Mehdi BOUCHAGOUR", "Responsable marketing", descriptionMehdi));
             favorites.Add(new ItemAbout("Assets/hugo_CheckNCook.png", "Hugo DUFOSSEZ", "Chef de projet", descriptionHugo));
-            favorites.Add(new ItemAbout("http://www.graindorge.fr/mediatheque/fromages/camembert.jpg", "Stéphane EINTRAZI", "Responsable design",descriptionStephane));
+            favorites.Add(new ItemAbout("Assets/stephane_CheckNCook.png", "Stéphane EINTRAZI", "Responsable design", descriptionStephane));
 
             itemsViewSource.Source = favorites;
 
