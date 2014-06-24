@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// Page displaying a collection of grouped items.
     /// </summary>
     public sealed partial class Main : Page, View
     {
@@ -71,7 +71,7 @@ namespace Check_n_Cook
         /// </summary>
         public ProgressBar progressBar;
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Can be replaced by a strongly typed display model
         /// </summary>
         /// <value>
         /// The default view model.
@@ -82,8 +82,8 @@ namespace Check_n_Cook
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et
-        /// gestion de la durée de vie des processus
+        /// NavigationHelper is used on each page for easy navigation and
+        /// for the management of life processes
         /// </summary>
         /// <value>
         /// The navigation helper.
@@ -111,14 +111,14 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the content passed during navigation. Any registered state is also
+        /// provided when a page is recreated from a previous session.
         /// </summary>
-        /// <param name="sender">La source de l'événement ; en général <see cref="NavigationHelper" /></param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)" /> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="sender">The source of the event; in general <see cref="NavigationHelper" /></param>
+        /// <param name="e">Event data that provide the navigation parameter passed to
+        /// <see cref="Frame.Navigate(Type, Object)" /> during the initial request of this page and
+        /// a dictionary stored by this page during a previous session 
+        /// The state will not have the Null value at the first visit to the page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             if (this.Model.FavouriteReceipes.Count > 0)
@@ -221,16 +221,16 @@ namespace Check_n_Cook
         #region Inscription de NavigationHelper
 
         /// <summary>
-        /// Appelé lorsque la Page est chargée et devient la source actuelle d'un Frame parent.
+        /// Called when the page is loaded and becomes the current source of a parent Frame.
         /// </summary>
-        /// <param name="e">Données d'événement qui peuvent être examinés en remplaçant le code. Les données d'événement représentent la navigation en attente qui chargera la Page active. Généralement la propriété la plus appropriée à examiner est Parameter.</param>
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour
+        /// <param name="e">Event data that can be examined by changing the code. The event data represent the pending navigation that will load the Active Page. Usually the most appropriate parameter to consider is Property.</param>
+        /// The methods provided in this section are used simply to allow
+        /// NavigationHelper to respond to the navigation methods of the page.
+        /// Specific logic to the page should be placed in event handlers for
         /// <see cref="GridCS.Common.NavigationHelper.LoadState" />
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState" />.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState
-        /// en plus de l'état de page conservé durant une session antérieure.
+        /// and <see cref="GridCS.Common.NavigationHelper.SaveState" />.
+        /// the navigation parameter is available in the LoadState method
+        /// in addition to the status page maintained during an earlier session.
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -294,9 +294,9 @@ namespace Check_n_Cook
             return error;
         }
         /// <summary>
-        /// Appelé immédiatement après le déchargement de la Page et ne représente plus la source actuelle d'un Frame parent.
+        /// Called immediately after unloading the page and no longer represents the current source of a Frame parent.
         /// </summary>
-        /// <param name="e">Données d'événement qui peuvent être examinés en remplaçant le code. Les données d'événement représentent la navigation qui a déchargé la Page active.</param>
+        /// <param name="e">Event data that can be examined by changing the code. The event data represent the navigation that have unloaded the Active Page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);

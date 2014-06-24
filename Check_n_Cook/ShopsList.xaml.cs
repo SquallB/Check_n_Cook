@@ -18,38 +18,71 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Pour en savoir plus sur le modèle d'élément Page Hub, consultez la page http://go.microsoft.com/fwlink/?LinkId=321224
+// To learn more about the item template Hub Page, see page http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// Page displaying a collection of grouped items.
     /// </summary>
     public sealed partial class ShopsList : Page
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
         public AppModel Model { get; set; }
+        /// <summary>
+        /// Gets or sets the shop views.
+        /// </summary>
+        /// <value>
+        /// The shop views.
+        /// </value>
         public List<ShopView> ShopViews { get; set; }
+        /// <summary>
+        /// Gets or sets my map.
+        /// </summary>
+        /// <value>
+        /// My map.
+        /// </value>
         public Map MyMap { get; set; }
 
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Can be replaced by a strongly typed display model
         /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
-        /// gestion de la durée de vie des processus
+        /// NavigationHelper is used on each page for making navigation easy and
+        /// to handle the process lifetime duration
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShopsList"/> class.
+        /// </summary>
         public ShopsList()
         {
             this.InitializeComponent();
@@ -59,16 +92,14 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the content passed during navigation. Any registered state is also
+        /// provided when a page is recreated from a previous session.
         /// </summary>
-        /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="sender">The source of the event; in general <see cref="NavigationHelper" /></param>
+        /// <param name="e">Event data that provide the navigation parameter passed to
+        /// <see cref="Frame.Navigate(Type, Object)" /> during the initial application of this page and
+        /// a dictionary stored by this page during a previous session state
+        /// the previous state won't have the Null value during the first visit of the page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.Model = (AppModel)e.NavigationParameter;
@@ -76,20 +107,27 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
-        /// en plus de l'état de page conservé durant une session antérieure.
+        /// <summary>
+        /// Called when the page is loaded and becomes the current source of a parent Frame.
+        /// </summary>
+        /// <param name="e">Event data that can be examined by changing the code. The event data represent the pending navigation that will load the Active Page. Usually the most appropriate property to consider is Parameter.</param>
+        /// The methods provided in this section are used simply to allow
+        /// The NavigationHelper to respond to the navigation methods of the page.
+        /// Specific logic to the page should be placed in event handlers for
+        /// <see cref="GridCS.Common.NavigationHelper.LoadState" />
+        /// et <see cref="GridCS.Common.NavigationHelper.SaveState" />.
+        /// the navigation parameter is available in the LoadState method
+        /// in addition to the page state conserved during the previous session.
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Called immediately after the page unloading, doesn't represent anymore the actual source of a frame parent.
+        /// </summary>
+        /// <param name="e">Event data that can be examined by replacing code. The event data represent the navigation that have discharged the active Page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -97,12 +135,18 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Handles the Loaded event of the myMap control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void myMap_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 this.MyMap = (Map)sender;
                 Geolocator geolocator = new Geolocator();
+                //used to obtain user location
                 Geoposition position = await geolocator.GetGeopositionAsync();
                 double latitude = position.Coordinate.Point.Position.Latitude;
                 double longitude = position.Coordinate.Point.Position.Longitude;
@@ -115,23 +159,24 @@ namespace Check_n_Cook
                 {
                     response = await searchManager.ReverseGeocodeAsync(requestOptions);
                 } while (response.LocationData.Count == 0 || response.LocationData == null);
-                GeocodeLocation currentLocation = response.LocationData[0];
 
+                GeocodeLocation currentLocation = response.LocationData[0];
+                //place a PushPin at the right place (user)
                 CustomPushPin userPin = new CustomPushPin(location);
                 userPin.Pin.Style = this.Resources["PushPinStyle"] as Style;
-
+                //create the associated toolTip
                 ToolTipService.SetToolTip(userPin.Pin, "Vous");
                 MyMap.Children.Add(userPin.Pin);
 
                 MyMap.ZoomLevel = 12;
                 MyMap.Center = location;
-
+                //used to retrieve shops
                 PagesJaunesShopRetriever retriever = new PagesJaunesShopRetriever();
                 bool nothing = await retriever.GetShops(currentLocation.Address.Locality, this.Model);
                 this.shopsViewSource.Source = this.Model.Shops;
 
                 this.ShopViews = new List<ShopView>();
-
+                //used to display shops
                 this.ShopViews = await this.createShopViews(this.Model.Shops, searchManager);
 
                 foreach (ShopView shopView in this.ShopViews)
@@ -146,10 +191,16 @@ namespace Check_n_Cook
             
         }
 
+        /// <summary>
+        /// Creates the shop views.
+        /// </summary>
+        /// <param name="shops">The shops.</param>
+        /// <param name="searchManager">The search manager.</param>
+        /// <returns></returns>
         private async Task<List<ShopView>> createShopViews(List<Shop> shops, SearchManager searchManager)
         {
             List<ShopView> shopViews = new List<ShopView>();
-
+            //get the location associated to all shops and create their views
             foreach (Shop shop in shops)
             {
                 var options = new GeocodeRequestOptions(shop.Address);
