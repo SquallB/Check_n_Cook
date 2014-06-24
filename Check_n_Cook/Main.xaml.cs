@@ -121,11 +121,8 @@ namespace Check_n_Cook
         /// The state will not have the Null value at the first visit to the page.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (this.Model.FavouriteReceipes.Count > 0)
-            {
-                this.Model.FavouriteReceipes.Clear();
-                this.Model.FavouriteReceipes = new Dictionary<string, Receipe>();
-            }
+            this.Model.FavouriteReceipes.Clear();
+            this.Model.FavouriteReceipes = new Dictionary<string, Receipe>();
 
             StorageFolder folder = KnownFolders.PicturesLibrary;
 
