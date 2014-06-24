@@ -128,7 +128,7 @@ namespace Check_n_Cook
         {
             if (this.isModifyingList)
             {
-                this.modifyListButton.Content = "Modifier la liste de course";
+                this.modifyListButton.Content = "Modifier la liste de courses";
 
                 foreach (Button button in this.deleteButtons)
                 {
@@ -148,7 +148,7 @@ namespace Check_n_Cook
             }
             else
             {
-                this.modifyListButton.Content = "Arrêter les modifications sur la liste de course";
+                this.modifyListButton.Content = "Arrêter les modifications sur la liste de courses";
 
                 foreach (Button button in this.deleteButtons)
                 {
