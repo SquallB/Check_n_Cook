@@ -8,7 +8,7 @@ namespace Check_n_Cook.Model.Grade
 {
     public class Difficulty : Grade
     {
-        public Difficulty(int value = 1) : base(1, 5, value) { }
+        public Difficulty(int value = 1) : base(1, 4, value) { }
 
         public Difficulty(String jsonString) : base(jsonString) { }
 

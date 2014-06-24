@@ -225,7 +225,7 @@ namespace Check_n_Cook
                 var difficultyLevel = (ComboBox)sender;
                 difficultyLevel.Items.Add(" ");
 
-                for (int i = 1; i <= 5; i++)
+                for (int i = 1; i < 5; i++)
                 {
                     difficultyLevel.Items.Add(i);
 
