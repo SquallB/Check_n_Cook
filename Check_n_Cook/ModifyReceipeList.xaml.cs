@@ -12,33 +12,57 @@ using Windows.UI.Xaml.Navigation;
 namespace Check_n_Cook
 {
     /// <summary>
-    /// Page affichant une collection groupée d'éléments.
+    /// This page displays a collection of element
     /// </summary>
     public sealed partial class ModifyReceipeList : Page, View
     {
+        /// <summary>
+        /// The navigation helper
+        /// </summary>
         private NavigationHelper navigationHelper;
+        /// <summary>
+        /// The default view model
+        /// </summary>
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        /// <summary>
+        /// The model
+        /// </summary>
         private AppModel Model;
+        /// <summary>
+        /// The date
+        /// </summary>
         private string date;
+        /// <summary>
+        /// The added view
+        /// </summary>
         private bool addedView;
 
+
         /// <summary>
-        /// Cela peut être remplacé par un modèle d'affichage fortement typé.
+        /// Gets the default view model.
         /// </summary>
+        /// <value>
+        /// The default view model.
+        /// </value>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         /// <summary>
-        /// NavigationHelper est utilisé sur chaque page pour faciliter la navigation et 
-        /// gestion de la durée de vie des processus
+        /// Gets the navigation helper.
         /// </summary>
+        /// <value>
+        /// The navigation helper.
+        /// </value>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifyReceipeList"/> class.
+        /// </summary>
         public ModifyReceipeList()
         {
             this.InitializeComponent();
@@ -49,16 +73,16 @@ namespace Check_n_Cook
 
 
         /// <summary>
-        /// Remplit la page à l'aide du contenu passé lors de la navigation. Tout état enregistré est également
-        /// fourni lorsqu'une page est recréée à partir d'une session antérieure.
+        /// Fills the page with the previous elements while the navigation. Any state loaded is given when the page
+        /// is recreated from a previous session.
         /// </summary>
         /// <param name="sender">
-        /// La source de l'événement ; en général <see cref="NavigationHelper"/>
+        /// The event source ; generaly <see cref="NavigationHelper"/>
         /// </param>
-        /// <param name="e">Données d'événement qui fournissent le paramètre de navigation transmis à
-        /// <see cref="Frame.Navigate(Type, Object)"/> lors de la requête initiale de cette page et
-        /// un dictionnaire d'état conservé par cette page durant une session
-        /// antérieure.  L'état n'aura pas la valeur Null lors de la première visite de la page.</param>
+        /// <param name="e"> Event data that give the parameter of the navigation transmitted
+        /// <see cref="Frame.Navigate(Type, Object)"/> during the initial request of this page and
+        /// a state dictionnary preserved by this page during a previous session
+        /// The state will not take the value Null when the first visit of this page.</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             GoToModifyReceipeListEvent evnt = e.NavigationParameter as GoToModifyReceipeListEvent;
@@ -107,20 +131,20 @@ namespace Check_n_Cook
 
         #region Inscription de NavigationHelper
 
-        /// Les méthodes fournies dans cette section sont utilisées simplement pour permettre
-        /// NavigationHelper pour répondre aux méthodes de navigation de la page.
-        /// 
-        /// La logique spécifique à la page doit être placée dans les gestionnaires d'événements pour  
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// et <see cref="GridCS.Common.NavigationHelper.SaveState"/>.
-        /// Le paramètre de navigation est disponible dans la méthode LoadState 
-        /// en plus de l'état de page conservé durant une session antérieure.
 
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will load the active page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
         }
 
+        /// <summary>
+        /// Called when the page is loaded and becomes the actual source of a parent frame.
+        /// </summary>
+        /// <param name="e">Event data that may be examinate by replcaing the code. The event data represents the navigation waiting that will unload the active page.</param>
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
@@ -128,6 +152,10 @@ namespace Check_n_Cook
 
         #endregion
 
+        /// <summary>
+        /// Refreshes the page.
+        /// </summary>
+        /// <param name="e">The event.</param>
         public void Refresh(Event e)
         {
             if (e is RemovedReceipeListEvent)
@@ -163,6 +191,11 @@ namespace Check_n_Cook
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the GoToDetailReceipe control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ItemClickEventArgs"/> instance containing the event data.</param>
         private void GoToDetailReceipe_Click(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ItemReceipe)
@@ -170,10 +203,17 @@ namespace Check_n_Cook
                 ItemReceipe item = (ItemReceipe)e.ClickedItem;
                 Receipe receipe = item.Receipe;
                 this.Model.SelectReceipe(receipe);
+
+                //navigate to the ReceipeDetail page
                 this.Frame.Navigate(typeof(ReceipeDetail), this.Model);
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the RemoveReceipe, update the model and the json file.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         public async void RemoveReceipe_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Button button = sender as Button;
