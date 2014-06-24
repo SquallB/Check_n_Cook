@@ -3,8 +3,16 @@ using Windows.UI.Xaml.Controls;
 
 namespace Check_n_Cook.Model.Data
 {
+    /// <summary>
+    /// This is a class that represents the operation for an itemReceipe or itemIngredient
+    /// </summary>
     public static class ToolItem
     {
+        /// <summary>
+        /// Creates the item receipe.
+        /// </summary>
+        /// <param name="receipe">The receipe.</param>
+        /// <returns></returns>
         public static ItemReceipe CreateItemReceipe(Receipe receipe)
         {
             ItemReceipe item = new ItemReceipe(receipe);
@@ -28,6 +36,11 @@ namespace Check_n_Cook.Model.Data
             return item;
         }
 
+        /// <summary>
+        /// Creates the item ingredient.
+        /// </summary>
+        /// <param name="ingredient">The ingredient.</param>
+        /// <returns></returns>
         public static ItemIngredient CreateItemIngredient(Ingredient ingredient)
         {
             ItemIngredient item = new ItemIngredient(ingredient);
