@@ -159,7 +159,7 @@
                 </DataTemplate>
             </HubSection>
 
-            <HubSection x:Name="resultsSection" Width="1020" Header="Résultat de recherche">
+            <HubSection x:Name="resultsSection" Width="1020" Header="Résultats de recherche">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout Placement="Full">
                         <TextBlock x:Name="txtResultNotFound" Text="Aucun résultat trouvé." Height="25" Width="109"/>
